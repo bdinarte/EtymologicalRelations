@@ -7,6 +7,9 @@ __pycache__/
 .idea/
 /.idea/
 
+# uncompressed database
+database/etymwn.tsv
+
 # C extensions
 *.so
 
