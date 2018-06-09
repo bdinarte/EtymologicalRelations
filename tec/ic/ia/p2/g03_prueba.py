@@ -22,16 +22,23 @@ if __name__ == '__main__':
 
 # -----------------------------------------------------------------------------
 
-data_df = get_etim_database(base_path)
+data_df = get_etim_database(base_path, filename="etymwn.tsv")
+print('obtenida la base')
+# print(data_df.iloc[1036:1037])
 
-from pyDatalog import pyDatalog
+# indexes = data_df.index[data_df[0].str.contains('afr')].tolist()
+col0 = data_df[0].tolist()
+print(set([x.split(sep=':')[0] for x in col0]))
+# print(indexes)
 
-print('comienza')
+"""
+
 for i, row in data_df.iterrows():
     pyDatalog.assert_fact(row[1][4:],
                           row[0][:3], row[0][5:],
                           row[2][:3], row[2][5:])
-    if int(i) % 500000 == 0:
-        print('millon')
+    if int(i) % 10000 == 0:
+        print(i)
 
 print(pyDatalog.ask("etymological_origin_of(aaq,'Pawanobskewi',_,X)"))
+"""
