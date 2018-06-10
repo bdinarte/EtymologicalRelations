@@ -1,3 +1,5 @@
+# -----------------------------------------------------------------------------
+
 from pyDatalog import pyDatalog
 from os import path as ospath
 from sys import path as syspath
@@ -28,12 +30,16 @@ syspath.append(base_path)
 
 # -----------------------------------------------------------------------------
 
-data_df = get_etim_database(base_path)
+if __name__ == '__main__':
 
-print('start')
-for i, row in data_df.iterrows():
-    pyDatalog.assert_fact(row[1][4:],
-                          row[0][:3], row[0][5:],
-                          row[2][:3], row[2][5:])
+    data_df = get_etim_database(base_path)
 
-print(pyDatalog.ask("etymological_origin_of(aaq,'Pawanobskewi',_,X)"))
+    print('start')
+    for i, row in data_df.iterrows():
+        pyDatalog.assert_fact(row[1][4:],
+                              row[0][:3], row[0][5:],
+                              row[2][:3], row[2][5:])
+
+    print(pyDatalog.ask("etymological_origin_of(aaq,'Pawanobskewi',_,X)"))
+
+# -----------------------------------------------------------------------------
