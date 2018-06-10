@@ -19,6 +19,7 @@ has_derived_form
 is_derived_from
 etymology
 etymologically_related
+orthography
 """
 
 mainfile_path = ospath.abspath(__file__)
@@ -38,15 +39,16 @@ for i, row in data_df.iterrows():
 # -----------------------------------------------------------------------------
 print('Creating Terms...')
 pyDatalog.create_terms('word_related_lang_aux, Word, Lang, X, Y')
-pyDatalog.create_terms('etymological_origin_of, has_derived_form, '
-                       'is_derived_from, etymology, etymologically_related')
+pyDatalog.create_terms('etymological_origin_of, has_derived_form,'
+                       'is_derived_from, etymology, etymologically_related,'
+                       'orthography')
 
 word_related_lang_aux(Word, Lang) <= \
 (
     etymology(Lang, Word, X, Y) or
-    etymological_origin_of(Lang, Word, X, Y) or
+    etymological_origin_of(X, Y, Lang, Word) or
     has_derived_form(Lang, Word, X, Y) or
-    is_derived_from(Lang, Word, X, Y) or
+    is_derived_from(X, Y, Lang, Word) or
     etymologically_related(Lang, Word, X, Y)
 )
 
@@ -93,7 +95,7 @@ def set_of_words_in_language(word, language):
         for i in answer.answers:
             set_of_words.append(i[0])
 
-    return set_of_words
+    return list(set(set_of_words))
 
 
 # -----------------------------------------------------------------------------
@@ -116,7 +118,7 @@ def set_of_languages_related_word(word):
         for i in answer.answers:
             set_of_langs.append(i[0])
 
-    return set_of_langs
+    return list(set(set_of_langs))
 
 
 # -----------------------------------------------------------------------------
