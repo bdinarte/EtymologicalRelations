@@ -38,6 +38,7 @@ class UserInterface(Tk):
         self.create_widgets_word_x_word()
         self.create_widgets_word_x_lang()
         self.create_widgets_lang_x_lang()
+        self.create_widgets_relations()
 
     # -------------------------------------------------------------------------
 
@@ -106,6 +107,16 @@ class UserInterface(Tk):
 
     # -------------------------------------------------------------------------
 
+    def create_widgets_relations(self):
+        self.cb_etymology = Checkbutton(self.lf_relations, text="rel:etymology")
+        self.cb_etymological_origin_of = Checkbutton(self.lf_relations, text="rel:etymological_origin_of")
+        self.cb_etymologically_related = Checkbutton(self.lf_relations, text="rel:etymologically_related")
+        self.cb_has_derived_form = Checkbutton(self.lf_relations, text="rel:has_derived_form")
+        self.cb_is_derived_from = Checkbutton(self.lf_relations, text="rel:is_derived_from")
+        self.cb_variant_orthography = Checkbutton(self.lf_relations, text="variant:orthography")
+
+    # -------------------------------------------------------------------------
+
     def accommodate_widgets(self):
 
         # ---------------------------------------------------------------------
@@ -162,6 +173,18 @@ class UserInterface(Tk):
         self.btn_contribution_by_lang.grid(row=4, column=3, columnspan=2)
 
         self.list_lang_x_lang.grid(row=2, column=0, columnspan=1, rowspan=8)
+
+        # ---------------------------------------------------------------------
+        # Checkbox de relaciones
+        # ---------------------------------------------------------------------
+
+        self.cb_etymology.grid(row=0, column=0, columnspan=2)
+        self.cb_etymological_origin_of.grid(row=1, column=0, columnspan=2)
+        self.cb_etymologically_related.grid(row=2, column=0, columnspan=2)
+        self.cb_has_derived_form.grid(row=3, column=0, columnspan=2)
+        self.cb_is_derived_from.grid(row=4, column=0, columnspan=2)
+        self.cb_variant_orthography.grid(row=5, column=0, columnspan=2)
+
 
     # -------------------------------------------------------------------------
 
