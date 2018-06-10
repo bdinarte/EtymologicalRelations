@@ -1,6 +1,7 @@
 
 # -----------------------------------------------------------------------------
 
+import pandas as pd 
 from os import path as ospath
 from sys import path as syspath
 
