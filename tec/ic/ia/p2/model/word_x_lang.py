@@ -49,7 +49,8 @@ word_related_lang_aux(Word, Lang) <= \
     etymological_origin_of(X, Y, Lang, Word) or
     has_derived_form(Lang, Word, X, Y) or
     is_derived_from(X, Y, Lang, Word) or
-    etymologically_related(Lang, Word, X, Y)
+    etymologically_related(Lang, Word, X, Y) or
+    orthography(Lang, Word, X, Y)
 )
 
 
