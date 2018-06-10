@@ -24,6 +24,7 @@ if __name__ == '__main__':
 
 data_df = get_etim_database(base_path, filename="etymwn.tsv")
 print('obtenida la base')
+# iloc => el último número no viene incluido, osea debe ser máximo buscado + 1
 # print(data_df.iloc[1036:1037])
 
 # indexes = data_df.index[data_df[0].str.contains('afr')].tolist()
