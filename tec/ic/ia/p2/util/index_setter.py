@@ -5,7 +5,7 @@ previos a la ejecución del programa principal que sirven para implementación
 de ciertos algoritmos para alcanzar una mejor eficiencia.
 """
 
-from file_management import get_etim_database
+from util.file_management import get_etim_database
 from os import path as ospath
 
 # Definir la ruta de la base de datos
@@ -14,10 +14,11 @@ file_folder = ospath.split(file_path)[0]
 project_path = ospath.split(file_folder)[0]
 
 print('Cargando base de datos a memoria...')
-data_df = get_etim_database(project_path, filename="etymwn.tsv")
+data_df = get_etim_database(project_path, filename="etymwn3.tsv")
 print('Base de datos cargada a memoria!')
 
 # Obtener los valores únicos que representan cada idioma
+# first_col = data_df[0].tolist()
 first_col = data_df[0].tolist()
 print('\nObteniendo conjunto de idiomas:')
 prefixes = list(set([value.split(':')[0] for value in first_col]))
