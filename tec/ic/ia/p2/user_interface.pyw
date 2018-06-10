@@ -37,6 +37,7 @@ class UserInterface(Tk):
     def create_widgets(self):
         self.create_widgets_word_x_word()
         self.create_widgets_word_x_lang()
+        self.create_widgets_lang_x_lang()
 
     # -------------------------------------------------------------------------
 
@@ -83,6 +84,28 @@ class UserInterface(Tk):
 
     # -------------------------------------------------------------------------
 
+    def create_widgets_lang_x_lang(self):
+
+        self.lang_x = StringVar()
+        self.lang_y = StringVar()
+        self.result_lang_x_lang = StringVar()
+
+        self.label_lang_x = Label(self.lf_lang_x_lang, text="Palabra P")
+        self.label_lang_y = Label(self.lf_lang_x_lang, text="Palabra D")
+        self.label_result_lang_x_lang = Label(self.lf_lang_x_lang, text="Resultado")
+
+        self.entry_lang_x = Entry(self.lf_lang_x_lang, textvariable=self.lang_x)
+        self.entry_lang_y = Entry(self.lf_lang_x_lang, textvariable=self.lang_y)
+        self.entry_result_lang_x_lang = Entry(self.lf_lang_x_lang, textvariable=self.result_lang_x_lang)
+
+        self.btn_amount_of_common_words = Button(self.lf_lang_x_lang, text="Cantidad palabras comunes", command=self.amount_of_common_words)
+        self.btn_common_words = Button(self.lf_lang_x_lang, text="Listar palabras comunes", command=self.common_words)
+        self.btn_greater_contribution = Button(self.lf_lang_x_lang, text="Idioma que más aporto a X", command=self.greater_contribution)
+        self.btn_contribution_by_lang = Button(self.lf_lang_x_lang, text="Porcentajes de aporte a X", command=self.contribution_by_lang)
+        self.list_lang_x_lang = Listbox(self.lf_lang_x_lang)
+
+    # -------------------------------------------------------------------------
+
     def accommodate_widgets(self):
 
         # ---------------------------------------------------------------------
@@ -125,6 +148,21 @@ class UserInterface(Tk):
         # Operaciones idioma entre idioma
         # ---------------------------------------------------------------------
 
+        self.label_lang_x.grid(row=0, column=0, sticky=NW, padx=5)
+        self.label_lang_y.grid(row=0, column=1, sticky=NW, padx=5)
+        self.label_result_lang_x_lang.grid(row=0, column=2, sticky=NW, padx=5)
+
+        self.entry_lang_x.grid(row=1, column=0)
+        self.entry_lang_y.grid(row=1, column=1)
+        self.entry_result_lang_x_lang.grid(row=1, column=2)
+
+        self.btn_amount_of_common_words.grid(row=1, column=3, columnspan=2)
+        self.btn_common_words.grid(row=2, column=3, columnspan=2)
+        self.btn_greater_contribution.grid(row=3, column=3, columnspan=2)
+        self.btn_contribution_by_lang.grid(row=4, column=3, columnspan=2)
+
+        self.list_lang_x_lang.grid(row=2, column=0, columnspan=1, rowspan=8)
+
     # -------------------------------------------------------------------------
 
     def is_son(self):
@@ -152,18 +190,37 @@ class UserInterface(Tk):
     # -------------------------------------------------------------------------
 
     def p_is_related_d(self):
-        self.result_word_x_lang.set("p_is_related")
+        self.result_word_x_lang.set("P está relacionada con D")
 
     # -------------------------------------------------------------------------
 
     def p_yields_d(self):
-        self.result_word_x_lang.set("p_yields_d")
+        self.result_word_x_lang.set("Palabras producidas")
 
     # -------------------------------------------------------------------------
 
     def langs_related_p(self):
-        self.result_word_x_lang.set("langs_related_p")
+        self.result_word_x_lang.set("Lenguajes relacionados con P")
 
+    # -------------------------------------------------------------------------
+
+    def amount_of_common_words(self):
+        self.result_lang_x_lang.set("12")
+
+    # -------------------------------------------------------------------------
+
+    def common_words(self):
+        self.result_lang_x_lang.set("Palabras comunes")
+
+    # -------------------------------------------------------------------------
+
+    def greater_contribution(self):
+        self.result_lang_x_lang.set("Latín")
+
+    # -------------------------------------------------------------------------
+
+    def contribution_by_lang(self):
+        self.result_lang_x_lang.set("Porcentaje de contribuciones al lenguaje")
 
 # -----------------------------------------------------------------------------
 
