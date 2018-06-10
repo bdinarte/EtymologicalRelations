@@ -22,13 +22,13 @@ class UserInterface(Tk):
 
     def create_frames(self):
 
-        self.lf_word_x_word = LabelFrame(text="This is a LabelFrame")
-        self.lf_word_x_lang = LabelFrame(text="This is a LabelFrame")
-        self.lf_lang_x_lang = LabelFrame(text="This is a LabelFrame")
-        self.lf_relations = LabelFrame(text="This is a LabelFrame")
+        self.lf_word_x_word = LabelFrame(text="Operaciones entre palabras")
+        self.lf_word_x_lang = LabelFrame(text="Operaciones palabra e idioma")
+        self.lf_lang_x_lang = LabelFrame(text="Operaciones idioma e idioma")
+        self.lf_relations = LabelFrame(text="Opciones generales")
 
         self.lf_word_x_word.grid(row=0, column=0)
-        self.lf_lang_x_lang.grid(row=0, column=1)
+        self.lf_word_x_lang.grid(row=0, column=1)
         self.lf_lang_x_lang.grid(row=1, column=0)
         self.lf_relations.grid(row=1, column=1)
 
@@ -46,35 +46,13 @@ class UserInterface(Tk):
         self.word_y = StringVar()
         self.result_word_x_word = StringVar()
 
-        self.label_word_x = Label(text="Palabra X")
-        self.label_word_y = Label(text="Palabra Y")
-        self.label_result_word_x_word = Label(text="Resultado")
-
-        self.entry_word_x = Entry(textvariable=self.word_x)
-        self.entry_word_y = Entry(textvariable=self.word_y)
-        self.entry_result = Entry(textvariable=self.result_word_x_word)
-
-        self.btn_is_son = Button(text="Es hija X de Y", command=self.is_son)
-        self.btn_is_uncle = Button(text="Es tía X de Y", command=self.is_uncle)
-        self.btn_are_cousins = Button(text="Son primas", command=self.are_cousins)
-        self.btn_are_siblings = Button(text="Son hermanas", command=self.are_siblings)
-        self.btn_cousin_grade = Button(text="Grado primas", command=self.cousin_grade)
-
-    # -------------------------------------------------------------------------
-
-    def create_widgets_word_x_lang(self):
-
-        self.word_x = StringVar()
-        self.word_y = StringVar()
-        self.result_word_x_word = StringVar()
-
         self.label_word_x = Label(self.lf_word_x_word, text="Palabra X")
         self.label_word_y = Label(self.lf_word_x_word, text="Palabra Y")
         self.label_result_word_x_word = Label(self.lf_word_x_word, text="Resultado")
 
         self.entry_word_x = Entry(self.lf_word_x_word, textvariable=self.word_x)
         self.entry_word_y = Entry(self.lf_word_x_word, textvariable=self.word_y)
-        self.entry_result = Entry(self.lf_word_x_word, textvariable=self.result_word_x_word)
+        self.entry_result_word_x_word = Entry(self.lf_word_x_word, textvariable=self.result_word_x_word)
 
         self.btn_is_son = Button(self.lf_word_x_word, text="Es hija X de Y", command=self.is_son)
         self.btn_is_uncle = Button(self.lf_word_x_word, text="Es tía X de Y", command=self.is_uncle)
@@ -84,23 +62,68 @@ class UserInterface(Tk):
 
     # -------------------------------------------------------------------------
 
+    def create_widgets_word_x_lang(self):
+
+        self.word_p = StringVar()
+        self.word_d = StringVar()
+        self.result_word_x_lang = StringVar()
+
+        self.label_word_p = Label(self.lf_word_x_lang, text="Palabra P")
+        self.label_word_d = Label(self.lf_word_x_lang, text="Palabra D")
+        self.label_result_word_x_lang = Label(self.lf_word_x_lang, text="Resultado")
+
+        self.entry_word_p = Entry(self.lf_word_x_lang, textvariable=self.word_p)
+        self.entry_word_d = Entry(self.lf_word_x_lang, textvariable=self.word_d)
+        self.entry_result_word_x_lang = Entry(self.lf_word_x_lang, textvariable=self.result_word_x_lang)
+
+        self.btn_p_is_related_d = Button(self.lf_word_x_lang, text="P se relaciona con D", command=self.p_is_related_d)
+        self.btn_p_yields_d = Button(self.lf_word_x_lang, text="Palabras originadas por P en D", command=self.p_yields_d)
+        self.btn_langs_related_p = Button(self.lf_word_x_lang, text="Idiomas relacionados con P", command=self.langs_related_p)
+        self.list_word_x_lang = Listbox(self.lf_word_x_lang)
+
+    # -------------------------------------------------------------------------
+
     def accommodate_widgets(self):
+
+        # ---------------------------------------------------------------------
+        # Operaciones palabra entre palabra
+        # ---------------------------------------------------------------------
 
         self.label_word_x.grid(row=0, column=0, sticky=NW, padx=5)
         self.label_word_y.grid(row=0, column=1, sticky=NW, padx=5)
         self.label_result_word_x_word.grid(row=0, column=2, sticky=NW, padx=5)
 
-        self.entry_result.grid(row=0, column=2)
         self.entry_word_x.grid(row=1, column=0)
-        self.entry_word_x.config(width=25)
         self.entry_word_y.grid(row=1, column=1)
-        self.entry_result.grid(row=1, column=2)
+        self.entry_result_word_x_word.grid(row=1, column=2)
 
         self.btn_cousin_grade.grid(row=1, column=3)
         self.btn_is_son.grid(row=2, column=0)
         self.btn_is_uncle.grid(row=2, column=1)
         self.btn_are_siblings.grid(row=2, column=2)
         self.btn_are_cousins.grid(row=2, column=3)
+
+        # ---------------------------------------------------------------------
+        # Operaciones palabra e idioma
+        # ---------------------------------------------------------------------
+
+        self.label_word_d.grid(row=0, column=0, sticky=NW, padx=5)
+        self.label_word_p.grid(row=0, column=1, sticky=NW, padx=5)
+        self.label_result_word_x_lang.grid(row=0, column=2, sticky=NW, padx=5)
+
+        self.entry_word_d.grid(row=1, column=0)
+        self.entry_word_p.grid(row=1, column=1)
+        self.entry_result_word_x_lang.grid(row=1, column=2)
+
+        self.btn_p_is_related_d.grid(row=1, column=3, columnspan=2)
+        self.btn_p_yields_d.grid(row=2, column=3, columnspan=2)
+        self.btn_langs_related_p.grid(row=3, column=3, columnspan=2)
+
+        self.list_word_x_lang.grid(row=2, column=0, columnspan=1, rowspan=8)
+
+        # ---------------------------------------------------------------------
+        # Operaciones idioma entre idioma
+        # ---------------------------------------------------------------------
 
     # -------------------------------------------------------------------------
 
@@ -125,6 +148,22 @@ class UserInterface(Tk):
 
     def cousin_grade(self):
         self.result_word_x_word.set("2*")
+
+    # -------------------------------------------------------------------------
+
+    def p_is_related_d(self):
+        self.result_word_x_lang.set("p_is_related")
+
+    # -------------------------------------------------------------------------
+
+    def p_yields_d(self):
+        self.result_word_x_lang.set("p_yields_d")
+
+    # -------------------------------------------------------------------------
+
+    def langs_related_p(self):
+        self.result_word_x_lang.set("langs_related_p")
+
 
 # -----------------------------------------------------------------------------
 
