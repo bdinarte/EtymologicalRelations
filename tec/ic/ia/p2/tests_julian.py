@@ -21,7 +21,7 @@ def factorial():
 # -----------------------------------------------------------------------------
 
 @pyDatalog.program()
-def tuturial():
+def tutorial():
     manager['Mary'] = 'John'
     manager['Sam'] = 'Mary'
     manager['Tom'] = 'Mary'
@@ -30,9 +30,9 @@ def tuturial():
 # -----------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    # database = get_database("etymwn.tsv")
-    print(pyDatalog.ask("factorial_of(4, R)"))
-    print(pyDatalog.ask("factorial[4] == R"))
-    print(pyDatalog.ask("managers_of('Mary', R)"))
+    database = get_database()
+    # print(pyDatalog.ask("factorial_of(4, R)"))
+    # print(pyDatalog.ask("factorial[4] == R"))
+    # print(pyDatalog.ask("managers_of('Mary', R)"))
 
 # -----------------------------------------------------------------------------
