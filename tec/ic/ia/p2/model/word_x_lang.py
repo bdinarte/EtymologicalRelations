@@ -1,3 +1,5 @@
+# -----------------------------------------------------------------------------
+
 from pyDatalog import pyDatalog
 from os import path as ospath
 from sys import path as syspath
@@ -24,6 +26,7 @@ base_path = ospath.split(base_path)[0]
 syspath.append(base_path)
 
 data_df = get_etim_database(base_path, 'etymwn3.tsv')
+
 
 print('start')
 for i, row in data_df.iterrows():
