@@ -29,8 +29,66 @@ def tutorial():
 
 # -----------------------------------------------------------------------------
 
+# @pyDatalog.program()
+# def case_son():
+#
+#     # El hijo de "bees" es "beeste"
+#     + has_derived_form("afr", "bees", "afr", "beeste")
+#     + is_derived_from("afr", "beeste", "afr", "bees")
+#
+#     # X = Primera palabra
+#     # LY = Lenguaje de la segunda palabra
+#     # Y = Segunda palabra
+#     son(X, LY, Y) <= (has_derived_form(LX, X, LY, Y) &
+#                       is_derived_from(LY, Y, LX, X))
+#
+#     print(son("bees", LY, Y))
+
+# -----------------------------------------------------------------------------
+
+@pyDatalog.program()
+def case_is_son():
+
+    # El hijo de "bees" es "beeste"
+    + has_derived_form("afr", "bees", "afr", "beeste")
+    + is_derived_from("afr", "beeste", "afr", "bees")
+
+    # El hijo de "actininum" es "aktinium"
+    + etymology("afr", "aktinium", "nld", "actinium")
+
+    # En este caso "verbuiging" es hijo de "-ing"
+    # + etymological_origin_of("afr", "-ing", "afr", "verbuiging")
+
+    # X = Primera palabra
+    # Y = Segunda palabra
+    # True es que X si es hija de Y
+    is_son(X, Y, True) <= (
+        has_derived_form(LX, X, LY, Y) &
+        is_derived_from(LY, Y, LX, X)
+    )
+
+    is_son(X, Y, True) <= (
+        etymology(LX, X, LY, Y)
+    )
+
+    is_son(X, Y, False) <= ~is_son(X, Y, True)
+
+    # # is_son(X, Y, R) <= (R == False)
+    # #
+    # is_son(X, Y, R) <= (has_derived_form(LX, X, LY, Y) &
+    #                     is_derived_from(LY, Y, LX, X) & (R == True))
+    #
+    # is_son(X, X, R) <= (R == True)
+    #
+    print(is_son("bees", "beeste", R))
+
+    print(is_son("aktinium", "actinium", R))
+
+# -----------------------------------------------------------------------------
+
 if __name__ == '__main__':
-    database = get_database()
+    print("Fin")
+    # database = get_database()
     # print(pyDatalog.ask("factorial_of(4, R)"))
     # print(pyDatalog.ask("factorial[4] == R"))
     # print(pyDatalog.ask("managers_of('Mary', R)"))
