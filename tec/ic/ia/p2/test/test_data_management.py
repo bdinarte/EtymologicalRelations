@@ -1,7 +1,8 @@
+# -----------------------------------------------------------------------------
 
 from pandas import DataFrame
 from unittest import TestCase
-from model.data_management import *
+from ..model.data_management import *
 
 # -----------------------------------------------------------------------------
 
@@ -9,8 +10,8 @@ from model.data_management import *
 class TestDataManagement(TestCase):
 
     """
-    Clase encargada de probar funciones y fragmentos importantes de código para
-    el modulo model.data_management
+    Clase encargada de probar funciones y fragmentos importantes de
+    código para el modulo model.data_management
     """
 
     # -------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 
 from unittest import TestCase
-from model.word_x_lang import *
+# from model.word_x_lang import *
 
 
 # -----------------------------------------------------------------------------

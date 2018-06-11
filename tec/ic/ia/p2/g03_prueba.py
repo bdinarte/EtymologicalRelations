@@ -1,14 +1,12 @@
 
 # -----------------------------------------------------------------------------
 
-import pandas as pd 
 from os import path as ospath
 from sys import path as syspath
 
 # -----------------------------------------------------------------------------
 
 from util.file_management import get_etim_database
-from user_interface import *
 
 # -----------------------------------------------------------------------------
 
