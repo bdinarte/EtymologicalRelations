@@ -1,7 +1,7 @@
 
 from pandas import DataFrame
 from unittest import TestCase
-from model.data_management import get_lang_rows, assert_facts_from_dataframe
+from model.data_management import *
 
 # -----------------------------------------------------------------------------
 
@@ -32,12 +32,43 @@ class TestDataManagement(TestCase):
             ['abs: beta', 'rel:etym', 'zsm: beta']
         ]
 
-        database = DataFrame(tsv_data)
+        dataframe = DataFrame(tsv_data)
 
-        obtained_data = get_lang_rows(database, 'abe')
-        expected_data = database.iloc[2:4]
+        obtained_data = get_lang_rows(dataframe, 'abe')
+        expected_data = dataframe.iloc[2:4]
 
         self.assertTrue(obtained_data.equals(expected_data))
+
+    def test_get_relations_rows(self):
+        """
+        Prueba del correcto resultado de la función para obtener las filas
+        de un dataframe correspondientes a la relación 'derived_from'
+        :param None: No aplica
+        :return Sin retorno
+        """
+        tsv_data = [
+            ['aaq: Pawanobskewi', 'rel:etym', 'eng: Penobscot'],
+            ['aaq: senabe', 'rel:derived_from', 'eng: sannup'],
+            ['abe: waniigan', 'rel:derived_from', 'eng: wangan'],
+            ['abe: waniigan', 'rel:etym', 'eng: wannigan'],
+            ['abs: beta', 'rel:has_derived_form', 'zsm: beta']
+        ]
+
+        dataframe = DataFrame(tsv_data)
+
+        obtained_data = get_relations_rows(dataframe, ['derived_from', 'etym'])
+        expected_data = dataframe.iloc[0:4]  # Se espera obtener filas 0 1 2 3
+
+        result1 = obtained_data.equals(expected_data)
+
+        obtained_data = get_relations_rows(dataframe, [])
+        expected_data = dataframe  # Se espera obtener todos el dataframe
+
+        result2 = obtained_data.equals(expected_data)
+
+        overall_results = result1 and result2
+
+        self.assertTrue(overall_results)
 
     def test_assert_facts_from_dataframe(self):
 
