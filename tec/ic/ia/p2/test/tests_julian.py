@@ -2,11 +2,10 @@
 
 import pandas as pd
 from pyDatalog import pyDatalog
-print("pyDatalog version " + pyDatalog.__version__)
 
 # -----------------------------------------------------------------------------
 
-def get_database(filename="B:\\etymwn.tsv"):
+def get_database(filename="B:\\etymwn3.tsv"):
     dataframe = pd.read_csv(filename, sep="\t", header=None)
     return dataframe.values.tolist()
 
@@ -29,60 +28,39 @@ def tutorial():
 
 # -----------------------------------------------------------------------------
 
-# @pyDatalog.program()
-# def case_son():
-#
-#     # El hijo de "bees" es "beeste"
-#     + has_derived_form("afr", "bees", "afr", "beeste")
-#     + is_derived_from("afr", "beeste", "afr", "bees")
-#
-#     # X = Primera palabra
-#     # LY = Lenguaje de la segunda palabra
-#     # Y = Segunda palabra
-#     son(X, LY, Y) <= (has_derived_form(LX, X, LY, Y) &
-#                       is_derived_from(LY, Y, LX, X))
-#
-#     print(son("bees", LY, Y))
-
-# -----------------------------------------------------------------------------
-
 @pyDatalog.program()
-def case_is_son():
+def is_son():
 
-    # El hijo de "bees" es "beeste"
+    # "beeste" es hijo de "bees"
     + has_derived_form("afr", "bees", "afr", "beeste")
+
+    # Todas las reglas has_derived_form tienen como contrario
+    # is_derived_from
     + is_derived_from("afr", "beeste", "afr", "bees")
 
-    # El hijo de "actininum" es "aktinium"
+    # "aktinium" es hijo de "actininum"
     + etymology("afr", "aktinium", "nld", "actinium")
 
-    # En este caso "verbuiging" es hijo de "-ing"
-    # + etymological_origin_of("afr", "-ing", "afr", "verbuiging")
+    # "verbuiging" es hijo de "-ing"
+    + etymological_origin_of("afr", "-ing", "afr", "verbuiging")
 
     # X = Primera palabra
     # Y = Segunda palabra
     # True es que X si es hija de Y
-    is_son(X, Y, True) <= (
-        has_derived_form(LX, X, LY, Y) &
-        is_derived_from(LY, Y, LX, X)
-    )
-
-    is_son(X, Y, True) <= (
-        etymology(LX, X, LY, Y)
-    )
-
     is_son(X, Y, False) <= ~is_son(X, Y, True)
+    is_son(X, Y, True) <= etymology(LX, X, LY, Y)
+    is_son(X, Y, True) <= etymological_origin_of(LY, Y, LX, X)
 
-    # # is_son(X, Y, R) <= (R == False)
-    # #
-    # is_son(X, Y, R) <= (has_derived_form(LX, X, LY, Y) &
-    #                     is_derived_from(LY, Y, LX, X) & (R == True))
-    #
-    # is_son(X, X, R) <= (R == True)
-    #
-    print(is_son("bees", "beeste", R))
+    is_son(X, Y, True) <= (
+        has_derived_form(LY, Y, LX, X) &
+        is_derived_from(LX, X, LY, Y)
+    )
+
+    print(is_son("beeste", "bees", R))
 
     print(is_son("aktinium", "actinium", R))
+
+    print(is_son("verbuiging", "-ing", R) == [(True, )])
 
 # -----------------------------------------------------------------------------
 

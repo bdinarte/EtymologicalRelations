@@ -44,9 +44,16 @@ def test_is_son():
                 is_derived_from(LX, X, LY, Y)
         )
 
+        # R = Respuesta
         assert is_son("beeste", "bees", R) == [(True,)]
         assert is_son("aktinium", "actinium", R) == [(True,)]
         assert is_son("verbuiging", "-ing", R) == [(True,)]
+
+        assert is_son("bees", "beeste", R) == [(False,)]
+        assert is_son("-ing", "verbuiging", R) == [(False,)]
+
+        # Chanchito no esta en la KB
+        assert is_son("chanchito", "chancho", R) == [(False,)]
 
 
 
