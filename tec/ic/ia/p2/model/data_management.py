@@ -2,6 +2,7 @@
 from pyDatalog import pyDatalog
 from os import path as ospath
 from util.file_management import get_etim_database, get_file_content
+import re
 
 # ----------------------------------------------------------------------------
 
@@ -64,6 +65,18 @@ def get_lang_rows(dataframe, language):
     end_row = lang_index[language][1]
 
     return dataframe.iloc[start_row:end_row]
+
+
+def get_relations_rows(dataframe, relations_list):
+    """
+    Obtiene las filas de un dataframe que contienen únicamente los tipos de
+    relaciones buscadas
+    :param dataframe: pandas dataframe con 3 columnas
+    :param relations_list: lista de nombres del tipo de relaciones buscadas
+    :return: un dataframe con las filas requeridas
+    """
+    escaped_relations = [re.escape(rel) for rel in relations_list]
+    return dataframe[dataframe[1].str.contains('|'.join(escaped_relations))]
 
 
 def assert_facts_from_dataframe(dataframe):
