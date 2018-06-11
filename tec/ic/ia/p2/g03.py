@@ -6,8 +6,7 @@ from sys import path as syspath
 
 # -----------------------------------------------------------------------------
 
-from util.file_management import get_etim_database
-from user_interface import *
+from ui.user_interface import *
 
 # -----------------------------------------------------------------------------
 
