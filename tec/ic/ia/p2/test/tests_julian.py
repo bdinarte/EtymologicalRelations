@@ -78,6 +78,7 @@ pyDatalog.create_terms("P, are_siblings")
 + is_derived_from("afr", "aandjete", "afr", "aand")
 
 are_siblings(X, Y, False) <= ~are_siblings(X, Y, True)
+are_siblings(X, Y, True) <= are_siblings(Y, X, True)
 are_siblings(X, Y, True) <= is_son(X, P, True) & is_son(Y, P, True) & ~(X == Y)
 
 print("are_siblings('persoonlik', 'tydelik', R)")
@@ -94,6 +95,50 @@ print(are_siblings("perro", "gato", R))
 
 print("are_siblings(X, Y, R)")
 print(are_siblings(X, Y, True))
+
+# -----------------------------------------------------------------------------
+
+#                                   [bisabuelo B]
+#                            ____________|_____________
+#                           |                         |
+#                      [abuelo A]              [tio_abuelo TA]
+#                   _______|__________               |
+#                  |                 |         [tio_seg TS]
+#           [padre P]             [tio T]           |
+#         _____|_____               |        [primo_seg PS]
+#        |          |           [primo PR]
+#  [persona X] [hermano H]
+
+pyDatalog.create_terms("A, T, PR, is_cousin, is_uncle")
+
++ has_derived_form(None, "bisabuelo B", None, "abuelo A")
++ has_derived_form(None, "bisabuelo B", None, "tio_abuelo TA")
++ has_derived_form(None, "abuelo A", None, "padre P")
++ has_derived_form(None, "abuelo A", None, "tio T")
++ has_derived_form(None, "padre P", None, "persona X")
++ has_derived_form(None, "padre P", None, "hermano H")
++ has_derived_form(None, "tio T", None, "primo PR")
++ has_derived_form(None, "tio_abuelo TA", None, "tio_seg TS")
++ has_derived_form(None, "tio_seg TS", None, "primo_seg TS")
+
+is_uncle(T, X, False) <= ~is_uncle(T, X, True)
+is_uncle(T, X, True) <= is_son(X, P, True) & are_siblings(P, T, True)
+
+print("is_uncle('tio T', 'persona X', R)")
+print(is_uncle("tio T", "persona X", R))
+
+print("is_uncle('tio_abuelo TA', 'padre P', R)")
+print(is_uncle("tio_abuelo TA", "padre P", R))
+
+# is_cousin(X, Y, False) <= ~is_cousin(X, Y, True)
+#
+# ís_cousin(X, PR, True) <= is_son(X, _, True)
+#
+# print(is_son(X, Y, True))
+
+# & is_son(P, A, True) & is_son(T, A, True) & is_son(PR, T, True)
+
+# print(is_cousin("persona X", "primo PR", R))
 
 
 # -----------------------------------------------------------------------------
