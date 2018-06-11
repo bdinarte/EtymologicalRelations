@@ -8,6 +8,7 @@ programa
 from pyDatalog import pyDatalog
 from util.file_management import get_etim_database
 from os import path as ospath
+from util.file_management import get_file_content
 
 # Definir la ruta de la base de datos
 file_path = ospath.abspath(__file__)
@@ -17,12 +18,6 @@ project_path = ospath.split(file_folder)[0]
 print('Cargando base de datos a memoria...')
 data_df = get_etim_database(project_path, filename="etymwn.tsv")
 print('Base de datos cargada a memoria!')
-
-
-def get_file_content(filename):
-    with open(filename, encoding='utf-8') as f:
-        content = f.read()
-    return content
 
 
 with open('facts.txt', 'a', encoding='UTF-8') as facts_file:
@@ -45,8 +40,10 @@ with open('facts.txt', 'a', encoding='UTF-8') as facts_file:
             lang2 = row[2][:3]
             word2 = row[2][5:]
 
+        rel_name = row[1][4:].replace(':', '_')
+
         line = str('+ '
-                   + row[1][4:].replace(':', '_') + '('
+                   + rel_name + '('
                    + lang1 + ','
                    + delim1 + word1 + delim1 + ','
                    + lang2 + ','
@@ -60,5 +57,5 @@ with open('facts.txt', 'a', encoding='UTF-8') as facts_file:
 
 
 print('Cargando a pyDatalog...')
-pyDatalog.load(get_file_content('facts.txt'))
+pyDatalog.load(get_file_content(project_path, 'facts.txt'))
 print('Carga completa!')
