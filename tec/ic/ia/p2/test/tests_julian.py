@@ -3,38 +3,38 @@
 import pandas as pd
 from pyDatalog import pyDatalog
 
+
 # -----------------------------------------------------------------------------
+#
 #             Árbol de pruebas utilizado para la relaciones de
 #        is_son, are_siblings, is_uncle, are_cousins, cousin_grade
 #
-#               <tatarabuelo TTA>
-#                   __\______________
-#                  |                 \
-#         <tio_bisabuelo TB>    <bisabuelo B>
-#               /                _____\_________
-#    <tio_abuelo_seg TAS>       |               \
-#            |            <tio_abuelo TA>   <abuelo A>
-#     <tio_ter TT>           /             _______\_____
-#                     <tio_seg TS>        |             \
-#                          |           <tio T>       <padre P>
-#                   <primo_seg PS>       |           _____\_____
-#                                    <primo PR>      \          \
-#                                               <hermano H>  <persona X>
+#                 <tatarabuelo TTA>
+#                     __\______________
+#                    |                 \
+#           <tio_bisabuelo TB>    <bisabuelo B>
+#                 /                _____\_________
+#      <tio_abuelo_seg TAS>       |               \
+#              |            <tio_abuelo TA>   <abuelo A>
+#       <tio_ter TT>           /             _______\_____
+#            |          <tio_seg TS>        |             \
+#      <primo_ter PT>        |           <tio T>       <padre P>
+#                     <primo_seg PS>       |           _____\_____
+#                                      <primo PR>      \          \
+#                                                 <hermano H>  <persona X>
 #
 # -----------------------------------------------------------------------------
 
 # Términos que se usan en este archivo
 
 pyDatalog.create_terms("X, LX, Y, LY, R, H, P, A, T, PR,"
-                       "B, TA, TS, PS, TTA, TB, TAS, TT, L, L2")
+                       "B, TA, TS, PS, TTA, TB, TAS, TT, L, L1, L2")
 
 pyDatalog.create_terms("has_derived_form, is_derived_from,"
                        "etymology, etymological_origin_of")
 
-pyDatalog.create_terms("is_son, are_siblings, "
-                       "is_ancestor, is_parent, "
-                       "is_uncle, are_cousins, cousin_grade, "
-                       "ancestor_level")
+pyDatalog.create_terms("is_son, is_parent, is_ancestor, ancestor_level,"
+                       "are_siblings, is_uncle, are_cousins, cousin_grade")
 
 # -----------------------------------------------------------------------------
 
@@ -44,6 +44,7 @@ pyDatalog.create_terms("is_son, are_siblings, "
 + has_derived_form(None, "tatarabuelo TTA", None, "tio_bisabuelo TB")
 + has_derived_form(None, "tio_bisabuelo TB", None, "tio_abuelo_seg TAS")
 + has_derived_form(None, "tio_abuelo_seg TAS", None, "tio_tercero TT")
++ has_derived_form(None, "tio_tercero TT", None, "primo_ter PT")
 + has_derived_form(None, "bisabuelo B", None, "abuelo A")
 + has_derived_form(None, "bisabuelo B", None, "tio_abuelo TA")
 + has_derived_form(None, "abuelo A", None, "padre P")
@@ -52,7 +53,7 @@ pyDatalog.create_terms("is_son, are_siblings, "
 + has_derived_form(None, "padre P", None, "hermano H")
 + has_derived_form(None, "tio T", None, "primo PR")
 + has_derived_form(None, "tio_abuelo TA", None, "tio_seg TS")
-+ has_derived_form(None, "tio_seg TS", None, "primo_seg TS")
++ has_derived_form(None, "tio_seg TS", None, "primo_seg PS")
 
 # -----------------------------------------------------------------------------
 # Pruebas para is_son
@@ -207,7 +208,6 @@ print(is_uncle("tio_bisabuelo TB", X))
 # Pruebas para ancestor_level
 # -----------------------------------------------------------------------------
 
-ancestor_level(X, H, 0) <= are_siblings(H, X)
 ancestor_level(X, Y, 1) <= is_parent(X, Y)
 
 ancestor_level(X, Y, L) <= (
@@ -226,9 +226,50 @@ print(ancestor_level("abuelo A", "persona X", L))
 print("ancestor_level('tatarabuelo TTA', 'persona X', L)")
 print(ancestor_level("tatarabuelo TTA", "persona X", L))
 
+print("ancestor_level(TTA, 'persona X', L)")
+print(ancestor_level(A, "persona X", L))
+
+print("ancestor_level(TTA, 'primo PR', L)")
+print(ancestor_level(A, "primo PR", L))
+
 # -----------------------------------------------------------------------------
 # Pruebas para are_cousins
 # -----------------------------------------------------------------------------
 
+are_cousins(X, Y, True) <= are_cousins(X, Y)
+are_cousins(X, Y, False) <= ~are_cousins(X, Y)
+
+are_cousins(X, Y) <= are_cousins(Y, X)
+
+are_cousins(X, Y) <= (
+     ancestor_level(A, X, L) &
+     ancestor_level(A, Y, L) &
+     ~are_siblings(X, Y) & ~(X == Y)
+)
+
+print("are_cousins('primo PR', 'hermano H', R)")
+print(are_cousins("primo PR", "hermano H", R))
+
+print("are_cousins('primo_ter PT', 'persona X', R)")
+print(are_cousins("primo_ter PT", "persona X", R))
+
+print("are_cousins('hermano H', 'persona X', R)")
+print(are_cousins("hermano H", "persona X", R))
+
+print("are_cousins(X, 'primo PR')")
+print(are_cousins(X, "primo PR"))
+
+print("are_cousins('persona X', X)")
+print(are_cousins("persona X", X))
+
+print("are_cousins(None, X)")
+print(are_cousins(None, X))
+
+# -----------------------------------------------------------------------------
+# Pruebas para cousin_grade
+# -----------------------------------------------------------------------------
+
+# Son primos si tienen al menos un ancestro al mismo nivel
+# cousin_grade(X, Y, L) <= ancestor_level(A, X, L) & ancestor_level(A, Y, L)
 
 # -----------------------------------------------------------------------------
