@@ -43,7 +43,7 @@ class TestLangLang(TestCase):
         expected_results = ['No hay palabras en común.']
         second_result_success = obtained_results == expected_results
 
-        self.assertTrue(second_result_success)
+        self.assertTrue(first_result_success and second_result_success)
 
     def test_common_words_count(self):
 
@@ -73,4 +73,4 @@ class TestLangLang(TestCase):
         expected_count = 0
         second_count_success = obtained_count == expected_count
 
-        self.assertTrue(second_count_success)
+        self.assertTrue(first_count_success and second_count_success)
