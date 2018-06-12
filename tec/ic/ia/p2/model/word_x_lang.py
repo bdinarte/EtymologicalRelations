@@ -38,7 +38,6 @@ for i, row in data_df.iterrows():
 
 # -----------------------------------------------------------------------------
 print('Creating Terms...')
-# Términos que se usan en este archivo
 
 pyDatalog.create_terms('word_related_lang, set_of_words_in_lang, Word, '
                        'Lang, X, Y, LX, LY, A, B')
@@ -47,27 +46,44 @@ pyDatalog.create_terms('etymology, etymological_origin_of,'
                        'etymologically_related, has_derived_form,'
                        'is_derived_from, orthography')
 
-pyDatalog.create_terms("is_son, is_ancestor, is_parent")
+pyDatalog.create_terms("is_son, is_ancestor, is_parent, lang_related_word")
+
++ etymological_origin_of("afr", "-lik", "eng", "persoonlik")
++ etymological_origin_of("afr", "-lik", "afr", "tydelik")
++ etymological_origin_of("afr", "-lik", "zsm", "wetenskaplik")
++ etymological_origin_of("afr", "-lik", "afr", "wetlik")
++ etymological_origin_of("afr", "-tjie", "afr", "dogtertjie")
++ etymological_origin_of("afr", "-tjie", "afr", "seuntjie")
++ etymological_origin_of("afr", "-tji", "afr", "uitjie")
++ etymological_origin_of("afr", "Afrikaner", "por", "africâner")
++ etymological_origin_of("zsm", "wetenskaplik", "spa", "tydelik")
+
++ has_derived_form("afr", "-lik", "afr", "wetenskaplik")
++ has_derived_form("por", "lan", "ita", "April")
++ has_derived_form("ita", "April", "afr", "-lik")
+
 
 # -----------------------------------------------------------------------------
 
-word_related_lang(Word, Lang, True) <= (
+word_related_lang(Word, Lang, True) <= word_related_lang(Word, Lang)
+
+word_related_lang(Word, Lang, False) <= ~word_related_lang(Word, Lang)
+
+word_related_lang(Word, Lang) <= (
     etymology(Lang, Word, X, Y)
 )
-word_related_lang(Word, Lang, True) <= (
+word_related_lang(Word, Lang) <= (
     etymological_origin_of(X, Y, Lang, Word)
 )
-word_related_lang(Word, Lang, True) <= (
+word_related_lang(Word, Lang) <= (
     etymologically_related(Lang, Word, X, Y)
 )
-word_related_lang(Word, Lang, True) <= (
+word_related_lang(Word, Lang) <= (
     has_derived_form(X, Y, Lang, Word)
 )
-word_related_lang(Word, Lang, True) <= (
+word_related_lang(Word, Lang) <= (
     is_derived_from(Lang, Word, X, Y)
 )
-
-word_related_lang(Word, Lang, False) <= ~word_related_lang(Word, Lang, True)
 
 
 def word_related_language(word, language):
@@ -84,6 +100,7 @@ def word_related_language(word, language):
 
     query = word_related_lang(word, language, Y)
     value = query.v()[0]
+
     return value
 
 
@@ -109,7 +126,12 @@ is_parent(X, Y, LX) <= is_son(Y, X, LX)
 is_ancestor(A, LX, B) <= is_parent(A, B, LX)
 is_ancestor(X, LX, Y) <= is_parent(X, A, LX) & is_ancestor(A, LX, Y)
 
+lang_related_word(X, LX, LY) <=  is_ancestor(X, LX, B)
+lang_related_word(Y, LX, LY) <=  is_ancestor(Y, LY, X)
 
+print(lang_related_word('-lik', LX, LY))
+print(is_ancestor('-lik', LX, B))
+print(is_ancestor(Y, LY, '-lik'))
 # -----------------------------------------------------------------------------
 
 def set_of_words_in_language(word, language):
@@ -142,16 +164,9 @@ def set_of_languages_related_word(word):
     :return: <array> del conjunto de idiomas que estan relacionados
     con una palabra en específico
     """
+    query = lang_related_word(word, LX, LY)
 
-    question = "etymology(X,"+word+",Y,Z)"
-    answer = pyDatalog.ask(question)
-
-    set_of_langs = []
-    if answer:
-        for i in answer.answers:
-            set_of_langs.append(i[0])
-
-    return list(set(set_of_langs))
+    return query
 
 
 # -----------------------------------------------------------------------------
@@ -187,13 +202,37 @@ else:
 
 # -------------------------------------------
 print('\n** set_of_languages_related_word... **')
-langs_aux = set_of_languages_related_word(word_aux)
+"""
+afr: -lik	rel:etymological_origin_o   eng: persoonlik
+afr: -lik	rel:etymological_origin_o   afr: tydelik
+afr: -lik	rel:etymological_origin_o   zsm: wetenskaplik
+afr: -lik	rel:etymological_origin_o   afr: wetlik
+afr: -lik	rel:has_derived_form    afr: wetenskaplik
+afr: -tjie	rel:etymological_origin_o   afr: dogtertjie
+afr: -tjie	rel:etymological_origin_o   afr: seuntjie
+afr: -tji   rel:etymological_origin_o   afr: uitjie
+afr: Afrikaner	rel:etymological_origin_o   por: africâner
+por: lan    rel:has_derived_form    ita: April
+ita: April	rel:has_derived_form    afr: -lik
+zsm: wetenskaplik    rel:etymological_origin_   spa: tydelik
 
+--- Abajo ---
+afr 
+zsm spa
+eng
+
+--- Arriba ---
+ita por
+"""
+
+langs_aux = set_of_languages_related_word(word_aux)
+langs_aux = langs_aux.data
 if len(langs_aux) > 0:
     resp = "La palabra '%s' está relacionada con los siguientes idiomas:" \
            % word_aux
     print(resp)
-    print('\t%s' % '\n\t'.join(map(str, langs_aux)))
+    for i in langs_aux:
+        print('\t%s' %i)
 else:
     resp = "La palabra '%s' no está relacionada con ningún idioma" \
            % word_aux
