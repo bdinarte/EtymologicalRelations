@@ -56,6 +56,14 @@ lang_index = eval(get_file_content(project_path, 'lang_index.txt'))
 # ----------------------------------------------------------------------------
 
 
+def get_all_languages():
+    return languages
+
+
+def get_lang_index():
+    return lang_index
+
+
 def get_lang_rows(dataframe, language):
     """
     Obtiene las filas del dataframe que corresponden al lenguaje definido
