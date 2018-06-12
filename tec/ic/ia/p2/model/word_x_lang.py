@@ -35,12 +35,20 @@ for i, row in data_df.iterrows():
                           row[0][:3], row[0][5:],
                           row[2][:3], row[2][5:])
 
+
+# -----------------------------------------------------------------------------
 print('Creating Terms...')
+# Términos que se usan en este archivo
+
 pyDatalog.create_terms('word_related_lang, set_of_words_in_lang, Word, '
-                       'Lang, X, Y, Res')
+                       'Lang, X, Y, LX, LY, A, B')
+
 pyDatalog.create_terms('etymology, etymological_origin_of,'
                        'etymologically_related, has_derived_form,'
                        'is_derived_from, orthography')
+
+pyDatalog.create_terms("is_son, is_ancestor, is_parent")
+
 # -----------------------------------------------------------------------------
 
 word_related_lang(Word, Lang, True) <= (
@@ -81,14 +89,28 @@ def word_related_language(word, language):
 
 # -----------------------------------------------------------------------------
 
-set_of_words_in_lang(Word, Lang, X, Y) <= (
-    has_derived_form(X, Y, Lang, Word)
-)
-set_of_words_in_lang(Word, Lang, X, Y) <= (
-    is_derived_from(Lang, Word, X, Y)
-)
+# X = Primera palabra
+# Y = Segunda palabra
+# True es que X si es hija de Y
+is_son(X, Y, LX, True) <= is_son(X, Y, LX)
+is_son(X, Y, LX, False) <= ~is_son(X, Y, LX)
 
-set_of_words_in_lang(Word, Lang, []) <= ~set_of_words_in_lang(Word, Lang, Res)
+is_son(X, Y, LX) <= etymology(LX, X, LY, Y)
+is_son(X, Y, LX) <= etymological_origin_of(LY, Y, LX, X)
+is_son(X, Y, LX) <= has_derived_form(LY, Y, LX, X)
+is_son(X, Y, LX) <= is_derived_from(LX, X, LY, Y)
+
+# -----------------------------------------------------------------------------
+# Pruebas para is_ancestor e is_parent
+# -----------------------------------------------------------------------------
+
+is_parent(X, Y, LX) <= is_son(Y, X, LX)
+
+is_ancestor(A, LX, B) <= is_parent(A, B, LX)
+is_ancestor(X, LX, Y) <= is_parent(X, A, LX) & is_ancestor(A, LX, Y)
+
+
+# -----------------------------------------------------------------------------
 
 def set_of_words_in_language(word, language):
     """
@@ -104,16 +126,9 @@ def set_of_words_in_language(word, language):
     que pueden ser generadas por una palabra específica
     """
 
-    # question = "is_derived_from(" + language + ",X,_," + word + ")"
-    # answer = pyDatalog.ask(question)
-    answer = set_of_words_in_lang(word, language, Res)
+    query = is_ancestor(word, language, X)
 
-    set_of_words = []
-    if answer:
-        for i in answer.answers:
-            set_of_words.append(i[0])
-
-    return list(set(set_of_words))
+    return query
 
 
 # -----------------------------------------------------------------------------
@@ -158,11 +173,13 @@ print(resp)
 print('\n** set_of_words_in_language... **')
 words_aux = set_of_words_in_language(word_aux, language_aux)
 
+words_aux = words_aux.data
 if len(words_aux) > 0:
     resp = "La palabra '%s' genera las siguientes palabras" \
            " en el lenguaje '%s':" % (word_aux, language_aux)
     print(resp)
-    print('\t%s' % '\n\t'.join(map(str, words_aux)))
+    for i in words_aux:
+        print('\t%s' %i)
 else:
     resp = "La palabra '%s' no genera ninguna otra en el lenguaje '%s'" \
            % (word_aux, language_aux)
