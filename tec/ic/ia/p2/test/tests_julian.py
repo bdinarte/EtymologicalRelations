@@ -4,33 +4,58 @@ import pandas as pd
 from pyDatalog import pyDatalog
 
 # -----------------------------------------------------------------------------
+#             Árbol de pruebas utilizado para la relaciones de
+#        is_son, are_siblings, is_uncle, are_cousins, cousin_grade
+#
+#               <tatarabuelo TTA>
+#                   __\______________
+#                  |                 \
+#         <tio_bisabuelo TB>    <bisabuelo B>
+#               /                _____\_________
+#    <tio_abuelo_seg TAS>       |               \
+#            |            <tio_abuelo TA>   <abuelo A>
+#     <tio_ter TT>           /             _______\_____
+#                     <tio_seg TS>        |             \
+#                          |           <tio T>       <padre P>
+#                   <primo_seg PS>       |           _____\_____
+#                                    <primo PR>      \          \
+#                                               <hermano H>  <persona X>
+#
+# -----------------------------------------------------------------------------
 
-def get_database(filename="B:\\etymwn3.tsv"):
-    dataframe = pd.read_csv(filename, sep="\t", header=None)
-    return dataframe.values.tolist()
+# Términos que se usan en este archivo
+
+pyDatalog.create_terms("X, LX, Y, LY, R, H, P, A, T, PR,"
+                       "B, TA, TS, PS, TTA, TB, TAS, TT")
+
+pyDatalog.create_terms("has_derived_form, is_derived_from,"
+                       "etymology, etymological_origin_of")
+
+pyDatalog.create_terms("is_son, are_siblings, "
+                       "is_ancestor, is_parent, "
+                       "is_uncle, are_cousins, cousin_grade")
 
 # -----------------------------------------------------------------------------
 
-@pyDatalog.program()
-def factorial():
-    factorial[N] = N * factorial[N - 1]
-    factorial[1] = 1
-    factorial_of(X, Y) <= (factorial[X] == Y)
+# Hechos provenientes del árbol
+
++ has_derived_form(None, "tatarabuelo TTA", None, "bisabuelo B")
++ has_derived_form(None, "tatarabuelo TTA", None, "tio_bisabuelo TB")
++ has_derived_form(None, "tio_bisabuelo TB", None, "tio_abuelo_seg TAS")
++ has_derived_form(None, "tio_abuelo_seg TAS", None, "tio_tercero TT")
++ has_derived_form(None, "bisabuelo B", None, "abuelo A")
++ has_derived_form(None, "bisabuelo B", None, "tio_abuelo TA")
++ has_derived_form(None, "abuelo A", None, "padre P")
++ has_derived_form(None, "abuelo A", None, "tio T")
++ has_derived_form(None, "padre P", None, "persona X")
++ has_derived_form(None, "padre P", None, "hermano H")
++ has_derived_form(None, "tio T", None, "primo PR")
++ has_derived_form(None, "tio_abuelo TA", None, "tio_seg TS")
++ has_derived_form(None, "tio_seg TS", None, "primo_seg TS")
 
 # -----------------------------------------------------------------------------
-
-@pyDatalog.program()
-def tutorial():
-    manager['Mary'] = 'John'
-    manager['Sam'] = 'Mary'
-    manager['Tom'] = 'Mary'
-    managers_of(X, Y) <= (manager[Y] == X)
-
+# Pruebas para is_son
 # -----------------------------------------------------------------------------
-
-pyDatalog.create_terms("LX, X, LY, Y, R, "
-                       "has_derived_form, is_derived_from, "
-                       "etymology, etymological_origin_of, is_son")
 
 # "beeste" es hijo de "bees"
 + has_derived_form("afr", "bees", "afr", "beeste")
@@ -48,11 +73,13 @@ pyDatalog.create_terms("LX, X, LY, Y, R, "
 # X = Primera palabra
 # Y = Segunda palabra
 # True es que X si es hija de Y
-is_son(X, Y, False) <= ~is_son(X, Y, True)
-is_son(X, Y, True) <= etymology(LX, X, LY, Y)
-is_son(X, Y, True) <= etymological_origin_of(LY, Y, LX, X)
-is_son(X, Y, True) <= has_derived_form(LY, Y, LX, X)
-is_son(X, Y, True) <= is_derived_from(LX, X, LY, Y)
+is_son(X, Y, True) <= is_son(X, Y)
+is_son(X, Y, False) <= ~is_son(X, Y)
+
+is_son(X, Y) <= etymology(LX, X, LY, Y)
+is_son(X, Y) <= etymological_origin_of(LY, Y, LX, X)
+is_son(X, Y) <= has_derived_form(LY, Y, LX, X)
+is_son(X, Y) <= is_derived_from(LX, X, LY, Y)
 
 print("is_son('beeste', 'bees', R)")
 print(is_son("beeste", "bees", R))
@@ -63,9 +90,50 @@ print(is_son("aktinium", "actinium", R))
 print("is_son('verbuiging', '-ing', R) == [(True, )]")
 print(is_son("verbuiging", "-ing", R) == [(True, )])
 
+# Persona Y no está definida
+print("is_son('persona X', 'persona Y', R)")
+print(is_son("persona X", "persona Y", R))
+
+# Despliega que el padre de persona X es padre P
+print("is_son('persona X', P)")
+print(is_son("persona X", P))
+
+# Los hijos del abuelo de uno son el tío T y el padre P
+print("is_son(X, 'abuelo A')")
+print(is_son(X, "abuelo A"))
+
+# Se obtiene una lista vacia
+print("is_son(None, None)")
+print(is_son(None, None))
+
+# Se obtiene el valor de R que debe ser False
+print("is_son(None, None, R)")
+print(is_son(None, None, R))
+
+# -----------------------------------------------------------------------------
+# Pruebas para is_ancestor e is_parent
 # -----------------------------------------------------------------------------
 
-pyDatalog.create_terms("P, are_siblings")
+is_parent(X, Y) <= is_son(Y, X)
+
+# Despliega que el padre de persona X es padre P
+print("is_parent(P, 'persona X')")
+print(is_parent(P, "persona X"))
+
+is_ancestor(A, B) <= is_parent(A, B)
+is_ancestor(X, Y) <= is_parent(X, A) & is_ancestor(A, Y)
+
+# Se obtiene del desde el padre hasta el tatarabuelo
+print("is_ancestor(A, 'persona X')")
+print(is_ancestor(A, "persona X"))
+
+# Se obtiene el ego, el padre, el tio, primos y hermanos
+print("is_ancestor('abuelo A', X)")
+print(is_ancestor("abuelo A", X))
+
+# -----------------------------------------------------------------------------
+# Pruebas para are_siblings
+# -----------------------------------------------------------------------------
 
 # "persoonlik" y "tydelik" son hijos de "-lik".
 + etymological_origin_of("afr", "-lik", "afr", "persoonlik")
@@ -74,12 +142,13 @@ pyDatalog.create_terms("P, are_siblings")
 # 2 Palabras que son hijas de "aand"
 + has_derived_form("afr", "aand", "afr", "aandete")
 + has_derived_form("afr", "aand", "afr", "aandjie")
-
 + is_derived_from("afr", "aandjete", "afr", "aand")
 
-are_siblings(X, Y, False) <= ~are_siblings(X, Y, True)
-are_siblings(X, Y, True) <= are_siblings(Y, X, True)
-are_siblings(X, Y, True) <= is_son(X, P, True) & is_son(Y, P, True) & ~(X == Y)
+are_siblings(X, Y, True) <= are_siblings(X, Y)
+are_siblings(X, Y, False) <= ~are_siblings(X, Y)
+
+are_siblings(X, Y) <= are_siblings(Y, X)
+are_siblings(X, Y) <= is_son(X, P) & is_son(Y, P) & ~(X == Y)
 
 print("are_siblings('persoonlik', 'tydelik', R)")
 print(are_siblings("persoonlik", "tydelik", R))
@@ -90,39 +159,26 @@ print(are_siblings("aandete", "aandjie", R))
 print("are_siblings(None, 'aandjie', R)")
 print(are_siblings(None, "aandjie", R))
 
-print("are_siblings('perro', 'gato', R)")
-print(are_siblings("perro", "gato", R))
+# Relación que no existe
+print("are_siblings('padre P', 'persona X', R)")
+print(are_siblings("padre P", "persona X", R))
 
-print("are_siblings(X, Y, R)")
-print(are_siblings(X, Y, True))
+# Tienen que haber 2 hermanos para aandjie
+print("are_siblings(X, 'aandjie')")
+print(are_siblings('aandjie', Y))
+
+# Lista vacía
+print("are_siblings(None, X)")
+print(are_siblings(None, X))
 
 # -----------------------------------------------------------------------------
+# Pruebas para is_uncle
+# -----------------------------------------------------------------------------
 
-#                                   [bisabuelo B]
-#                            ____________|_____________
-#                           |                         |
-#                      [abuelo A]              [tio_abuelo TA]
-#                   _______|__________               |
-#                  |                 |         [tio_seg TS]
-#           [padre P]             [tio T]           |
-#         _____|_____               |        [primo_seg PS]
-#        |          |           [primo PR]
-#  [persona X] [hermano H]
-
-pyDatalog.create_terms("A, T, PR, is_cousin, is_uncle")
-
-+ has_derived_form(None, "bisabuelo B", None, "abuelo A")
-+ has_derived_form(None, "bisabuelo B", None, "tio_abuelo TA")
-+ has_derived_form(None, "abuelo A", None, "padre P")
-+ has_derived_form(None, "abuelo A", None, "tio T")
-+ has_derived_form(None, "padre P", None, "persona X")
-+ has_derived_form(None, "padre P", None, "hermano H")
-+ has_derived_form(None, "tio T", None, "primo PR")
-+ has_derived_form(None, "tio_abuelo TA", None, "tio_seg TS")
-+ has_derived_form(None, "tio_seg TS", None, "primo_seg TS")
-
-is_uncle(T, X, False) <= ~is_uncle(T, X, True)
-is_uncle(T, X, True) <= is_son(X, P, True) & are_siblings(P, T, True)
+is_uncle(T, X, True) <= is_uncle(T, X)
+is_uncle(T, X, False) <= ~is_uncle(T, X)
+is_uncle(T, X) <= is_parent(P, X) & are_siblings(P, T)
+is_uncle(T, X) <= is_ancestor(A, X) & is_uncle(T, A)
 
 print("is_uncle('tio T', 'persona X', R)")
 print(is_uncle("tio T", "persona X", R))
@@ -130,24 +186,21 @@ print(is_uncle("tio T", "persona X", R))
 print("is_uncle('tio_abuelo TA', 'padre P', R)")
 print(is_uncle("tio_abuelo TA", "padre P", R))
 
-# is_cousin(X, Y, False) <= ~is_cousin(X, Y, True)
-#
-# ís_cousin(X, PR, True) <= is_son(X, _, True)
-#
-# print(is_son(X, Y, True))
+# Deben de ser True al considerar tíos abuelos
+print("is_uncle('tio_abuelo TA', 'persona X', R)")
+print(is_uncle("tio_abuelo TA", "persona X", R))
 
-# & is_son(P, A, True) & is_son(T, A, True) & is_son(PR, T, True)
+print("is_uncle('tio_bisabuelo TB', 'persona X', R)")
+print(is_uncle("tio_bisabuelo TB", "persona X", R))
 
-# print(is_cousin("persona X", "primo PR", R))
+# Deberia mostrar toda la ascendencia de tíos no solo el primero
+print("is_uncle(T, 'persona X')")
+print(is_uncle(T, "persona X"))
 
+# Muestra toda la descendencia del hermano
+print("is_uncle('tio_bisabuelo TB', X)")
+print(is_uncle("tio_bisabuelo TB", X))
 
-# -----------------------------------------------------------------------------
-
-# if __name__ == '__main__':
-#     print("Fin")
-#     database = get_database()
-#     print(pyDatalog.ask("factorial_of(4, R)"))
-#     print(pyDatalog.ask("factorial[4] == R"))
-#     print(pyDatalog.ask("managers_of('Mary', R)"))
+# print(is_ancestor(X, "padre P"))
 
 # -----------------------------------------------------------------------------
