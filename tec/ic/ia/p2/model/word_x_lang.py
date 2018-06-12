@@ -35,30 +35,34 @@ for i, row in data_df.iterrows():
                           row[0][:3], row[0][5:],
                           row[2][:3], row[2][5:])
 
-
-# -----------------------------------------------------------------------------
 print('Creating Terms...')
-pyDatalog.create_terms('word_related_lang, Word, Lang, X, Y')
-pyDatalog.create_terms('etymological_origin_of, has_derived_form,'
-                       'is_derived_from, etymology, etymologically_related,'
-                       'orthography')
+pyDatalog.create_terms('word_related_lang, set_of_words_in_lang, Word, '
+                       'Lang, X, Y, Res')
+pyDatalog.create_terms('etymology, etymological_origin_of,'
+                       'etymologically_related, has_derived_form,'
+                       'is_derived_from, orthography')
+# -----------------------------------------------------------------------------
 
 word_related_lang(Word, Lang, True) <= (
     etymology(Lang, Word, X, Y)
 )
-
-word_related_lang(Word, Lang) <= (
+word_related_lang(Word, Lang, True) <= (
     etymological_origin_of(X, Y, Lang, Word)
+)
+word_related_lang(Word, Lang, True) <= (
+    etymologically_related(Lang, Word, X, Y)
+)
+word_related_lang(Word, Lang, True) <= (
+    has_derived_form(X, Y, Lang, Word)
+)
+word_related_lang(Word, Lang, True) <= (
+    is_derived_from(Lang, Word, X, Y)
 )
 
 word_related_lang(Word, Lang, False) <= ~word_related_lang(Word, Lang, True)
 
-#
-# word_related_lang_aux(Word, Lang) <= (
-#     etymological_origin_of(X, Y, Lang, Word)
-# )
 
-def word_related_language_aux(word, language):
+def word_related_language(word, language):
     """
     ● Determinar si una palabra está relacionada con un idioma (Si / No)
 
@@ -70,14 +74,21 @@ def word_related_language_aux(word, language):
     con el idioma
     """
 
-    # question = "etymology(" + language + ","+word+",_,Y)"
-    # answer = pyDatalog.ask('word_related_lang_aux('+word+', '+language+')')
     query = word_related_lang(word, language, Y)
     value = query.v()[0]
-    print(value)
+    return value
 
 
 # -----------------------------------------------------------------------------
+
+set_of_words_in_lang(Word, Lang, X, Y) <= (
+    has_derived_form(X, Y, Lang, Word)
+)
+set_of_words_in_lang(Word, Lang, X, Y) <= (
+    is_derived_from(Lang, Word, X, Y)
+)
+
+set_of_words_in_lang(Word, Lang, []) <= ~set_of_words_in_lang(Word, Lang, Res)
 
 def set_of_words_in_language(word, language):
     """
@@ -93,8 +104,9 @@ def set_of_words_in_language(word, language):
     que pueden ser generadas por una palabra específica
     """
 
-    question = "is_derived_from(" + language + ",X,_," + word + ")"
-    answer = pyDatalog.ask(question)
+    # question = "is_derived_from(" + language + ",X,_," + word + ")"
+    # answer = pyDatalog.ask(question)
+    answer = set_of_words_in_lang(word, language, Res)
 
     set_of_words = []
     if answer:
@@ -135,37 +147,37 @@ language_aux = 'afr'
 
 # -------------------------------------------
 print('\n** word_related_language... **')
-word_related_language_aux(word_aux, language_aux)
+answer = word_related_language(word_aux, language_aux)
 
-# confirm = 'si' if answer else 'no'
-# resp = "La palabra '%s' %s está relacionada con el lenguaje '%s'"\
-#        % (word_aux, confirm, language_aux)
-# print(resp)
+confirm = 'SI' if answer else 'NO'
+resp = "La palabra '%s' %s está relacionada con el lenguaje '%s'"\
+       % (word_aux, confirm, language_aux)
+print(resp)
 
 # -------------------------------------------
-# print('\n** set_of_words_in_language... **')
-# words_aux = set_of_words_in_language(word_aux, language_aux)
-#
-# if len(words_aux) > 0:
-#     resp = "La palabra '%s' genera las siguientes palabras" \
-#            " en el lenguaje '%s':" % (word_aux, language_aux)
-#     print(resp)
-#     print('\t%s' % '\n\t'.join(map(str, words_aux)))
-# else:
-#     resp = "La palabra '%s' no genera ninguna otra en el lenguaje '%s'" \
-#            % (word_aux, language_aux)
-#     print(resp)
-#
-# # -------------------------------------------
-# print('\n** set_of_languages_related_word... **')
-# langs_aux = set_of_languages_related_word(word_aux)
-#
-# if len(langs_aux) > 0:
-#     resp = "La palabra '%s' está relacionada con los siguientes idiomas:" \
-#            % word_aux
-#     print(resp)
-#     print('\t%s' % '\n\t'.join(map(str, langs_aux)))
-# else:
-#     resp = "La palabra '%s' no está relacionada con ningún idioma" \
-#            % word_aux
-#     print(resp)
+print('\n** set_of_words_in_language... **')
+words_aux = set_of_words_in_language(word_aux, language_aux)
+
+if len(words_aux) > 0:
+    resp = "La palabra '%s' genera las siguientes palabras" \
+           " en el lenguaje '%s':" % (word_aux, language_aux)
+    print(resp)
+    print('\t%s' % '\n\t'.join(map(str, words_aux)))
+else:
+    resp = "La palabra '%s' no genera ninguna otra en el lenguaje '%s'" \
+           % (word_aux, language_aux)
+    print(resp)
+
+# -------------------------------------------
+print('\n** set_of_languages_related_word... **')
+langs_aux = set_of_languages_related_word(word_aux)
+
+if len(langs_aux) > 0:
+    resp = "La palabra '%s' está relacionada con los siguientes idiomas:" \
+           % word_aux
+    print(resp)
+    print('\t%s' % '\n\t'.join(map(str, langs_aux)))
+else:
+    resp = "La palabra '%s' no está relacionada con ningún idioma" \
+           % word_aux
+    print(resp)
