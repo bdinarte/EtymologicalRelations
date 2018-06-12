@@ -26,14 +26,15 @@ from pyDatalog import pyDatalog
 # Términos que se usan en este archivo
 
 pyDatalog.create_terms("X, LX, Y, LY, R, H, P, A, T, PR,"
-                       "B, TA, TS, PS, TTA, TB, TAS, TT")
+                       "B, TA, TS, PS, TTA, TB, TAS, TT, L, L2")
 
 pyDatalog.create_terms("has_derived_form, is_derived_from,"
                        "etymology, etymological_origin_of")
 
 pyDatalog.create_terms("is_son, are_siblings, "
                        "is_ancestor, is_parent, "
-                       "is_uncle, are_cousins, cousin_grade")
+                       "is_uncle, are_cousins, cousin_grade, "
+                       "ancestor_level")
 
 # -----------------------------------------------------------------------------
 
@@ -177,8 +178,8 @@ print(are_siblings(None, X))
 
 is_uncle(T, X, True) <= is_uncle(T, X)
 is_uncle(T, X, False) <= ~is_uncle(T, X)
-is_uncle(T, X) <= are_siblings(P, T) & is_son(X, P)
-is_uncle(T, X) <= is_parent(P, X) & is_ancestor(A, P) & is_parent(A, T) & ~is_parent(A, T)
+is_uncle(T, X) <= is_parent(P, X) & are_siblings(P, T)
+is_uncle(T, X) <= is_ancestor(A, X) & is_uncle(T, A)
 
 print("is_uncle('tio T', 'persona X', R)")
 print(is_uncle("tio T", "persona X", R))
@@ -187,14 +188,47 @@ print("is_uncle('tio_abuelo TA', 'padre P', R)")
 print(is_uncle("tio_abuelo TA", "padre P", R))
 
 # Deben de ser True al considerar tíos abuelos
-print("is_uncle('tio_abuelo TA', 'persona X')")
+print("is_uncle('tio_abuelo TA', 'persona X', R)")
 print(is_uncle("tio_abuelo TA", "persona X", R))
 
-print("is_uncle('tio_bisabuelo TB', 'persona X')")
+print("is_uncle('tio_bisabuelo TB', 'persona X', R)")
 print(is_uncle("tio_bisabuelo TB", "persona X", R))
 
 # Deberia mostrar toda la ascendencia de tíos no solo el primero
-print("is_uncle(T, 'persona X', R)")
+print("is_uncle(T, 'persona X')")
 print(is_uncle(T, "persona X"))
+
+# Muestra toda la descendencia del hermano
+print("is_uncle('tio_bisabuelo TB', X)")
+print(is_uncle("tio_bisabuelo TB", X))
+
+
+# -----------------------------------------------------------------------------
+# Pruebas para ancestor_level
+# -----------------------------------------------------------------------------
+
+ancestor_level(X, H, 0) <= are_siblings(H, X)
+ancestor_level(X, Y, 1) <= is_parent(X, Y)
+
+ancestor_level(X, Y, L) <= (
+    is_parent(X, H) & ancestor_level(H, Y, L2) & (L == L2 + 1)
+)
+
+# Nivel 1
+print("ancestor_level('padre P', 'persona X', L)")
+print(ancestor_level("padre P", "persona X", L))
+
+# Nivel 2
+print("ancestor_level('abuelo A', 'persona X', L)")
+print(ancestor_level("abuelo A", "persona X", L))
+
+# Nivel 4
+print("ancestor_level('tatarabuelo TTA', 'persona X', L)")
+print(ancestor_level("tatarabuelo TTA", "persona X", L))
+
+# -----------------------------------------------------------------------------
+# Pruebas para are_cousins
+# -----------------------------------------------------------------------------
+
 
 # -----------------------------------------------------------------------------

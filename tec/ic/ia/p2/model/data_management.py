@@ -1,15 +1,17 @@
 
 from pyDatalog import pyDatalog
 from os import path as ospath
-from ..util.file_management import get_etim_database, get_file_content
+from util.file_management import get_etim_database, get_file_content
 import re
 
 # ----------------------------------------------------------------------------
 
+# TODO Eliminar este apartado
 # Definir la ruta del proyecto
 file_path = ospath.abspath(__file__)
 file_folder = ospath.split(file_path)[0]
 project_path = ospath.split(file_folder)[0]
+# TODO Hasta aquí se elimina
 
 languages = [
     'aaq', 'abe', 'abs', 'adt', 'afr', 'aii', 'ain', 'akk', 'akz', 'ale', 'alq',
