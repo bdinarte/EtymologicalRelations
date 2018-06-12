@@ -31,13 +31,15 @@ pyDatalog.create_terms("X, LX, Y, LY, R, H, P, A, T, PR,"
 pyDatalog.create_terms("has_derived_form, is_derived_from,"
                        "etymology, etymological_origin_of")
 
-pyDatalog.create_terms("is_son, are_siblings,"
+pyDatalog.create_terms("is_son, are_siblings, "
+                       "is_ancestor, is_parent, "
                        "is_uncle, are_cousins, cousin_grade")
 
 # -----------------------------------------------------------------------------
 
 # Hechos provenientes del árbol
 
++ has_derived_form(None, "tatarabuelo TTA", None, "bisabuelo B")
 + has_derived_form(None, "tatarabuelo TTA", None, "tio_bisabuelo TB")
 + has_derived_form(None, "tio_bisabuelo TB", None, "tio_abuelo_seg TAS")
 + has_derived_form(None, "tio_abuelo_seg TAS", None, "tio_tercero TT")
@@ -101,10 +103,33 @@ print("is_son(X, 'abuelo A')")
 print(is_son(X, "abuelo A"))
 
 # Se obtiene una lista vacia
+print("is_son(None, None)")
 print(is_son(None, None))
 
 # Se obtiene el valor de R que debe ser False
+print("is_son(None, None, R)")
 print(is_son(None, None, R))
+
+# -----------------------------------------------------------------------------
+# Pruebas para is_ancestor e is_parent
+# -----------------------------------------------------------------------------
+
+is_parent(X, Y) <= is_son(Y, X)
+
+# Despliega que el padre de persona X es padre P
+print("is_parent(P, 'persona X')")
+print(is_parent(P, "persona X"))
+
+is_ancestor(A, B) <= is_parent(A, B)
+is_ancestor(X, Y) <= is_parent(X, A) & is_ancestor(A, Y)
+
+# Se obtiene del desde el padre hasta el tatarabuelo
+print("is_ancestor(A, 'persona X')")
+print(is_ancestor(A, "persona X"))
+
+# Se obtiene el ego, el padre, el tio, primos y hermanos
+print("is_ancestor('abuelo A', X)")
+print(is_ancestor("abuelo A", X))
 
 # -----------------------------------------------------------------------------
 # Pruebas para are_siblings
@@ -148,12 +173,12 @@ print(are_siblings(None, X))
 
 # -----------------------------------------------------------------------------
 # Pruebas para is_uncle
-# TODO: De momento no cuenta como tíos los tíos abuelos
 # -----------------------------------------------------------------------------
 
 is_uncle(T, X, True) <= is_uncle(T, X)
 is_uncle(T, X, False) <= ~is_uncle(T, X)
 is_uncle(T, X) <= are_siblings(P, T) & is_son(X, P)
+is_uncle(T, X) <= is_parent(P, X) & is_ancestor(A, P) & is_parent(A, T) & ~is_parent(A, T)
 
 print("is_uncle('tio T', 'persona X', R)")
 print(is_uncle("tio T", "persona X", R))
@@ -161,13 +186,15 @@ print(is_uncle("tio T", "persona X", R))
 print("is_uncle('tio_abuelo TA', 'padre P', R)")
 print(is_uncle("tio_abuelo TA", "padre P", R))
 
-# TODO: Deben de ser True al considerar tíos abuelos
+# Deben de ser True al considerar tíos abuelos
 print("is_uncle('tio_abuelo TA', 'persona X')")
 print(is_uncle("tio_abuelo TA", "persona X", R))
+
 print("is_uncle('tio_bisabuelo TB', 'persona X')")
 print(is_uncle("tio_bisabuelo TB", "persona X", R))
 
-# TODO: deberia mostrar toda la ascendencia de tíos no solo el primero
+# Deberia mostrar toda la ascendencia de tíos no solo el primero
+print("is_uncle(T, 'persona X', R)")
 print(is_uncle(T, "persona X"))
 
 # -----------------------------------------------------------------------------
