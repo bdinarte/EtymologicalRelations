@@ -33,8 +33,8 @@ pyDatalog.create_terms("X, LX, Y, LY, R, H, P, A, T, PR,"
 pyDatalog.create_terms("has_derived_form, is_derived_from,"
                        "etymology, etymological_origin_of")
 
-pyDatalog.create_terms("is_son, is_parent, is_ancestor, ancestor_level,"
-                       "are_siblings, is_uncle, are_cousins, cousin_grade")
+pyDatalog.create_terms("is_son, is_parent, is_ancestor, ancestor_level, grade, "
+                       "are_siblings, is_uncle, are_cousins, cousins_level")
 
 # -----------------------------------------------------------------------------
 
@@ -111,6 +111,9 @@ print(is_son(None, None))
 # Se obtiene el valor de R que debe ser False
 print("is_son(None, None, R)")
 print(is_son(None, None, R))
+
+print("is_son(None, 'persona X', R)")
+print(is_son(None, "persona X", R))
 
 # -----------------------------------------------------------------------------
 # Pruebas para is_ancestor e is_parent
@@ -203,10 +206,17 @@ print(is_uncle(T, "persona X"))
 print("is_uncle('tio_bisabuelo TB', X)")
 print(is_uncle("tio_bisabuelo TB", X))
 
+print("is_uncle(None, None, R)")
+print(is_uncle(None, None, R))
+
+print("is_uncle(None, 'persona X', R)")
+print(is_uncle(None, "persona X", R))
 
 # -----------------------------------------------------------------------------
 # Pruebas para ancestor_level
 # -----------------------------------------------------------------------------
+
+# ancestor_level(X, Y, 0) <= ~ancestor_level(X, Y, L)
 
 ancestor_level(X, Y, 1) <= is_parent(X, Y)
 
@@ -226,11 +236,14 @@ print(ancestor_level("abuelo A", "persona X", L))
 print("ancestor_level('tatarabuelo TTA', 'persona X', L)")
 print(ancestor_level("tatarabuelo TTA", "persona X", L))
 
-print("ancestor_level(TTA, 'persona X', L)")
+print("ancestor_level(A, 'persona X', L)")
 print(ancestor_level(A, "persona X", L))
 
-print("ancestor_level(TTA, 'primo PR', L)")
+print("ancestor_level(A, 'primo PR', L)")
 print(ancestor_level(A, "primo PR", L))
+
+print("ancestor_level(None, None, L)")
+print(ancestor_level(None, None, L))
 
 # -----------------------------------------------------------------------------
 # Pruebas para are_cousins
@@ -242,9 +255,9 @@ are_cousins(X, Y, False) <= ~are_cousins(X, Y)
 are_cousins(X, Y) <= are_cousins(Y, X)
 
 are_cousins(X, Y) <= (
-     ancestor_level(A, X, L) &
-     ancestor_level(A, Y, L) &
-     ~are_siblings(X, Y) & ~(X == Y)
+    ancestor_level(A, X, L) &
+    ancestor_level(A, Y, L) &
+    ~are_siblings(X, Y) & ~(X == Y)
 )
 
 print("are_cousins('primo PR', 'hermano H', R)")
@@ -269,7 +282,23 @@ print(are_cousins(None, X))
 # Pruebas para cousin_grade
 # -----------------------------------------------------------------------------
 
-# Son primos si tienen al menos un ancestro al mismo nivel
-# cousin_grade(X, Y, L) <= ancestor_level(A, X, L) & ancestor_level(A, Y, L)
+(cousins_level[X, Y] == min_(L2, order_by=L2)) <= (
+    are_cousins(X, Y) &
+    ancestor_level(A, X, L) &
+    ancestor_level(A, Y, L) &
+    ~(X == Y) & (L2 == L - 1)
+)
+
+cousins_level(X, Y, 0) <= ~are_cousins(X, Y)
+cousins_level(X, Y, L) <= (cousins_level[X, Y] == L)
+
+print("cousins_level('persona X', Y, L)")
+print(cousins_level("persona X", Y, L))
+
+print("cousins_level('primo PR', Y, L)")
+print(cousins_level("primo PR", Y, L))
+
+print("cousins_level('persona X', 'primo_seg PS', L)")
+print(cousins_level("persona X", "primo_seg PS", L))
 
 # -----------------------------------------------------------------------------
