@@ -26,14 +26,15 @@ from pyDatalog import pyDatalog
 # Términos que se usan en este archivo
 
 pyDatalog.create_terms("X, LX, Y, LY, R, H, P, A, T, PR,"
-                       "B, TA, TS, PS, TTA, TB, TAS, TT")
+                       "B, TA, TS, PS, TTA, TB, TAS, TT, L, L2")
 
 pyDatalog.create_terms("has_derived_form, is_derived_from,"
                        "etymology, etymological_origin_of")
 
 pyDatalog.create_terms("is_son, are_siblings, "
                        "is_ancestor, is_parent, "
-                       "is_uncle, are_cousins, cousin_grade")
+                       "is_uncle, are_cousins, cousin_grade, "
+                       "ancestor_level")
 
 # -----------------------------------------------------------------------------
 
@@ -201,6 +202,33 @@ print(is_uncle(T, "persona X"))
 print("is_uncle('tio_bisabuelo TB', X)")
 print(is_uncle("tio_bisabuelo TB", X))
 
-# print(is_ancestor(X, "padre P"))
+
+# -----------------------------------------------------------------------------
+# Pruebas para ancestor_level
+# -----------------------------------------------------------------------------
+
+ancestor_level(X, H, 0) <= are_siblings(H, X)
+ancestor_level(X, Y, 1) <= is_parent(X, Y)
+
+ancestor_level(X, Y, L) <= (
+    is_parent(X, H) & ancestor_level(H, Y, L2) & (L == L2 + 1)
+)
+
+# Nivel 1
+print("ancestor_level('padre P', 'persona X', L)")
+print(ancestor_level("padre P", "persona X", L))
+
+# Nivel 2
+print("ancestor_level('abuelo A', 'persona X', L)")
+print(ancestor_level("abuelo A", "persona X", L))
+
+# Nivel 4
+print("ancestor_level('tatarabuelo TTA', 'persona X', L)")
+print(ancestor_level("tatarabuelo TTA", "persona X", L))
+
+# -----------------------------------------------------------------------------
+# Pruebas para are_cousins
+# -----------------------------------------------------------------------------
+
 
 # -----------------------------------------------------------------------------
