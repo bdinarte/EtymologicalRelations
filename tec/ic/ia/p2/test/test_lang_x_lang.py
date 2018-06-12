@@ -28,15 +28,15 @@ class TestLangLang(TestCase):
             ['aaq: prueba1', 'rel:etymology', 'eng: prueba1'],
             ['aaq: senabe', 'rel:etymology', 'eng: sannup'],
             ['abe: waniigan', 'rel:etymological_origin_of', 'eng: waniigan'],
-            ['aaq: prueba2', 'rel:etymology', 'eng: prueba2'],
+            ['aaq: prueba2', 'rel:etymological_origin_of', 'eng: prueba2'],
             ['abs: beta', 'rel:etymology', 'zsm: beta']
         ]
 
         dataframe = DataFrame(tsv_data)
         assert_facts_from_dataframe(dataframe)
 
-        obtained_results = words_in_common('aaq', 'eng')
-        expected_results = ['prueba1', 'prueba2']
+        obtained_results = set(words_in_common('aaq', 'eng'))
+        expected_results = {'prueba1', 'prueba2'}
         first_result_success = obtained_results == expected_results
 
         obtained_results = words_in_common('aaq', 'zsm')
@@ -58,7 +58,7 @@ class TestLangLang(TestCase):
             ['aaq: prueba1', 'rel:etymology', 'eng: prueba1'],
             ['aaq: senabe', 'rel:etymology', 'eng: sannup'],
             ['abe: waniigan', 'rel:etymological_origin_of', 'eng: waniigan'],
-            ['aaq: prueba2', 'rel:etymology', 'eng: prueba2'],
+            ['aaq: prueba2', 'rel:etymological_origin_of', 'eng: prueba2'],
             ['abs: beta', 'rel:etymology', 'zsm: beta']
         ]
 
