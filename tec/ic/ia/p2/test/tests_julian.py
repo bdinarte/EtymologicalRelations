@@ -177,8 +177,8 @@ print(are_siblings(None, X))
 
 is_uncle(T, X, True) <= is_uncle(T, X)
 is_uncle(T, X, False) <= ~is_uncle(T, X)
-is_uncle(T, X) <= are_siblings(P, T) & is_son(X, P)
-is_uncle(T, X) <= is_parent(P, X) & is_ancestor(A, P) & is_parent(A, T) & ~is_parent(A, T)
+is_uncle(T, X) <= is_parent(P, X) & are_siblings(P, T)
+is_uncle(T, X) <= is_ancestor(A, X) & is_uncle(T, A)
 
 print("is_uncle('tio T', 'persona X', R)")
 print(is_uncle("tio T", "persona X", R))
@@ -187,14 +187,20 @@ print("is_uncle('tio_abuelo TA', 'padre P', R)")
 print(is_uncle("tio_abuelo TA", "padre P", R))
 
 # Deben de ser True al considerar tíos abuelos
-print("is_uncle('tio_abuelo TA', 'persona X')")
+print("is_uncle('tio_abuelo TA', 'persona X', R)")
 print(is_uncle("tio_abuelo TA", "persona X", R))
 
-print("is_uncle('tio_bisabuelo TB', 'persona X')")
+print("is_uncle('tio_bisabuelo TB', 'persona X', R)")
 print(is_uncle("tio_bisabuelo TB", "persona X", R))
 
 # Deberia mostrar toda la ascendencia de tíos no solo el primero
-print("is_uncle(T, 'persona X', R)")
+print("is_uncle(T, 'persona X')")
 print(is_uncle(T, "persona X"))
+
+# Muestra toda la descendencia del hermano
+print("is_uncle('tio_bisabuelo TB', X)")
+print(is_uncle("tio_bisabuelo TB", X))
+
+# print(is_ancestor(X, "padre P"))
 
 # -----------------------------------------------------------------------------
