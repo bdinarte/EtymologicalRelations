@@ -18,41 +18,49 @@ project_path = ospath.split(file_folder)[0]
 
 print('Cargando base de datos a memoria...')
 s = time()
-data_df = get_etim_database(project_path, filename="etymwn.tsv")
+data_df = get_etim_database(project_path, filename="etymwn3.tsv")
+
 print('Base de datos cargada a memoria! ' + str(time() - s) + ' segundos.')
 
 s = time()
 with open('..\\files\\facts.txt', 'a', encoding='UTF-8') as facts_file:
     for i, row in data_df.iterrows():
 
-        delim1 = '"' if "'" in row[0][5:] else "'"
-        delim2 = '"' if "'" in row[2][5:] else "'"
-
-        if row[0][:2] == 'p_':
-            lang1 = row[0][:5]
-            word1 = row[0][7:]
-        else:
-            lang1 = row[0][:3]
-            word1 = row[0][5:]
-
-        if row[2][:2] == 'p_':
-            lang2 = row[2][:5]
-            word2 = row[2][7:]
-        else:
-            lang2 = row[2][:3]
-            word2 = row[2][5:]
+        valid_relations = ['etymological_origin_of',
+                           'etymologically',
+                           'etymologically_related',
+                           'etymology',
+                           'has_derived_form']
 
         rel_name = row[1][4:].replace(':', '_')
 
-        line = str('+ '
-                   + rel_name + '('
-                   + lang1 + ','
-                   + delim1 + word1 + delim1 + ','
-                   + lang2 + ','
-                   + delim2 + word2 + delim2 + ')\n')
+        if rel_name in valid_relations:
+            delim1 = '"' if "'" in row[0][5:] else "'"
+            delim2 = '"' if "'" in row[2][5:] else "'"
 
-        if not(i + 1 == 8074 or i + 1 == 9662):
-            facts_file.write(line)
+            if row[0][:2] == 'p_':
+                lang1 = row[0][:5]
+                word1 = row[0][7:]
+            else:
+                lang1 = row[0][:3]
+                word1 = row[0][5:]
+
+            if row[2][:2] == 'p_':
+                lang2 = row[2][:5]
+                word2 = row[2][7:]
+            else:
+                lang2 = row[2][:3]
+                word2 = row[2][5:]
+
+            line = str('+ '
+                       + rel_name + '('
+                       + delim1 + lang1 + delim1 + ','
+                       + delim1 + word1 + delim1 + ','
+                       + delim2 + lang2 + delim2 + ','
+                       + delim2 + word2 + delim2 + ')\n')
+
+            if not(i + 1 == 8074 or i + 1 == 9662):
+                facts_file.write(line)
 
         if int(i+1) % 500000 == 0:
             print(i)
