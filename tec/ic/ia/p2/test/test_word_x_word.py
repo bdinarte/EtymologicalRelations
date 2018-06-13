@@ -1,107 +1,113 @@
 # -----------------------------------------------------------------------------
 
-import pytest
-from controller.word_x_word import *
+import logging
+from model.word_x_word import *
+
+# pyEngine.Logging = True
+# logging.basicConfig(level=logging.DEBUG)
 
 # -----------------------------------------------------------------------------
 #
 #             Árbol de pruebas utilizado para la relaciones de
 #             is_child, siblings, uncle, cousins, cousin_grade
 #
-#                 <tatarabuelo TTA>
+#                 <tatarabuelo>
 #                     __\______________
 #                    |                 \
-#           <tio_bisabuelo TB>    <bisabuelo B>
+#             <tio_bisabuelo>      <bisabuelo>
 #                 /                _____\_________
-#      <tio_abuelo_seg TAS>       |               \
-#              |            <tio_abuelo TA>   <abuelo A>
-#       <tio_ter TT>           /             _______\_____
-#            |          <tio_seg TS>        |             \
-#      <primo_ter PT>        |           <tio T>       <padre P>
-#                     <primo_seg PS>       |           _____\_____
-#                                      <primo PR>      \          \
-#                                                 <hermano H>  <persona X>
+#        <tio_abuelo_seg>         |               \
+#              |            <tio_abuelo>        <abuelo>
+#         <tio_ter>            /             _______\_____
+#            |            <tio_seg>         |             \
+#      <primo_ter>           |            <tio>         <padre>
+#                       <primo_seg>        |           _____\_____
+#                                       <primo>        \          \
+#                                                   <hermano>   <ego X>
 #
 # -----------------------------------------------------------------------------
 
-def setup_module(module): # Debe llamarse así
-
-    + etymology("-", "padre P", "-", "persona X")
-    + is_derived_from("-", "persona X", "-", "padre T")
-    + etymological_origin_of("-", "persona X", "-", "padre P")
-    + has_derived_form("-", "tatarabuelo TTA", "-", "bisabuelo B")
-    + has_derived_form("-", "tatarabuelo TTA", "-", "tio_bisabuelo TB")
-    + has_derived_form("-", "tio_bisabuelo TB", "-", "tio_abuelo_seg TAS")
-    + has_derived_form("-", "tio_abuelo_seg TAS", "-", "tio_tercero TT")
-    + has_derived_form("-", "tio_tercero TT", "-", "primo_ter PT")
-    + has_derived_form("-", "bisabuelo B", "-", "abuelo A")
-    + has_derived_form("-", "bisabuelo B", "-", "tio_abuelo TA")
-    + has_derived_form("-", "abuelo A", "-", "padre P")
-    + has_derived_form("-", "abuelo A", "-", "tio T")
-    + has_derived_form("-", "padre P", "-", "persona X")
-    + has_derived_form("-", "padre P", "-", "hermano H")
-    + has_derived_form("-", "tio T", "-", "primo PR")
-    + has_derived_form("-", "tio_abuelo TA", "-", "tio_seg TS")
-    + has_derived_form("-", "tio_seg TS", "-", "primo_seg PS")
-
-# -----------------------------------------------------------------------------
-
-def test_are_siblings_positive():
-    self.assertTrue(exec_are_siblings("persona X", "hermano H") ==
-            exec_are_siblings("abuelo A", "tio_abuelo TA") == True)
-
-def test_are_siblings_negative():
-    assert (exec_are_siblings(" ", " ") ==
-            exec_are_siblings(" ", "tio_abuelo TA") ==
-            exec_are_siblings("hermano H", "primo PR") == False)
+def setup_module(module):
+    + etymology("-", "padre", "-", "ego")
+    + is_derived_from("-", "ego", "-", "padre")
+    + etymological_origin_of("-", "ego", "-", "padre")
+    + has_derived_form("-", "tatarabuelo", "-", "bisabuelo")
+    + has_derived_form("-", "tatarabuelo", "-", "tio_bisabuelo")
+    + has_derived_form("-", "tio_bisabuelo", "-", "tio_abuelo_seg")
+    + has_derived_form("-", "tio_abuelo_seg", "-", "tio_ter")
+    + has_derived_form("-", "tio_ter", "-", "primo_ter")
+    + has_derived_form("-", "bisabuelo", "-", "abuelo")
+    + has_derived_form("-", "bisabuelo", "-", "tio_abuelo")
+    + has_derived_form("-", "abuelo", "-", "padre")
+    + has_derived_form("-", "abuelo", "-", "tio")
+    + has_derived_form("-", "padre", "-", "ego")
+    + has_derived_form("-", "padre", "-", "hermano")
+    + has_derived_form("-", "tio", "-", "primo")
+    + has_derived_form("-", "tio_abuelo", "-", "tio_seg")
+    + has_derived_form("-", "tio_seg", "-", "primo_seg")
 
 # -----------------------------------------------------------------------------
 
-# def test_are_cousins_positivee():
-#     assert 1 == 1
+def test_siblings():
 
-#     # print("cousins('primo_ter PT', 'persona X', R)")
-#     # print(are_cousins("primo_ter PT", "persona X", R))
-#     #
-#     # print("cousins('hermano H', 'persona X', R)")
-#     # print(are_cousins("hermano H", "persona X", R))
-#     #
-#     # print("cousins(X, 'primo PR')")
-#     # print(cousins(X, "primo PR"))
-#     #
-#     # print("cousins('persona X', X)")
-#     # print(cousins("persona X", X))
-#     #
-#     # print("cousins(None, X)")
-#     # print(cousins(None, X))
+    answer = siblings(X, Y).data
 
-    # print(exec_are_cousins('primo PR', 'hermano H'))
-    # assert (exec_are_cousins("primo PR", "persona X") ==
-    #         exec_are_cousins("primo_ter PT", "hermano H") ==
-    #         exec_are_cousins("abuelo A", "tio_abuelo TB") == True)
+    expected = [
+        ("ego", "hermano"),
+        ("tio_abuelo", "abuelo"),
+        ("hermano", "ego"),
+        ("bisabuelo", "tio_bisabuelo"),
+        ("tio", "padre"),
+        ("abuelo", "tio_abuelo"),
+        ("tio_bisabuelo", "bisabuelo"),
+        ("padre", "tio")
+    ]
+
+    assert set(answer) == set(expected)
 
 # -----------------------------------------------------------------------------
 
-# def test_is_child_positive():
-#     assert exec_is_child("persona X", "padre P") == True
-#
-# def test_is_child_negative():
-#     assert (exec_is_child(" ", " ") ==
-#             exec_is_child(" ", "padre P") ==
-#             exec_is_child("persona X", "primo PR") == False)
-#
-# # -----------------------------------------------------------------------------
-#
-# def test_is_uncle_positive():
-#     print(uncle("tio T", X))
-#     # assert exec_is_uncle("tio T", "persona X") == True
-# #
-# # def test_is_uncle_negative():
-# #     assert 1 == 1
-#
-# # -----------------------------------------------------------------------------
-#
-# def test_cousins_grade():
-#     assert 1 == 1
+def test_cousins():
+    answer = cousins("ego", Y).data
+    expected = [("primo_ter",), ("primo",), ("primo_seg",)]
+    assert set(answer) == set(expected)
+
+# -----------------------------------------------------------------------------
+
+def test_child_has_parent():
+    answer = child("ego", P).data
+    expected = [("padre",)]
+    assert set(answer) == set(expected)
+
+# -----------------------------------------------------------------------------
+
+def test_child_has_no_parent():
+    answer = child("tatarabuelo", P).data
+    assert set(answer) == set([])
+
+# -----------------------------------------------------------------------------
+
+def test_uncle():
+
+    answer = uncle(T, "ego").data
+    print(answer)
+
+    expected = [
+        ("tio",),
+        ("tio_seg",),
+        ("tio_abuelo",),
+        ("tio_abuelo_seg",),
+        ("tio_bisabuelo",),
+        ("tio_ter",)
+    ]
+
+    assert set(answer) == set(expected)
+
+# -----------------------------------------------------------------------------
+
+def test_cousins_level():
+    answer = cousins_level("ego", Y, L).data
+    expected = [("primo", 1), ("primo_seg", 2), ("primo_ter", 3),]
+    assert set(answer) == set(expected)
 
 # -----------------------------------------------------------------------------
