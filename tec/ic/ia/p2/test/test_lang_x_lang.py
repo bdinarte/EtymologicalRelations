@@ -1,7 +1,7 @@
 
 from pandas import DataFrame
 from unittest import TestCase
-from ..model.lang_x_lang import *
+from ..controller.lang_x_lang import *
 
 # -----------------------------------------------------------------------------
 
