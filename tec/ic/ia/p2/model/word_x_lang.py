@@ -8,36 +8,8 @@ from util.file_management import get_etim_database
 
 
 # -----------------------------------------------------------------------------
-
-"""
-Lectura de la BD de pruebas y creación de los hechos
-para posteriormente utilizarlos
-
-rel:
-etymological_origin_of
-has_derived_form
-is_derived_from
-etymology
-etymologically_related
-orthography
-"""
-
-mainfile_path = ospath.abspath(__file__)
-base_path = ospath.split(mainfile_path)[0]
-base_path = ospath.split(base_path)[0]
-syspath.append(base_path)
-
-data_df = get_etim_database(base_path, 'etymwn3.tsv')
-
-print('Creating Facts...')
-for i, row in data_df.iterrows():
-    pyDatalog.assert_fact(row[1][4:],
-                          row[0][:3], row[0][5:],
-                          row[2][:3], row[2][5:])
-
-
+# ------------------------------ Creating Terms -------------------------------
 # -----------------------------------------------------------------------------
-print('Creating Terms...')
 
 pyDatalog.create_terms('word_related_lang, set_of_words_in_lang, Word, '
                        'Lang, X, Y, LX, LY, A, B')
@@ -48,20 +20,6 @@ pyDatalog.create_terms('etymology, etymological_origin_of,'
 
 pyDatalog.create_terms("is_son, is_ancestor, is_parent, lang_related_word,"
                        "is_son2, is_ancestor2, is_parent2")
-
-+ etymological_origin_of("afr", "-lik", "eng", "persoonlik")
-+ etymological_origin_of("afr", "-lik", "afr", "tydelik")
-+ etymological_origin_of("afr", "-lik", "zsm", "wetenskaplik")
-+ etymological_origin_of("afr", "-lik", "afr", "wetlik")
-+ etymological_origin_of("afr", "-tjie", "afr", "dogtertjie")
-+ etymological_origin_of("afr", "-tjie", "afr", "seuntjie")
-+ etymological_origin_of("afr", "-tji", "afr", "uitjie")
-+ etymological_origin_of("afr", "Afrikaner", "por", "africâner")
-+ etymological_origin_of("zsm", "wetenskaplik", "spa", "tydelik")
-
-+ has_derived_form("afr", "-lik", "afr", "wetenskaplik")
-+ has_derived_form("por", "lan", "ita", "April")
-+ has_derived_form("ita", "April", "afr", "-lik")
 
 
 # -----------------------------------------------------------------------------
