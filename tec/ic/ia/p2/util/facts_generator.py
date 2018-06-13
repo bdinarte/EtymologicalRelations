@@ -22,7 +22,7 @@ data_df = get_etim_database(project_path, filename="etymwn.tsv")
 print('Base de datos cargada a memoria! ' + str(time() - s) + ' segundos.')
 
 s = time()
-with open('facts.txt', 'a', encoding='UTF-8') as facts_file:
+with open('..\\files\\facts.txt', 'a', encoding='UTF-8') as facts_file:
     for i, row in data_df.iterrows():
 
         delim1 = '"' if "'" in row[0][5:] else "'"
@@ -58,6 +58,7 @@ with open('facts.txt', 'a', encoding='UTF-8') as facts_file:
             print(i)
 
 print('Creación del archivo: ' + str(time() - s) + ' segundos.')
+
 s = time()
 print('Cargando a pyDatalog...')
 pyDatalog.load(get_file_content(project_path, 'facts.txt'))
