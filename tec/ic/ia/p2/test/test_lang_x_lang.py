@@ -1,76 +1,62 @@
 
-from pandas import DataFrame
-from unittest import TestCase
+
 from ..controller.lang_x_lang import *
 
-# -----------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------
+# ------ Definición del KB con el que se generan las pruebas unitarias -------
+# ----------------------------------------------------------------------------
 
 
-class TestLangLang(TestCase):
+def setup_module(module):
+    + etymology('abs', 'beta', 'zsm', 'beta')
+    + etymology('aaq', 'prueba1', 'eng', 'prueba1')
+    + etymology('aaq', 'senabe', 'eng', 'sannup')
+    + etymological_origin_of('abe', 'waniigan', 'eng', 'waniigan')
+    + etymological_origin_of('aaq', 'prueba2', 'eng', 'prueba2')
+
+
+# ----------------------------------------------------------------------------
+
+
+def test_words_in_common():
 
     """
-    Clase encargada de probar funciones y fragmentos importantes de código para
-    el modulo model.lang_x_lang
+    Prueba de la función para obtener las palabras en común entre dos
+    lenguajes
+    Entradas: No aplica
+    @return Sin retorno
     """
 
-    # -------------------------------------------------------------------------
+    obtained_results = set(words_in_common('aaq', 'eng'))
+    expected_results = {'prueba1', 'prueba2'}
+    first_result_success = obtained_results == expected_results
 
-    def test_words_in_common(self):
+    obtained_results = words_in_common('aaq', 'zsm')
+    expected_results = ['No hay palabras en común.']
+    second_result_success = obtained_results == expected_results
 
-        """
-        Prueba de la función para obtener las palabras en común entre dos
-        lenguajes
-        Entradas: No aplica
-        @return Sin retorno
-        """
+    assert(first_result_success and second_result_success)
 
-        tsv_data = [
-            ['aaq: prueba1', 'rel:etymology', 'eng: prueba1'],
-            ['aaq: senabe', 'rel:etymology', 'eng: sannup'],
-            ['abe: waniigan', 'rel:etymological_origin_of', 'eng: waniigan'],
-            ['aaq: prueba2', 'rel:etymological_origin_of', 'eng: prueba2'],
-            ['abs: beta', 'rel:etymology', 'zsm: beta']
-        ]
 
-        dataframe = DataFrame(tsv_data)
-        assert_facts_from_dataframe(dataframe)
+# ----------------------------------------------------------------------------
 
-        obtained_results = set(words_in_common('aaq', 'eng'))
-        expected_results = {'prueba1', 'prueba2'}
-        first_result_success = obtained_results == expected_results
 
-        obtained_results = words_in_common('aaq', 'zsm')
-        expected_results = ['No hay palabras en común.']
-        second_result_success = obtained_results == expected_results
+def test_common_words_count():
 
-        self.assertTrue(first_result_success and second_result_success)
+    """
+    Prueba de la función para obtener la cantidad de palabras en común
+    entre dos lenguajes
+    Entradas: No aplica
+    @return Sin retorno
+    """
 
-    def test_common_words_count(self):
+    obtained_count = common_words_count('aaq', 'eng')
+    expected_count = 2
+    first_count_success = obtained_count == expected_count
 
-        """
-        Prueba de la función para obtener la cantidad de palabras en común
-        entre dos lenguajes
-        Entradas: No aplica
-        @return Sin retorno
-        """
+    obtained_count = common_words_count('aaq', 'zsm')
+    expected_count = 0
+    second_count_success = obtained_count == expected_count
 
-        tsv_data = [
-            ['aaq: prueba1', 'rel:etymology', 'eng: prueba1'],
-            ['aaq: senabe', 'rel:etymology', 'eng: sannup'],
-            ['abe: waniigan', 'rel:etymological_origin_of', 'eng: waniigan'],
-            ['aaq: prueba2', 'rel:etymological_origin_of', 'eng: prueba2'],
-            ['abs: beta', 'rel:etymology', 'zsm: beta']
-        ]
-
-        dataframe = DataFrame(tsv_data)
-        assert_facts_from_dataframe(dataframe)
-
-        obtained_count = common_words_count('aaq', 'eng')
-        expected_count = 2
-        first_count_success = obtained_count == expected_count
-
-        obtained_count = common_words_count('aaq', 'zsm')
-        expected_count = 0
-        second_count_success = obtained_count == expected_count
-
-        self.assertTrue(first_count_success and second_count_success)
+    assert(first_count_success and second_count_success)
