@@ -273,7 +273,7 @@ class UserInterface(Tk):
     def amount_of_common_words(self):
         first_lang = self.lang_x.get()
         second_lang = self.lang_y.get()
-        answer = common_words_count(first_lang, second_lang)
+        answer = count_common_words(first_lang, second_lang)
         self.result_lang_x_lang.set(answer)
 
     # -------------------------------------------------------------------------
