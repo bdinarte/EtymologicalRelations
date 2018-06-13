@@ -40,7 +40,10 @@ def set_of_words_in_language(word, language):
 
     query = is_ancestor(word, language, X)
 
-    return query
+    words = [i[0] for i in query.data]
+    words.sort()
+
+    return words
 
 
 # -----------------------------------------------------------------------------
@@ -57,4 +60,7 @@ def set_of_languages_related_word(word):
 
     query = lang_related_word(word, LX)
 
-    return query
+    langs = [i[0] for i in query.data]
+    langs.sort()
+
+    return langs

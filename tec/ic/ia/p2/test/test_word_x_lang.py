@@ -82,17 +82,9 @@ def test_set_of_words_in_language():
     word_aux = '-lik'
     language_aux = 'afr'
 
-    words_aux = set_of_words_in_language(word_aux, language_aux)
+    words = set_of_words_in_language(word_aux, language_aux)
 
-    words = [i[0] for i in words_aux.data]
-    expected_words = ['tydelik', 'wetlik', 'wetenskaplik']
-
-    # Se ordenan las listas para que funcione el assert, pues no siempre
-    # tienen el mismo orden al ejecutar set_of_words_in_language
-
-    words.sort()
-    expected_words.sort()
-
+    expected_words = ['tydelik', 'wetenskaplik', 'wetlik']
 
     assert words == expected_words
 
@@ -132,14 +124,8 @@ def test_set_of_languages_related_word():
     word_aux = '-lik'
     language_aux = 'afr'
 
-    langs_aux = set_of_languages_related_word(word_aux)
+    langs = set_of_languages_related_word(word_aux)
 
-    langs = [i[0] for i in langs_aux.data]
-    expected_langs = ['ita', 'afr', 'zsm', 'eng']
-
-    # Se ordenan las listas para que funcione el assert, pues no siempre
-    # tienen el mismo orden al ejecutar set_of_languages_related_word
-    langs.sort()
-    expected_langs.sort()
+    expected_langs = ['afr', 'eng', 'ita', 'zsm']
 
     assert langs == expected_langs
