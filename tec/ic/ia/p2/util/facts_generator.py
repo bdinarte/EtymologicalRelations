@@ -15,10 +15,10 @@ from time import time
 file_path = ospath.abspath(__file__)
 file_folder = ospath.split(file_path)[0]
 project_path = ospath.split(file_folder)[0]
-"""
+
 print('Cargando base de datos a memoria...')
 s = time()
-data_df = get_etim_database(project_path, filename="etymwn3.tsv")
+data_df = get_etim_database(project_path, filename="etymwn.tsv")
 print('Base de datos cargada a memoria! ' + str(time() - s) + ' segundos.')
 
 s = time()
@@ -58,11 +58,8 @@ with open('..\\files\\facts.txt', 'a', encoding='UTF-8') as facts_file:
             print(i)
 
 print('Creación del archivo: ' + str(time() - s) + ' segundos.')
-"""
+
 s = time()
 print('Cargando a pyDatalog...')
-with open(FILEPATH, encoding='utf-8') as file_content:
-    content = file_content.read()
-    pyDatalog.load(content)
+pyDatalog.load(get_file_content(project_path, 'facts.txt'))
 print('Carga completa! ' + str(time() - s) + ' segundos.')
-
