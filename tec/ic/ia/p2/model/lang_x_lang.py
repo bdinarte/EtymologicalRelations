@@ -59,31 +59,44 @@ pyDatalog.create_terms('count_lang_common_words, Total')
 
 # ----------------------------------------------------------------------------
 
-# Términos para la función count_words_input
-pyDatalog.create_terms('count_words_input')
+# Términos para la función input_words
+pyDatalog.create_terms('input_words')
 
-# Relaciones para la función count_words_input
-# Obtiene cuantas palabras aportó un lenguaje a otro
-(count_words_input[Lang1, Lang2] == len_(Word2)) <= (
+# Relaciones para la función input_words
+# Obtiene cuales palabras aportó un lenguaje a otro
+input_words(Lang1, Word1, Lang2, Word2) <= (
     has_derived_form(Lang1, Word1, Lang2, Word2) &
     has_derived_form_active(True)
 )
-(count_words_input[Lang1, Lang2] == len_(Word2)) <= (
+input_words(Lang1, Word1, Lang2, Word2) <= (
     etymology(Lang2, Word2, Lang1, Word1) &
     etymology_active(True)
 )
-(count_words_input[Lang1, Lang2] == len_(Word2)) <= (
+input_words(Lang1, Word1, Lang2, Word2) <= (
     etymological_origin_of(Lang1, Word1, Lang2, Word2) &
     etymological_origin_of_active(True)
 )
+
 # ----------------------------------------------------------------------------
 
 # Términos para la función count_words_received
 pyDatalog.create_terms('count_words_received')
 
 # Relaciones para la función count_words_received
+# Cuenta la cantidad de palabras que un idioma recibió de cualquier otro
 
-
+(count_words_received[Lang2] == len_(Word2)) <= (
+    etymological_origin_of(Lang1, Word1, Lang2, Word2) &
+    etymological_origin_of_active(True)
+)
+(count_words_received[Lang2] == len_(Word2)) <= (
+    etymology(Lang2, Word2, Lang1, Word1) &
+    etymology_active(True)
+)
+(count_words_received[Lang2] == len_(Word2)) <= (
+    has_derived_form(Lang1, Word1, Lang2, Word2) &
+    has_derived_form_active(True)
+)
 # ----------------------------------------------------------------------------
 
 # Términos para la función input_percent
@@ -91,3 +104,4 @@ pyDatalog.create_terms('input_percent')
 
 # Relaciones para la función input_percent
 
+# Relaciones para la función words_in_common
