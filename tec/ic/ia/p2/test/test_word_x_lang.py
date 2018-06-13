@@ -1,7 +1,7 @@
 
 import pytest
 
-from model.word_x_lang import *
+from controller.word_x_lang import *
 
 
 # -----------------------------------------------------------------------------
