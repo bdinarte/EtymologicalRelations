@@ -13,7 +13,7 @@ pyDatalog.create_terms('etymological_origin_of,'
                        'has_derived_form,'
                        'etymology,'
                        'etymologically_related')
-pyDatalog.create_terms('Lang1, Lang2, Word1, Word2')
+pyDatalog.create_terms('Lang1, Lang2, Word1, Word2, Total')
 
 + etymological_origin_of('','','','')
 + has_derived_form('','','','')
@@ -50,7 +50,7 @@ lang_common_words(Lang1, Word1, Lang2, Word1) <= (
 # ----------------------------------------------------------------------------
 
 # Términos para la función common_words_count
-pyDatalog.create_terms('count_lang_common_words, Total')
+pyDatalog.create_terms('count_lang_common_words')
 
 # Relaciones para la función words_in_common
 (count_lang_common_words[Lang1, Lang2] == len_(Word1)) <= (
@@ -75,6 +75,16 @@ input_words(Lang1, Word1, Lang2, Word2) <= (
 input_words(Lang1, Word1, Lang2, Word2) <= (
     etymological_origin_of(Lang1, Word1, Lang2, Word2) &
     etymological_origin_of_active(True)
+)
+
+# ----------------------------------------------------------------------------
+
+# Términos para la función count_input_words
+pyDatalog.create_terms('count_input_words')
+
+# Relaciones para la función words_in_common
+(count_input_words[Lang1, Lang2] == len_(Word2)) <= (
+    input_words(Lang1, Word1, Lang2, Word2)
 )
 
 # ----------------------------------------------------------------------------

@@ -45,7 +45,7 @@ def test_words_in_common():
 # ----------------------------------------------------------------------------
 
 
-def test_common_words_count():
+def test_count_common_words():
 
     """
     Prueba de la función para obtener la cantidad de palabras en común
@@ -54,11 +54,11 @@ def test_common_words_count():
     @return Sin retorno
     """
 
-    obtained_count = common_words_count('aaq', 'eng')
+    obtained_count = count_common_words('aaq', 'eng')
     expected_count = 3
     first_count_success = obtained_count == expected_count
 
-    obtained_count = common_words_count('aaq', 'zsm')
+    obtained_count = count_common_words('aaq', 'zsm')
     expected_count = 0
     second_count_success = obtained_count == expected_count
 
@@ -86,3 +86,23 @@ def test_aux_input_words():
     second_result_success = obtained_results == expected_results
 
     assert(first_result_success and second_result_success)
+
+
+def test_aux_count_input_words():
+
+    """
+    Prueba de la función para obtener la cantidad de palabras que el primer
+    lenguaje aportó al otro
+    Entradas: No aplica
+    @return Sin retorno
+    """
+
+    obtained_count = aux_count_input_words('equ', 'isd')
+    expected_count = 3
+    first_count_success = obtained_count == expected_count
+
+    obtained_count = count_common_words('abs', 'aaq')
+    expected_count = 0
+    second_count_success = obtained_count == expected_count
+
+    assert(first_count_success and second_count_success)
