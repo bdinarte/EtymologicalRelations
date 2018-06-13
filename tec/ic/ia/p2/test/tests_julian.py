@@ -58,7 +58,7 @@ print("are_cousins(X, Y)")
 print(cousins("persona X", X))
 
 # -----------------------------------------------------------------------------
-# Pruebas para cousin_grade
+# Pruebas para cousins_level
 # -----------------------------------------------------------------------------
 
 print("cousins_level('persona X', Y, L)")

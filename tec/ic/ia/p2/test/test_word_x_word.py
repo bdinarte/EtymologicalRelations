@@ -87,6 +87,12 @@ def test_child_has_no_parent():
 
 # -----------------------------------------------------------------------------
 
+def test_is_child_both_empty():
+    answer = is_child("", "", R).data
+    assert set(answer) == set([(False,)])
+
+# -----------------------------------------------------------------------------
+
 def test_uncle():
 
     answer = uncle(T, "ego").data

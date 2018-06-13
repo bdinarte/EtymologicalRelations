@@ -1,7 +1,7 @@
 
 from pyDatalog import pyDatalog
 from os import path as ospath
-from ..util.file_management import get_etim_database, get_file_content
+from util.file_management import get_etim_database, get_file_content
 import re
 
 # ----------------------------------------------------------------------------

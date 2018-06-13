@@ -1,6 +1,9 @@
 # -----------------------------------------------------------------------------
 
 from tkinter import *
+from controller.word_x_word import *
+from controller.word_x_lang import *
+from controller.lang_x_lang import *
 
 # -----------------------------------------------------------------------------
 
@@ -56,26 +59,26 @@ class UserInterface(Tk):
         self.entry_word_y = Entry(self.lf_word_x_word, textvariable=self.word_y)
         self.entry_result_word_x_word = Entry(self.lf_word_x_word, textvariable=self.result_word_x_word)
 
-        self.btn_is_son = Button(self.lf_word_x_word, text="Es hija X de Y", command=self.is_son)
+        self.btn_is_son = Button(self.lf_word_x_word, text="Es hija X de Y", command=self.exec_is_child)
         self.btn_is_uncle = Button(self.lf_word_x_word, text="Es tía X de Y", command=self.is_uncle)
         self.btn_are_cousins = Button(self.lf_word_x_word, text="Son primas", command=self.are_cousins)
         self.btn_are_siblings = Button(self.lf_word_x_word, text="Son hermanas", command=self.are_siblings)
-        self.btn_cousin_grade = Button(self.lf_word_x_word, text="Grado primas", command=self.cousin_grade)
+        self.btn_cousin_grade = Button(self.lf_word_x_word, text="Grado primas", command=self.cousins_level)
 
     # -------------------------------------------------------------------------
 
     def create_widgets_word_x_lang(self):
 
         self.word_p = StringVar()
-        self.word_d = StringVar()
+        self.lang_d = StringVar()
         self.result_word_x_lang = StringVar()
 
         self.label_word_p = Label(self.lf_word_x_lang, text="Palabra P")
-        self.label_word_d = Label(self.lf_word_x_lang, text="Palabra D")
+        self.label_lang_d = Label(self.lf_word_x_lang, text="Idioma D")
         self.label_result_word_x_lang = Label(self.lf_word_x_lang, text="Resultado")
 
         self.entry_word_p = Entry(self.lf_word_x_lang, textvariable=self.word_p)
-        self.entry_word_d = Entry(self.lf_word_x_lang, textvariable=self.word_d)
+        self.entry_word_d = Entry(self.lf_word_x_lang, textvariable=self.lang_d)
         self.entry_result_word_x_lang = Entry(self.lf_word_x_lang, textvariable=self.result_word_x_lang)
 
         self.btn_p_is_related_d = Button(self.lf_word_x_lang, text="P se relaciona con D", command=self.p_is_related_d)
@@ -91,8 +94,8 @@ class UserInterface(Tk):
         self.lang_y = StringVar()
         self.result_lang_x_lang = StringVar()
 
-        self.label_lang_x = Label(self.lf_lang_x_lang, text="Palabra P")
-        self.label_lang_y = Label(self.lf_lang_x_lang, text="Palabra D")
+        self.label_lang_x = Label(self.lf_lang_x_lang, text="Idioma X")
+        self.label_lang_y = Label(self.lf_lang_x_lang, text="Idioma Y")
         self.label_result_lang_x_lang = Label(self.lf_lang_x_lang, text="Resultado")
 
         self.entry_lang_x = Entry(self.lf_lang_x_lang, textvariable=self.lang_x)
@@ -141,7 +144,7 @@ class UserInterface(Tk):
         # Operaciones palabra e idioma
         # ---------------------------------------------------------------------
 
-        self.label_word_d.grid(row=0, column=0, sticky=NW, padx=5)
+        self.label_lang_d.grid(row=0, column=0, sticky=NW, padx=5)
         self.label_word_p.grid(row=0, column=1, sticky=NW, padx=5)
         self.label_result_word_x_lang.grid(row=0, column=2, sticky=NW, padx=5)
 
@@ -188,51 +191,97 @@ class UserInterface(Tk):
 
     # -------------------------------------------------------------------------
 
-    def is_son(self):
-        self.result_word_x_word.set("SÍ")
+    def exec_is_child(self):
+        parent_word = self.word_x.get()
+        child_word = self.word_y.get()
+        answer = exec_is_child(parent_word, child_word)
+        self.result_word_x_word.set(answer)
 
     # -------------------------------------------------------------------------
 
     def is_uncle(self):
-        self.result_word_x_word.set("NO")
+        uncle_word = self.word_x.get()
+        nephew_word = self.word_y.get()
+        answer = exec_is_uncle(uncle_word, nephew_word)
+        self.result_word_x_word.set(answer)
+
     # -------------------------------------------------------------------------
 
     def are_cousins(self):
-        self.result_word_x_word.set("NO")
+        first_word = self.word_x.get()
+        second_word = self.word_y.get()
+        answer = exec_are_cousins(first_word, second_word)
+        self.result_word_x_word.set(answer)
 
     # -------------------------------------------------------------------------
 
     def are_siblings(self):
-        self.result_word_x_word.set("SÍ")
+        first_word = self.word_x.get()
+        second_word = self.word_y.get()
+        answer = exec_are_siblings(first_word, second_word)
+        self.result_word_x_word.set(answer)
 
     # -------------------------------------------------------------------------
 
-    def cousin_grade(self):
-        self.result_word_x_word.set("2*")
+    def cousins_level(self):
+        first_word = self.word_x.get()
+        second_word = self.word_y.get()
+        answer = exec_cousins_level(first_word, second_word)
+        self.result_word_x_word.set(answer)
 
     # -------------------------------------------------------------------------
 
     def p_is_related_d(self):
-        self.result_word_x_lang.set("P está relacionada con D")
+        word = self.word_p.get()
+        lang = self.lang_d.get()
+        answer = word_related_language(word, lang)
+        self.result_word_x_lang.set(answer)
 
     # -------------------------------------------------------------------------
 
     def p_yields_d(self):
-        self.result_word_x_lang.set("Palabras producidas")
+
+        word = self.word_p.get()
+        lang = self.lang_d.get()
+        answer = set_of_words_in_language(word, lang)
+
+        for item in answer:
+            self.list_word_x_lang.insert(END, item)
+
+        self.result_word_x_lang.set("OK")
 
     # -------------------------------------------------------------------------
 
     def langs_related_p(self):
-        self.result_word_x_lang.set("Lenguajes relacionados con P")
+
+        word = self.word_p.get()
+        self.lang_d.set("No aplica")
+
+        answer = set_of_languages_related_word(word, lang)
+
+        for item in answer:
+            self.list_word_x_lang.insert(END, item)
+
+        self.result_word_x_lang.set("OK")
 
     # -------------------------------------------------------------------------
 
     def amount_of_common_words(self):
-        self.result_lang_x_lang.set("12")
+        first_lang = self.lang_x.get()
+        second_lang = self.lang_y.get()
+        answer = common_words_count(first_lang, second_lang)
+        self.result_lang_x_lang.set(answer)
 
     # -------------------------------------------------------------------------
 
     def common_words(self):
+        first_lang = self.lang_x.get()
+        second_lang = self.lang_y.get()
+        answer = words_in_common(first_lang, second_lang)
+
+        for item in answer:
+            self.list_lang_x_lang.insert(END, item)
+
         self.result_lang_x_lang.set("Palabras comunes")
 
     # -------------------------------------------------------------------------
@@ -243,7 +292,7 @@ class UserInterface(Tk):
     # -------------------------------------------------------------------------
 
     def contribution_by_lang(self):
-        self.result_lang_x_lang.set("Porcentaje de contribuciones al lenguaje")
+        self.result_lang_x_lang.set("Porcentajes")
 
 # -----------------------------------------------------------------------------
 
