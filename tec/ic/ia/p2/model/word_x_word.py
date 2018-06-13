@@ -17,12 +17,11 @@ pyDatalog.create_terms("uncle, is_uncle")
 # -----------------------------------------------------------------------------
 
 # X proviene de Y.
-child(X, Y) <= etymology(LX, X, LY, Y)
-child(X, Y) <= etymological_origin_of(LY, Y, LX, X)
+child(X, Y) <= child(X, Y) & ~(X == Y)
+child(X, Y) <= etymology(LY, Y, LX, X)
+child(X, Y) <= etymological_origin_of(LX, X, LY, Y)
 child(X, Y) <= has_derived_form(LY, Y, LX, X)
 child(X, Y) <= is_derived_from(LX, X, LY, Y)
-
-# -----------------------------------------------------------------------------
 
 # Si X proviene de Y entonces True.
 # Forma para obtener una relación con false en vez de una lista vacía.
@@ -38,12 +37,12 @@ parent(X, Y) <= child(Y, X)
 
 # X es ancestro de Y.
 ancestor(X, Y) <= parent(X, Y)
-ancestor(X, Y) <= parent(X, A) & ancestor(A, Y)
+ancestor(X, Y) <= parent(X, A) & ancestor(A, Y) & ~(X == Y)
 
 # -----------------------------------------------------------------------------
 
 # X es hermano del término Y. Es bidireccional.
-siblings(X, Y) <= siblings(Y, X)
+siblings(X, Y) <= siblings(Y, X) & ~(X == Y)
 siblings(X, Y) <= child(X, P) & child(Y, P) & ~(X == Y)
 
 # -----------------------------------------------------------------------------
@@ -61,7 +60,7 @@ are_siblings(X, Y, False) <= ~siblings(X, Y)
 # Sirve para determinar las clases de cada uno de los tíos.
 ancestor_level(X, Y, 1) <= parent(X, Y)
 ancestor_level(X, Y, L) <= (
-    parent(X, H) & ancestor_level(H, Y, L2) & (L == L2 + 1)
+    parent(X, H) & ancestor_level(H, Y, L2) & (L == L2 + 1) & ~(X == Y)
 )
 
 # -----------------------------------------------------------------------------
