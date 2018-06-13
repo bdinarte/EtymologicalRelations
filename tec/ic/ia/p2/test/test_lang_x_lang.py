@@ -60,3 +60,26 @@ def test_common_words_count():
     second_count_success = obtained_count == expected_count
 
     assert(first_count_success and second_count_success)
+
+
+# ----------------------------------------------------------------------------
+
+
+def test_aux_count_words_input():
+
+    """
+    Prueba de la función para obtener la cantidad de palabras que el primer
+    lenguaje aportó al segundo
+    Entradas: No aplica
+    @return Sin retorno
+    """
+
+    obtained_count = aux_count_words_input('eng', 'aaq')
+    expected_count = 2
+    first_count_success = obtained_count == expected_count
+
+    obtained_count = aux_count_words_input('aaq', 'zsm')
+    expected_count = 0
+    second_count_success = obtained_count == expected_count
+
+    assert(first_count_success and second_count_success)

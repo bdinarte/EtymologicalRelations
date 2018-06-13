@@ -7,8 +7,6 @@ sys.path.insert(0, os.path.abspath('..'))
 # ----------------------------------------------------------------------------
 
 from model.lang_x_lang import *
-from util.file_management import get_etim_database
-from model.data_management import assert_facts_from_dataframe
 
 # ----------------------------------------------------------------------------
 
@@ -33,5 +31,15 @@ def words_in_common(language1, language2):
 def common_words_count(language1, language2):
 
     word_count = count_lang_common_words[language1, language2] == Total
+
+    return word_count.v()[0] if word_count.v() else 0
+
+
+# ----------------------------------------------------------------------------
+
+
+def aux_count_words_input(language1, language2):
+
+    word_count = count_words_input[language1, language2] == Total
 
     return word_count.v()[0] if word_count.v() else 0
