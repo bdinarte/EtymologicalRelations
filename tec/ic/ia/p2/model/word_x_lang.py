@@ -175,76 +175,7 @@ def set_of_languages_related_word(word):
     :return: <array> del conjunto de idiomas que estan relacionados
     con una palabra en específico
     """
+
     query = lang_related_word(word, LX)
 
     return query
-
-
-# -----------------------------------------------------------------------------
-# PRUEBAS DE LAS FUNCIONES
-# -----------------------------------------------------------------------------
-word_aux = '-lik'
-language_aux = 'afr'
-
-# -------------------------------------------
-print('\n** word_related_language... **')
-answer = word_related_language(word_aux, language_aux)
-
-confirm = 'SI' if answer else 'NO'
-resp = "La palabra '%s' %s está relacionada con el lenguaje '%s'"\
-       % (word_aux, confirm, language_aux)
-print(resp)
-
-# -------------------------------------------
-print('\n** set_of_words_in_language... **')
-words_aux = set_of_words_in_language(word_aux, language_aux)
-
-words_aux = words_aux.data
-if len(words_aux) > 0:
-    resp = "La palabra '%s' genera las siguientes palabras" \
-           " en el lenguaje '%s':" % (word_aux, language_aux)
-    print(resp)
-    for i in words_aux:
-        print('\t%s' %i)
-else:
-    resp = "La palabra '%s' no genera ninguna otra en el lenguaje '%s'" \
-           % (word_aux, language_aux)
-    print(resp)
-
-# -------------------------------------------
-print('\n** set_of_languages_related_word... **')
-"""
-afr: -lik	rel:etymological_origin_o   eng: persoonlik
-afr: -lik	rel:etymological_origin_o   afr: tydelik
-afr: -lik	rel:etymological_origin_o   zsm: wetenskaplik
-afr: -lik	rel:etymological_origin_o   afr: wetlik
-afr: -lik	rel:has_derived_form    afr: wetenskaplik
-afr: -tjie	rel:etymological_origin_o   afr: dogtertjie
-afr: -tjie	rel:etymological_origin_o   afr: seuntjie
-afr: -tji   rel:etymological_origin_o   afr: uitjie
-afr: Afrikaner	rel:etymological_origin_o   por: africâner
-por: lan    rel:has_derived_form    ita: April
-ita: April	rel:has_derived_form    afr: -lik
-zsm: wetenskaplik    rel:etymological_origin_   spa: tydelik
-
---- Abajo ---
-afr 
-zsm spa
-eng
-
---- Arriba ---
-ita por
-"""
-
-langs_aux = set_of_languages_related_word(word_aux)
-langs_aux = langs_aux.data
-if len(langs_aux) > 0:
-    resp = "La palabra '%s' está relacionada con los siguientes idiomas:" \
-           % word_aux
-    print(resp)
-    for i in langs_aux:
-        print('\t%s' %i)
-else:
-    resp = "La palabra '%s' no está relacionada con ningún idioma" \
-           % word_aux
-    print(resp)
