@@ -46,7 +46,8 @@ pyDatalog.create_terms('etymology, etymological_origin_of,'
                        'etymologically_related, has_derived_form,'
                        'is_derived_from, orthography')
 
-pyDatalog.create_terms("is_son, is_ancestor, is_parent, lang_related_word")
+pyDatalog.create_terms("is_son, is_ancestor, is_parent, lang_related_word,"
+                       "is_son2, is_ancestor2, is_parent2")
 
 + etymological_origin_of("afr", "-lik", "eng", "persoonlik")
 + etymological_origin_of("afr", "-lik", "afr", "tydelik")
@@ -117,21 +118,11 @@ is_son(X, Y, LX) <= etymological_origin_of(LY, Y, LX, X)
 is_son(X, Y, LX) <= has_derived_form(LY, Y, LX, X)
 is_son(X, Y, LX) <= is_derived_from(LX, X, LY, Y)
 
-# -----------------------------------------------------------------------------
-# Pruebas para is_ancestor e is_parent
-# -----------------------------------------------------------------------------
-
 is_parent(X, Y, LX) <= is_son(Y, X, LX)
 
 is_ancestor(A, LX, B) <= is_parent(A, B, LX)
 is_ancestor(X, LX, Y) <= is_parent(X, A, LX) & is_ancestor(A, LX, Y)
 
-lang_related_word(X, LX, LY) <=  is_ancestor(X, LX, B)
-lang_related_word(Y, LX, LY) <=  is_ancestor(Y, LY, X)
-
-print(lang_related_word('-lik', LX, LY))
-print(is_ancestor('-lik', LX, B))
-print(is_ancestor(Y, LY, '-lik'))
 # -----------------------------------------------------------------------------
 
 def set_of_words_in_language(word, language):
@@ -155,6 +146,26 @@ def set_of_words_in_language(word, language):
 
 # -----------------------------------------------------------------------------
 
+# X = Primera palabra
+# Y = Segunda palabra
+# True es que X si es hija de Y
+is_son2(X, Y, LY, True) <= is_son2(X, Y, LY)
+is_son2(X, Y, LY, False) <= ~is_son2(X, Y, LY)
+
+is_son2(X, Y, LY) <= etymology(LX, X, LY, Y)
+is_son2(X, Y, LY) <= etymological_origin_of(LY, Y, LX, X)
+is_son2(X, Y, LY) <= has_derived_form(LY, Y, LX, X)
+is_son2(X, Y, LY) <= is_derived_from(LX, X, LY, Y)
+
+is_parent2(X, Y, LY) <= is_son2(Y, X, LY)
+
+is_ancestor2(A, LX, B) <= is_parent2(A, B, LX)
+is_ancestor2(X, LX, Y) <= is_parent2(X, Y, LX) & is_ancestor2(A, LX, X)
+
+lang_related_word(X, LX) <=  is_ancestor(X, LX, B)
+lang_related_word(X, LX) <=  is_ancestor2(Y, LX, X)
+
+
 def set_of_languages_related_word(word):
     """
     ● Listar los idiomas relacionados con una palabra
@@ -164,7 +175,7 @@ def set_of_languages_related_word(word):
     :return: <array> del conjunto de idiomas que estan relacionados
     con una palabra en específico
     """
-    query = lang_related_word(word, LX, LY)
+    query = lang_related_word(word, LX)
 
     return query
 
@@ -172,7 +183,7 @@ def set_of_languages_related_word(word):
 # -----------------------------------------------------------------------------
 # PRUEBAS DE LAS FUNCIONES
 # -----------------------------------------------------------------------------
-word_aux = 'aand'
+word_aux = '-lik'
 language_aux = 'afr'
 
 # -------------------------------------------
