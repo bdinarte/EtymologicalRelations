@@ -1,5 +1,9 @@
 # -----------------------------------------------------------------------------
 
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+
 from tkinter import *
 from controller.word_x_word import *
 from controller.word_x_lang import *
@@ -257,7 +261,7 @@ class UserInterface(Tk):
         word = self.word_p.get()
         self.lang_d.set("No aplica")
 
-        answer = set_of_languages_related_word(word, lang)
+        answer = set_of_languages_related_word(word)
 
         for item in answer:
             self.list_word_x_lang.insert(END, item)

@@ -1,5 +1,9 @@
 # -----------------------------------------------------------------------------
 
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+
 from model.word_x_word import *
 
 # TODO: Hechos para probar la interfaz gráfica

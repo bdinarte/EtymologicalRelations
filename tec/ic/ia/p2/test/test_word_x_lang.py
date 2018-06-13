@@ -1,7 +1,5 @@
 
-import pytest
-
-from controller.word_x_lang import *
+from ..controller.word_x_lang import *
 
 
 # -----------------------------------------------------------------------------

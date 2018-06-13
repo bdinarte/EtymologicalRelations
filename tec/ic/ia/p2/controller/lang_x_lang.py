@@ -1,9 +1,12 @@
 # ----------------------------------------------------------------------------
 
-from model.lang_x_lang import *
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
 
 # ----------------------------------------------------------------------------
 
+from model.lang_x_lang import *
 from util.file_management import get_etim_database
 from model.data_management import assert_facts_from_dataframe
 

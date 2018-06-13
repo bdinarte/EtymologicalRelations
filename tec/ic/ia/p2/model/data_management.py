@@ -1,6 +1,10 @@
 
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+
 from pyDatalog import pyDatalog
-from os import path as ospath
+from os import path as ospath 
 from util.file_management import get_etim_database, get_file_content
 import re
 

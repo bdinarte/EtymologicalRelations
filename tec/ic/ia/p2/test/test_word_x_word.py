@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 
 import logging
-from model.word_x_word import *
+from ..model.word_x_word import *
 
 # pyEngine.Logging = True
 # logging.basicConfig(level=logging.DEBUG)

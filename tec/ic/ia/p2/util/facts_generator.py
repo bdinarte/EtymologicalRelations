@@ -5,6 +5,10 @@ archivo procesado con los hechos a agregarse a la base de conocimiento del
 programa
 """
 
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+
 from pyDatalog import pyDatalog
 from util.file_management import get_etim_database
 from os import path as ospath

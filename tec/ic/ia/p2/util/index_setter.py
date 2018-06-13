@@ -5,6 +5,10 @@ previos a la ejecución del programa principal que sirven para implementación
 de ciertos algoritmos para alcanzar una mejor eficiencia.
 """
 
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+
 from util.file_management import get_etim_database
 from os import path as ospath
 
