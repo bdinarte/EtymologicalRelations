@@ -22,7 +22,6 @@ def setup_module(module):
     + has_derived_form("por", "lan", "ita", "April")
     + has_derived_form("ita", "April", "afr", "-lik")
     + has_derived_form("afr", "Desember", "afr", "Decembermaande")
-    + is_derived_from("afr", "Decembermaande", "afr", "Desember")
 
 
 # -----------------------------------------------------------------------------
@@ -32,10 +31,32 @@ def setup_module(module):
 def test_word_related_language_true():
 
     """
-    Descripción
+    Prueba utilizada para verificar la correcta funcionalidad a la hora de:
+    ● Determinar si una palabra está relacionada con un idioma (Si / No)
 
-    Entradas: No aplica
-    @return Sin retorno
+    Se utilizan los siguientes parámetros:
+    :param word: <string> indica la palabra utilizada para
+    encontrar una posible existencia en el idioma <language>
+        En esta prueba el word es igual a -> '-lik'
+
+    :param language: <string> para indicar el idioma sobre el que
+    se determinará la existencia de la palabra <word>
+        En esta prueba el language es igual a -> 'afr'
+
+    Respecto al valor de retorno que se va verificar, el mismo es
+    <booleano> para indicar si la palabra tiene relación o no con el idioma
+
+    La respuesta esperada es un valor booleano de True ya que dados los hechos
+    definidos en el setup_module, los siguientes hacen que la respuesta
+    sea positiva:
+
+        + etymological_origin_of("afr", "-lik", "eng", "persoonlik")
+        + etymological_origin_of("afr", "-lik", "afr", "tydelik")
+        + etymological_origin_of("afr", "-lik", "zsm", "wetenskaplik")
+        + etymological_origin_of("afr", "-lik", "afr", "wetlik")
+        + has_derived_form("afr", "-lik", "afr", "wetenskaplik")
+        + has_derived_form("ita", "April", "afr", "-lik")
+
     """
 
     word_aux = '-lik'
@@ -49,10 +70,24 @@ def test_word_related_language_true():
 
 def test_word_related_language_false():
     """
-    Descripción
+    Prueba utilizada para verificar la correcta funcionalidad a la hora de:
+    ● Determinar si una palabra está relacionada con un idioma (Si / No)
 
-    Entradas: No aplica
-    @return Sin retorno
+    Se utilizan los siguientes parámetros:
+    :param word: <string> indica la palabra utilizada para
+    encontrar una posible existencia en el idioma <language>
+        En esta prueba el word es igual a -> 'hola'
+
+    :param language: <string> para indicar el idioma sobre el que
+    se determinará la existencia de la palabra <word>
+        En esta prueba el language es igual a -> 'afr'
+
+    Respecto al valor de retorno que se va verificar, el mismo es
+    <booleano> para indicar si la palabra tiene relación o no con el idioma
+
+    La respuesta esperada es un valor booleano de True ya que dados los hechos
+    definidos en el setup_module, los mismos no cumplen ninguna condicion
+        'afr' : 'hola'
     """
 
     word_aux = 'hola'
@@ -66,15 +101,31 @@ def test_word_related_language_false():
 
 def test_set_of_words_in_language():
     """
-    Descripción
+    Prueba utilizada para verificar la correcta funcionalidad a la hora de:
+    ● Obtener el conjunto de todas las palabras en un idioma originadas
+    por una palabra específica (e.g. una palabra específica en latín puede
+    originar múltiples palabras en español)
 
-        wetlik
-        tydelik
-        persoonlik
-        wetenskaplik
+    Se utilizan los siguientes parámetros:
+    :param word: <string> indica la palabra utilizada para
+    encontrar el conjunto de palabras que genera en un idioma <language>
+        En esta prueba el word es igual a -> '-lik'
 
-    Entradas: No aplica
-    @return Sin retorno
+    :param language: <string> indica el idioma sobre el que se determinará
+    la existencia del conjunto de palabras
+        En esta prueba el language es igual a -> 'afr'
+
+    Respecto al valor de retorno que se va verificar, el mismo es
+    un <array> con el conjunto de palabras en un idioma que pueden ser
+    generadas por una palabra específica
+
+    La respuesta esperada es un set de 'words', que dados los hechos
+    definidos en el setup_module, una palabra de origen y un lenguaje de
+    destino, la palabra origen da lugar a las siguientes que están
+    en el lenguaje 'afr':
+        -> tydelik
+        -> wetenskaplik
+        -> wetlik
     """
 
     word_aux = '-lik'
@@ -90,37 +141,34 @@ def test_set_of_words_in_language():
 
 def test_set_of_languages_related_word():
     """
-    Descripción
+    Prueba utilizada para verificar la correcta funcionalidad a la hora de:
+    ● Listar los idiomas relacionados con una palabra
 
-    Entradas: No aplica
-    @return Sin retorno
-    """
+    Se utilizan los siguientes parámetros:
+    :param word: <string> de la palabra sobre la cual se determinaran
+    los idiomas que la misma genera
+        En esta prueba el word es igual a -> '-lik'
 
-    """
-    afr: -lik	rel:etymological_origin_o   eng: persoonlik
-    afr: -lik	rel:etymological_origin_o   afr: tydelik
-    afr: -lik	rel:etymological_origin_o   zsm: wetenskaplik
-    afr: -lik	rel:etymological_origin_o   afr: wetlik
-    afr: -lik	rel:has_derived_form    afr: wetenskaplik
-    afr: -tjie	rel:etymological_origin_o   afr: dogtertjie
-    afr: -tjie	rel:etymological_origin_o   afr: seuntjie
-    afr: -tji   rel:etymological_origin_o   afr: uitjie
-    afr: Afrikaner	rel:etymological_origin_o   por: africâner
-    por: lan    rel:has_derived_form    ita: April
-    ita: April	rel:has_derived_form    afr: -lik
-    zsm: wetenskaplik    rel:etymological_origin_   spa: tydelik
+    Respecto al valor de retorno que se va verificar, el mismo es
+    un <array> del conjunto de idiomas que estan relacionados
+    con la palabra especificada
 
-    --- Abajo ---
-    afr 
-    zsm spa
-    eng
+    La respuesta esperada es un set de 'languages', que dados los hechos
+    definidos en el setup_module y una palabra base, la misma se relaciona a
+    los siguientes lenguajes:
+        -> afr
+        -> eng
+        -> ita
+        -> zsm
 
-    --- Arriba ---
-    ita por
+    Note que estos se originan de los siguientes hechos:
+        + etymological_origin_of("afr", "-lik", "afr", "tydelik")
+        + etymological_origin_of("afr", "-lik", "eng", "persoonlik")
+        + etymological_origin_of("afr", "-lik", "zsm", "wetenskaplik")
+        + has_derived_form("ita", "April", "afr", "-lik")
     """
 
     word_aux = '-lik'
-    language_aux = 'afr'
 
     langs = set_of_languages_related_word(word_aux)
 
