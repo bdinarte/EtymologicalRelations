@@ -112,12 +112,12 @@ pyDatalog.create_terms('input_percent', 'Percent', 'Partial')
 
 pyDatalog.create_terms('langs_related_lang, son')
 
-son(Lang1, Lang2) <= etymology(Lang1, Word1, Lang2, Word2)
-son(Lang1, Lang2) <= etymological_origin_of(Lang2, Word2, Lang1, Word1)
-son(Lang1, Lang2) <= has_derived_form(Lang2, Word2, Lang1, Word1)
+son(Lang2, Lang1) <= etymology(Lang2, Word2, Lang1, Word1)
+son(Lang2, Lang1) <= etymological_origin_of(Lang1, Word1, Lang2, Word2)
+son(Lang2, Lang1) <= has_derived_form(Lang1, Word1, Lang2, Word2)
 
 # Determina el conjunto de lenguajes relacionados a otro lenguaje
-langs_related_lang(Lang1, Lang2, Total) <=  son(Lang1, Lang2) & (Total == [input_percent[Lang2, Lang1]])
+langs_related_lang(Lang1, Lang2, Total) <=  son(Lang2, Lang1) & (Total == [input_percent[Lang1, Lang2]])
 
 # -----------------------------------------------------------------------------
 
@@ -133,4 +133,4 @@ langs_related_lang(Lang1, Lang2, Total) <=  son(Lang1, Lang2) & (Total == [input
 + etymological_origin_of('sas', 'mom', 'aaq', 'son4')
 + has_derived_form('sss', 'mom', 'isd', 'son5')
 
-print(langs_related_lang('aaq', Lang1, Total))
+print(langs_related_lang(Lang1, Lang2, Total))
