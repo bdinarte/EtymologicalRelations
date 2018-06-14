@@ -108,8 +108,9 @@ class UserInterface(Tk):
 
         self.btn_amount_of_common_words = Button(self.lf_lang_x_lang, text="Cantidad palabras comunes", command=self.amount_of_common_words)
         self.btn_common_words = Button(self.lf_lang_x_lang, text="Listar palabras comunes", command=self.common_words)
-        self.btn_greater_contribution = Button(self.lf_lang_x_lang, text="Idioma que más aporto a X", command=self.greater_contribution)
-        self.btn_contribution_by_lang = Button(self.lf_lang_x_lang, text="Porcentajes de aporte a X", command=self.contribution_by_lang)
+        self.btn_greater_contribution = Button(self.lf_lang_x_lang,
+                                               text="Idioma que más aporto a otro", command=self.greater_contribution)
+        self.btn_contribution_by_lang = Button(self.lf_lang_x_lang, text="Porcentajes de aporte", command=self.contribution_by_lang)
         self.list_lang_x_lang = Listbox(self.lf_lang_x_lang)
 
     # -------------------------------------------------------------------------
