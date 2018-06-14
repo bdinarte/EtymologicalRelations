@@ -20,6 +20,7 @@ def setup_module(module):
     + etymology('isd', 'son3', 'equ', 'father3')
     + etymological_origin_of('sas', 'mom', 'isd', 'son4')
     + has_derived_form('sss', 'mom', 'isd', 'son5')
+    + etymologically_related('lla','ma','alp','aca')
 
 # ----------------------------------------------------------------------------
 
@@ -147,3 +148,14 @@ def test_aux_input_percent():
     second_result_success = obtained_percent == expected_percent
 
     assert (first_result_success and second_result_success)
+
+
+def test_get_all_lang_inputs():
+    """
+    Prueba de la función para obtener los porcentajes que cada lenguaje aportó
+    a los otros
+    Entradas: No aplica
+    @return Sin retorno
+    """
+
+    obtained_results = get_all_lang_inputs()

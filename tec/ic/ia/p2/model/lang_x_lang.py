@@ -15,10 +15,6 @@ pyDatalog.create_terms('etymological_origin_of,'
                        'etymologically_related')
 pyDatalog.create_terms('Lang1, Lang2, Word1, Word2, Total')
 
-+ etymological_origin_of('','','','')
-+ has_derived_form('','','','')
-+ etymology('','','','')
-+ etymologically_related('','','','')
 + etymological_origin_of_active(True)
 + has_derived_form_active(True)
 + etymology_active(True)
@@ -103,34 +99,37 @@ pyDatalog.create_terms('count_words_received')
 pyDatalog.create_terms('input_percent', 'Percent', 'Partial')
 
 # Relaciones para la función input_percent
-# Retorna el porcentaje que el lenguaje uno le aportó al segundo
+# Obtiene el porcentaje que el lenguaje uno le aportó al segundo
 (input_percent[Lang1, Lang2] == Percent) <= (
     (Partial == count_input_words[Lang1, Lang2]) &
     (Total == count_words_received[Lang2]) &
     (Percent == Partial/Total)
 )
 
-pyDatalog.create_terms('langs_related_lang, son')
+# ----------------------------------------------------------------------------
 
-son(Lang2, Lang1) <= etymology(Lang2, Word2, Lang1, Word1)
-son(Lang2, Lang1) <= etymological_origin_of(Lang1, Word1, Lang2, Word2)
-son(Lang2, Lang1) <= has_derived_form(Lang1, Word1, Lang2, Word2)
+# Términos para la función all_lang_inputs
+pyDatalog.create_terms('all_lang_inputs, inputs_words')
 
-# Determina el conjunto de lenguajes relacionados a otro lenguaje
-langs_related_lang(Lang1, Lang2, Total) <=  son(Lang2, Lang1) & (Total == [input_percent[Lang1, Lang2]])
+# Relaciones para la función all_lang_inputs
+# Obtiene los lenguajes que aportan a otro lenguaje
+inputs_words(Lang2, Lang1) <= (
+    etymology(Lang2, Word2, Lang1, Word1) &
+    etymology_active(True)
+)
+inputs_words(Lang2, Lang1) <= (
+    etymological_origin_of(Lang1, Word1, Lang2, Word2) &
+    etymological_origin_of_active(True)
+)
+inputs_words(Lang2, Lang1) <= (
+    has_derived_form(Lang1, Word1, Lang2, Word2) &
+    has_derived_form_active(True)
+)
+
+# Agrega el porcentaje de aporte
+all_lang_inputs(Lang1, Lang2, Total) <= (
+    inputs_words(Lang2, Lang1) &
+    (Total == [input_percent[Lang1, Lang2]])
+)
 
 # -----------------------------------------------------------------------------
-
-+ etymology('abs', 'beta', 'zsm', 'beta')
-+ etymology('aaq', 'prueba1', 'eng', 'prueba1')
-+ etymology('aaq', 'senabe', 'eng', 'sannup')
-+ etymological_origin_of('abe', 'waniigan', 'eng', 'waniigan')
-+ etymological_origin_of('aaq', 'prueba2', 'eng', 'prueba2')
-+ etymology('aaq', 'prueba3', 'eng', 'prueba3')
-+ has_derived_form('equ', 'father', 'isd', 'son')
-+ has_derived_form('equ', 'father', 'isd', 'son2')
-+ etymology('aaq', 'son3', 'equ', 'father3')
-+ etymological_origin_of('sas', 'mom', 'aaq', 'son4')
-+ has_derived_form('sss', 'mom', 'isd', 'son5')
-
-print(langs_related_lang(Lang1, Lang2, Total))

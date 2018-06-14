@@ -70,3 +70,21 @@ def aux_input_percent(language1, language2):
     percent = input_percent[language1, language2] == Percent
 
     return percent.v()[0] if percent.v() else 0
+
+
+# ----------------------------------------------------------------------------
+
+
+def get_all_lang_inputs():
+
+    query_results = all_lang_inputs(Lang1, Lang2, Total)
+
+    if not query_results.v():
+        return {'No hay aportes.'}
+
+    existing_results = [result[0] + ' aporta a '
+                        + result[1] + ' un '
+                        + str(round(result[2][0], 2) * 100) + '%.'
+                        for result in query_results.data]
+
+    return existing_results
