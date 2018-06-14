@@ -118,13 +118,13 @@ de trabajo encontró que algunas relaciones eran recíprocas, entonces con solo 
 bastaría para encontrar la relación.
 
 La lista de relaciones que se consideraron a lo largo del desarrollo de este proyecto son:
+
 | Relación                  | Registros     |
 | ------------------------- | ------------- |
 | etymology                 | 473 515       |
 | etymological_origin_of    | 473 433       |
 | etymologically_related    | 538 558       |
 | has_derived_form          | 2 264 744     |
-| ------------------------- | ------------- |
 | Total:                    | 3 750 250     |
 
 
