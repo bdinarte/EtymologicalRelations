@@ -97,7 +97,7 @@ con el diseño, despliegue y ejecución de la interfaz gráfica mostrada al usua
 eventos por medio de botones, inputs para ingresar datos y áreas destinadas a mostrar las
 respuestas recibidas por parte del sistema.
 
-Por otra parte, el módulo C(Controller) se encarga de controlar el flujo de acceso
+Por otra parte, el módulo C(Controller) se encarga del flujo de acceso
 entre la vista y el modelo, entonces lo que pretende es brindar la definición de funciones
 que reciben los parámetros respectivos para ejecutar alguna de las reglas definidas en 
 la parte del modelo.
@@ -109,7 +109,7 @@ El módulo de test, contiene todas las pruebas desarrollas por medio de pytest
 para cada una de las funcionalidades que contempla el proyecto.
 
 Por último, el folder util almacena código que está relacionado a herramientas, entre 
-estas se encuentran las de lectura de archivos, escritura, entre otras cosas.
+estas se encuentran las de lectura y escritura de archivos, entre otras.
 
 ### Implementación
 En este apartado es importante mencionar que no todas las relaciones que se encontraban en 
