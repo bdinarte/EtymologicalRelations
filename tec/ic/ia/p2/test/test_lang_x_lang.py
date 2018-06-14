@@ -18,6 +18,8 @@ def setup_module(module):
     + has_derived_form('equ', 'father', 'isd', 'son')
     + has_derived_form('equ', 'father', 'isd', 'son2')
     + etymology('isd', 'son3', 'equ', 'father3')
+    + etymological_origin_of('sas', 'mom', 'isd', 'son4')
+    + has_derived_form('sss', 'mom', 'isd', 'son5')
 
 # ----------------------------------------------------------------------------
 
@@ -31,12 +33,12 @@ def test_words_in_common():
     @return Sin retorno
     """
 
-    obtained_results = set(words_in_common('aaq', 'eng'))
+    obtained_results = words_in_common('aaq', 'eng')
     expected_results = {'prueba1', 'prueba2', 'prueba3'}
     first_result_success = obtained_results == expected_results
 
     obtained_results = words_in_common('aaq', 'zsm')
-    expected_results = ['No hay palabras en común.']
+    expected_results = {'No hay palabras en común.'}
     second_result_success = obtained_results == expected_results
 
     assert(first_result_success and second_result_success)
@@ -77,12 +79,12 @@ def test_aux_input_words():
     @return Sin retorno
     """
 
-    obtained_results = set(aux_input_words('equ', 'isd'))
+    obtained_results = aux_input_words('equ', 'isd')
     expected_results = {'son', 'son2', 'son3'}
     first_result_success = obtained_results == expected_results
 
     obtained_results = aux_input_words('abs', 'aaq')
-    expected_results = ['El lenguaje no aportó nada.']
+    expected_results = {'El lenguaje no aportó nada.'}
     second_result_success = obtained_results == expected_results
 
     assert(first_result_success and second_result_success)
@@ -99,6 +101,26 @@ def test_aux_count_input_words():
 
     obtained_count = aux_count_input_words('equ', 'isd')
     expected_count = 3
+    first_count_success = obtained_count == expected_count
+
+    obtained_count = count_common_words('abs', 'aaq')
+    expected_count = 0
+    second_count_success = obtained_count == expected_count
+
+    assert(first_count_success and second_count_success)
+
+
+def test_aux_count_words_received():
+
+    """
+    Prueba de la función para obtener la cantidad de palabras que cualquier
+    lenguaje aportó al segundo
+    Entradas: No aplica
+    @return Sin retorno
+    """
+
+    obtained_count = aux_count_words_received('isd')
+    expected_count = 5
     first_count_success = obtained_count == expected_count
 
     obtained_count = count_common_words('abs', 'aaq')
