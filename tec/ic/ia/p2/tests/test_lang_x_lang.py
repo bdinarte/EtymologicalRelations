@@ -42,7 +42,7 @@ def test_words_in_common():
     expected_results = {'No hay palabras en común.'}
     second_result_success = obtained_results == expected_results
 
-    assert(first_result_success and second_result_success)
+    assert first_result_success and second_result_success
 
 
 # ----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ def test_count_common_words():
     expected_count = 0
     second_count_success = obtained_count == expected_count
 
-    assert(first_count_success and second_count_success)
+    assert first_count_success and second_count_success
 
 
 # ----------------------------------------------------------------------------
@@ -88,7 +88,10 @@ def test_aux_input_words():
     expected_results = {'El lenguaje no aportó nada.'}
     second_result_success = obtained_results == expected_results
 
-    assert(first_result_success and second_result_success)
+    assert first_result_success and second_result_success
+
+
+# ----------------------------------------------------------------------------
 
 
 def test_aux_count_input_words():
@@ -108,7 +111,10 @@ def test_aux_count_input_words():
     expected_count = 0
     second_count_success = obtained_count == expected_count
 
-    assert(first_count_success and second_count_success)
+    assert first_count_success and second_count_success
+
+
+# ----------------------------------------------------------------------------
 
 
 def test_aux_count_words_received():
@@ -128,7 +134,10 @@ def test_aux_count_words_received():
     expected_count = 0
     second_count_success = obtained_count == expected_count
 
-    assert(first_count_success and second_count_success)
+    assert first_count_success and second_count_success
+
+
+# ----------------------------------------------------------------------------
 
 
 def test_aux_input_percent():
@@ -147,7 +156,10 @@ def test_aux_input_percent():
     expected_percent = 0
     second_result_success = obtained_percent == expected_percent
 
-    assert (first_result_success and second_result_success)
+    assert first_result_success and second_result_success
+
+
+# ----------------------------------------------------------------------------
 
 
 def test_get_all_lang_inputs():
@@ -159,3 +171,20 @@ def test_get_all_lang_inputs():
     """
 
     obtained_results = get_all_lang_inputs()
+    expected_results = ['sss aporta a isd un 20.0%.',
+                        'equ aporta a isd un 60.0%.',
+                        'sas aporta a isd un 20.0%.',
+                        'aaq aporta a eng un 50.0%.',
+                        'abe aporta a eng un 50.0%.',
+                        'eng aporta a aaq un 100.0%.',
+                        'zsm aporta a abs un 100.0%.']
+
+    assert obtained_results == expected_results
+
+
+# ----------------------------------------------------------------------------
+
+
+def test_get_max_input():
+
+    assert True

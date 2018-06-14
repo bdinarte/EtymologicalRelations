@@ -88,3 +88,6 @@ def get_all_lang_inputs():
                         for result in query_results.data]
 
     return existing_results
+
+
+# ----------------------------------------------------------------------------

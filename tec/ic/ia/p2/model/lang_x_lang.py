@@ -132,4 +132,16 @@ all_lang_inputs(Lang1, Lang2, Total) <= (
     (Total == [input_percent[Lang1, Lang2]])
 )
 
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+
+# Términos para la función max_input
+pyDatalog.create_terms('max_input, Max_Dest, Max_Orig')
+
+# Relaciones para la función max_input
+# max_input(Max_Dest, Max_Orig) <= (
+#     all_lang_inputs(Lang1, Lang2, Total) &
+#     (Max_Orig == max_(Lang1, order_by=Total)) &
+#     (Max_Dest == max_(Lang2, order_by=Total))
+# )
+
+# min_, max_ (P[X]==min_(Y, order_by=Z))
