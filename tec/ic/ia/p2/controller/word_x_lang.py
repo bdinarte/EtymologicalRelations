@@ -42,7 +42,7 @@ def set_of_words_in_language(word, language):
     que pueden ser generadas por una palabra específica
     """
 
-    query = is_ancestor(word, language, X)
+    query = ancestor(word, language, X)
 
     words = [i[0] for i in query.data]
     words.sort()
