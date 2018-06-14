@@ -129,7 +129,7 @@ inputs_words(Lang2, Lang1) <= (
 # Agrega el porcentaje de aporte
 all_lang_inputs(Lang1, Lang2, Total) <= (
     inputs_words(Lang2, Lang1) &
-    (Total == [input_percent[Lang1, Lang2]])
+    (Total == input_percent[Lang1, Lang2])
 )
 
 # ----------------------------------------------------------------------------
@@ -138,7 +138,7 @@ all_lang_inputs(Lang1, Lang2, Total) <= (
 pyDatalog.create_terms('max_input, Max_Dest, Max_Orig')
 
 # Relaciones para la función max_input
-# max_input(Max_Dest, Max_Orig) <= (
+# (max_input[Lang1, Lang2] == (Max_Dest, Max_Orig)) <= (
 #     all_lang_inputs(Lang1, Lang2, Total) &
 #     (Max_Orig == max_(Lang1, order_by=Total)) &
 #     (Max_Dest == max_(Lang2, order_by=Total))

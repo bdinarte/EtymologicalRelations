@@ -84,10 +84,17 @@ def get_all_lang_inputs():
 
     existing_results = [result[0] + ' aporta a '
                         + result[1] + ' un '
-                        + str(round(result[2][0], 2) * 100) + '%.'
+                        + str(round(result[2], 2) * 100) + '%.'
                         for result in query_results.data]
 
     return existing_results
 
 
 # ----------------------------------------------------------------------------
+
+
+def get_max_input():
+
+    query_results = max_input(Max_Dest, Max_Orig)
+
+    return query_results.v()[0] if query_results.v() else 0
