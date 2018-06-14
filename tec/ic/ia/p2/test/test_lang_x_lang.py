@@ -128,3 +128,22 @@ def test_aux_count_words_received():
     second_count_success = obtained_count == expected_count
 
     assert(first_count_success and second_count_success)
+
+
+def test_aux_input_percent():
+    """
+    Prueba de la función para obtener el porcentaje que un lenguaje aportó
+    al segundo
+    Entradas: No aplica
+    @return Sin retorno
+    """
+
+    obtained_percent = aux_input_percent('equ', 'isd')
+    expected_percent = 0.6
+    first_result_success = obtained_percent == expected_percent
+
+    obtained_percent = count_common_words('abs', 'aaq')
+    expected_percent = 0
+    second_result_success = obtained_percent == expected_percent
+
+    assert (first_result_success and second_result_success)

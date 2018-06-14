@@ -88,6 +88,7 @@ pyDatalog.create_terms('count_input_words')
 )
 
 # ----------------------------------------------------------------------------
+
 # Términos para la función count_words_received
 pyDatalog.create_terms('count_words_received')
 
@@ -99,6 +100,12 @@ pyDatalog.create_terms('count_words_received')
 # ----------------------------------------------------------------------------
 
 # Términos para la función input_percent
-pyDatalog.create_terms('input_percent')
+pyDatalog.create_terms('input_percent', 'Percent', 'Partial')
 
 # Relaciones para la función input_percent
+# Retorna el porcentaje que el lenguaje uno le aportó al segundo
+(input_percent[Lang1, Lang2] == Percent) <= (
+    (Partial == count_input_words[Lang1, Lang2]) &
+    (Total == count_words_received[Lang2]) &
+    (Percent == Partial/Total)
+)

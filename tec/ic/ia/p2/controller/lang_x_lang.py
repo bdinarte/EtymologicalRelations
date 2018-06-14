@@ -65,4 +65,8 @@ def aux_count_words_received(language):
 # ----------------------------------------------------------------------------
 
 
+def aux_input_percent(language1, language2):
 
+    percent = input_percent[language1, language2] == Percent
+
+    return percent.v()[0] if percent.v() else 0
