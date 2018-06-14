@@ -109,3 +109,28 @@ pyDatalog.create_terms('input_percent', 'Percent', 'Partial')
     (Total == count_words_received[Lang2]) &
     (Percent == Partial/Total)
 )
+
+pyDatalog.create_terms('langs_related_lang, son')
+
+son(Lang1, Lang2) <= etymology(Lang1, Word1, Lang2, Word2)
+son(Lang1, Lang2) <= etymological_origin_of(Lang2, Word2, Lang1, Word1)
+son(Lang1, Lang2) <= has_derived_form(Lang2, Word2, Lang1, Word1)
+
+# Determina el conjunto de lenguajes relacionados a otro lenguaje
+langs_related_lang(Lang1, Lang2, Total) <=  son(Lang1, Lang2) & (Total == [input_percent[Lang2, Lang1]])
+
+# -----------------------------------------------------------------------------
+
++ etymology('abs', 'beta', 'zsm', 'beta')
++ etymology('aaq', 'prueba1', 'eng', 'prueba1')
++ etymology('aaq', 'senabe', 'eng', 'sannup')
++ etymological_origin_of('abe', 'waniigan', 'eng', 'waniigan')
++ etymological_origin_of('aaq', 'prueba2', 'eng', 'prueba2')
++ etymology('aaq', 'prueba3', 'eng', 'prueba3')
++ has_derived_form('equ', 'father', 'isd', 'son')
++ has_derived_form('equ', 'father', 'isd', 'son2')
++ etymology('aaq', 'son3', 'equ', 'father3')
++ etymological_origin_of('sas', 'mom', 'aaq', 'son4')
++ has_derived_form('sss', 'mom', 'isd', 'son5')
+
+print(langs_related_lang('aaq', Lang1, Total))
