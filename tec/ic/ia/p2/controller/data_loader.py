@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 import re
 import multiprocessing
-from test.timeit import timeit
+from util.timeit import timeit
 from pyDatalog import pyDatalog
 from itertools import takewhile, repeat
 
