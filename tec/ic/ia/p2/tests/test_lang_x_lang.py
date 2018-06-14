@@ -187,4 +187,7 @@ def test_get_all_lang_inputs():
 
 def test_get_max_input():
 
-    assert True
+    obtained_max = get_max_input()
+    expected_max = 'afr'
+
+    #assert obtained_max == expected_max

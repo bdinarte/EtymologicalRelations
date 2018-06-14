@@ -95,6 +95,6 @@ def get_all_lang_inputs():
 
 def get_max_input():
 
-    query_results = max_input(Max_Dest, Max_Orig)
+    query_results = max_orig[Lang1] == Total
 
     return query_results.v()[0] if query_results.v() else 0
