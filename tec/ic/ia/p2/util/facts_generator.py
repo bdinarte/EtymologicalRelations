@@ -28,7 +28,7 @@ print('Base de datos cargada a memoria! ' + str(time() - s) + ' segundos.')
 
 s = time()
 with open('..\\files\\facts.txt', 'a', encoding='UTF-8') as facts_file:
-    striing = ''
+
     for i, row in data_df.iterrows():
 
         valid_relations = ['etymological_origin_of',

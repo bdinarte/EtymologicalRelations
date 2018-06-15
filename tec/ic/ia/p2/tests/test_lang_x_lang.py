@@ -187,7 +187,12 @@ def test_get_all_lang_inputs():
 
 def test_get_max_input():
 
-    obtained_max = get_max_input()
-    expected_max = 'afr'
+    obtained_max = get_max_input('isd')
+    expected_max = 'Idioma: equ a: isd con 60.0%.'
+    first_result_success = obtained_max == expected_max
 
-    #assert obtained_max == expected_max
+    obtained_max = get_max_input()
+    expected_max = 'Idioma: zsm a: abs con 100.0%.'
+    second_result_success = obtained_max == expected_max
+
+    assert first_result_success and second_result_success

@@ -75,12 +75,15 @@ def aux_input_percent(language1, language2):
 # ----------------------------------------------------------------------------
 
 
-def get_all_lang_inputs():
+def get_all_lang_inputs(language=''):
 
-    query_results = all_lang_inputs(Lang1, Lang2, Total)
+    if language == '':
+        query_results = all_lang_inputs(Lang1, Lang2, Total)
+    else:
+        query_results = all_lang_inputs(Lang1, language, Total)
 
     if not query_results.v():
-        return {'No hay aportes.'}
+        return ['No hay aportes.']
 
     existing_results = [result[0] + ' aporta a '
                         + result[1] + ' un '
@@ -93,8 +96,18 @@ def get_all_lang_inputs():
 # ----------------------------------------------------------------------------
 
 
-def get_max_input():
+def get_max_input(language=''):
 
-    query_results = max_orig[Lang1] == Total
+    if language == '':
+        query_results = max_input(Total, Lang2)
+    else:
+        query_results = max_input(Total, language)
 
-    return query_results.v()[0] if query_results.v() else 0
+    if not query_results.v():
+        return 'No hay aportes.'
+
+    max_input_string = str('Idioma: ' + query_results.data[0][0][1] + ' a: '
+                           + query_results.data[0][0][2] + ' con '
+                           + str(query_results.data[0][0][0]*100) + '%.')
+
+    return max_input_string
