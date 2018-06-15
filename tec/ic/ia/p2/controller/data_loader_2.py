@@ -8,9 +8,17 @@ sys.path.insert(0, os.path.abspath('..'))
 
 import re
 import multiprocessing
+from threading import Thread
 from util.timeit import timeit
-from pyDatalog import pyDatalog
+from pyDatalog import pyDatalog, Logic
 from itertools import takewhile, repeat
+
+import logging
+from pyDatalog import pyEngine
+
+pyEngine.Logging = True
+logging.basicConfig(level=logging.DEBUG)
+
 
 # -----------------------------------------------------------------------------
 
@@ -39,42 +47,49 @@ def get_file_rows_amount(filename):
 
 @timeit
 def load_facts_from_databse(filename):
-
-    cpu_count = multiprocessing.cpu_count()
-    pool = multiprocessing.Pool(processes=cpu_count)
+    cpu_count = 50
     n_lines = get_file_rows_amount(filename)
-    create_and_exec_chunks(pool, filename, n_lines, cpu_count)
-    pool.close()
+    create_and_exec_chunks(filename, n_lines, cpu_count)
 
 # -----------------------------------------------------------------------------
 
-def create_and_exec_chunks(pool, filename, n_lines, cpu_count):
+def create_and_exec_chunks(filename, n_lines, cpu_count):
+
+    Logic()
+    facts_set = Logic(True)
 
     current_line = 0
     last_line = n_x_cpu = n_lines // cpu_count
 
-    jobs = []
+    threads = []
 
     for _ in range(cpu_count - 1):
-        args = (filename, current_line, last_line,)
-        jobs.append(pool.apply_async(load_facts_from_chunk, args))
+        args = (facts_set, filename, current_line, last_line,)
+        threads.append(Thread(target=load_facts_from_chunk, args=args))
         last_line += n_x_cpu
         current_line += n_x_cpu
 
-    args = (filename, last_line, n_lines,)
-    jobs.append(pool.apply_async(load_facts_from_chunk, args))
+    args = (facts_set, filename, last_line, n_lines,)
+    threads.append(Thread(target=load_facts_from_chunk, args=args))
 
-    for job in jobs:
-        job.get()
+    for thread in threads:
+        thread.start()
+
+    for thread in threads:
+        thread.join()
 
 # -----------------------------------------------------------------------------
 
-def load_facts_from_chunk(filename, start, end):
+def load_facts_from_chunk(facts_set, filename, start, end):
+    # print(facts_set)
+    print("thread procesando de {} hasta {}".format(start, end))
     pattern = get_pattern_to_match_facts()
     with open(filename, mode="r", encoding="utf8") as file:
         for i, line in enumerate(file):
             if start <= i < end:
                 match_and_assert_fact(pattern, line)
+                if(i%1000 == 0):
+                    print(i)
 
 # -----------------------------------------------------------------------------
 
@@ -86,16 +101,27 @@ def match_and_assert_fact(pattern, line):
 # -----------------------------------------------------------------------------
 
 def assert_fact_from_match(match):
-    pyDatalog.assert_fact(
-        match.group(3),
-        match.group(1), match.group(2),
-        match.group(4), match.group(5)
-    )
+    pass
+    # pyDatalog.assert_fact(
+    #     match.group(3),
+    #     match.group(1), match.group(2),
+    #     match.group(4), match.group(5)
+    # )
 
 # -----------------------------------------------------------------------------
 
 if __name__ ==  '__main__':
+
     filename = "C:\\Git\\EtymologicalRelations\\tec\\ic\\ia\\p2\\files\\etymwn.tsv"
+
+    # load_facts_from_databse(filename)
+    # Logic()
+    # logic_set = Logic(True)
+    # print(logic_set)
+
     load_facts_from_databse(filename)
+    # load_facts_from_chunk(None, filename, 0, 300)
+    # print(pyDatalog.ask("etymology('afr', 'denkbeeldig', X , Y)"))
+
 
 # -----------------------------------------------------------------------------
