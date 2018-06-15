@@ -172,4 +172,9 @@ print('\n-------------\n')
 print(ancestor('kkkkkk', 'spa', Y))
 
 print('\n-------------\n')
-print(word_related_lang('jjjjjjj', 'spa', Y))
+
+pyDatalog.create_terms('ancestor_dinarte')
+
+ancestor_dinarte(LX, LY, Word) <= word_related_lang(Word, LX) & word_related_lang(Word, LY)
+
+print(ancestor_dinarte('spa', 'por',  Word))
