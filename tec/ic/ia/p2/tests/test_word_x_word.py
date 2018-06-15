@@ -3,8 +3,8 @@
 import logging
 from ..model.word_x_word import *
 
-# pyEngine.Logging = True
-# logging.basicConfig(level=logging.DEBUG)
+pyEngine.Logging = True
+logging.basicConfig(level=logging.DEBUG)
 
 # -----------------------------------------------------------------------------
 #
@@ -29,7 +29,6 @@ from ..model.word_x_word import *
 
 def setup_module(module):
     + etymology("-", "padre", "-", "ego")
-    + is_derived_from("-", "ego", "-", "padre")
     + etymological_origin_of("-", "ego", "-", "padre")
     + has_derived_form("-", "tatarabuelo", "-", "bisabuelo")
     + has_derived_form("-", "tatarabuelo", "-", "tio_bisabuelo")
