@@ -113,3 +113,5 @@ venv.bak/
 *.tsv
 
 tec/ic/ia/p2/tests/tests_julian\.py
+
+tec/ic/ia/p2/files/
