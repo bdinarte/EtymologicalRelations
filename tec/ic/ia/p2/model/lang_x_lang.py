@@ -137,16 +137,12 @@ all_lang_inputs(Lang1, Lang2, Total) <= (
 # Términos para la función max_input
 pyDatalog.create_terms('max_input, max_orig, max_dest, Max_Orig, Max_Dest')
 
-(max_orig[Max_Orig] == max_(Max_Orig, order_by=Total)) <= (
+(max_orig[Max_Orig, Lang2] == max_(Max_Orig, order_by=Total)) <= (
     all_lang_inputs(Lang1, Lang2, Total) &
     (Max_Orig == (Total, Lang1, Lang2))
 )
 
-# Relaciones para la función max_input
-max_input(Max_Orig) <= (
-    all_lang_inputs(Lang1, Lang2, Total) &
-    (Max_Orig == max_orig[Lang1, Total])
-)
+max_orig(Total, Lang2) <= (Total == max_orig[Max_Orig, Lang2])
 
 
 + etymology('abs', 'beta', 'zsm', 'beta')
@@ -162,7 +158,11 @@ max_input(Max_Orig) <= (
 + has_derived_form('sss', 'mom', 'isd', 'son5')
 + etymologically_related('lla','ma','alp','aca')
 
-max_orig(Total) <= (Total == max_orig[Max_Orig])
+query_results = max_orig(Total, Lang2)
+print(query_results)
 
-query_results = max_orig(Total)
+
+print('\n------\n')
+query_results = all_lang_inputs(Lang1, Lang2, Total)
+
 print(query_results)
