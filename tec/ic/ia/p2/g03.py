@@ -1,22 +1,25 @@
 
 # -----------------------------------------------------------------------------
 
-from os import path as ospath
-from sys import path as syspath
+import os
+import sys
+sys.path.insert(0, os.path.abspath(".."))
+
+import logging
+from pyDatalog import pyDatalog, pyEngine
+
+pyEngine.Logging = True
+logging.basicConfig(level=logging.DEBUG, format="%(message)s")
+
+from view.user_interface import *
 
 # -----------------------------------------------------------------------------
 
-from ui.user_interface import *
 
-# -----------------------------------------------------------------------------
-
-mainfile_path = ospath.abspath(__file__)
-base_path = ospath.split(mainfile_path)[0]
-syspath.append(base_path)
-
-
-if __name__ == '__main__':
+def run():
     UserInterface().mainloop()
 
-# -----------------------------------------------------------------------------
+if __name__ == '__main__':
+    run()
 
+# -----------------------------------------------------------------------------
