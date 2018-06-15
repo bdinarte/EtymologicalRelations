@@ -250,6 +250,8 @@ class UserInterface(Tk):
         lang = self.lang_d.get()
         answer = set_of_words_in_language(word, lang)
 
+        self.list_word_x_lang.delete(0)
+
         for item in answer:
             self.list_word_x_lang.insert(END, item)
 
@@ -283,6 +285,8 @@ class UserInterface(Tk):
         first_lang = self.lang_x.get()
         second_lang = self.lang_y.get()
         answer = words_in_common(first_lang, second_lang)
+
+        self.list_lang_x_lang.delete(0, self.list_lang_x_lang.size())
 
         for item in answer:
             self.list_lang_x_lang.insert(END, item)
