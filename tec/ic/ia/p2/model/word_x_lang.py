@@ -87,8 +87,8 @@ parent(X, Y, LX) <= son(Y, X, LX)
 # Determina el conjunto de palabras relacionadas a un lenguaje(LX) y a
 # una palabra de origen
 
-ancestor(A, LX, B) <= parent(A, B, LX)
-ancestor(X, LX, Y) <= parent(X, Y, LX) & ancestor(Y, LX, A)
+ancestor(X, LX, Y) <= parent(X, Y, LX)
+ancestor(X, LX, Y) <= parent(X, A, LX) & ancestor(A, LX, Y)
 
 
 # -----------------------------------------------------------------------------
@@ -125,15 +125,20 @@ parent_ly(X, Y, LY) <= son_ly(Y, X, LY)
 ancestor_ly(A, LX, B) <= parent_ly(A, B, LX)
 ancestor_ly(X, LX, Y) <= parent_ly(X, A, LX) & ancestor_ly(A, LY, Y)
 
+pyDatalog.create_terms('ancestor_lx')
+
+ancestor_lx(X, LX, Y) <= parent(X, Y, LX)
+ancestor_lx(X, LY, Y) <= parent(X, A, LX) & ancestor_lx(A, LY, Y)
 
 # Determina el conjunto de lenguajes LX & LY relacionados a una palabra X
-lang_related_word(X, LX) <=  ancestor(X, LX, B)     # Lenguajes LX
+lang_related_word(X, LX) <=  son(X, Y, LX)          # Lenguajes con word X lado hijo
+lang_related_word(X, LX) <=  son_ly(Y, X, LX)       # Lenguajes con word X lado padre
+lang_related_word(X, LX) <=  ancestor_lx(X, LX, B)     # Lenguajes LX
 lang_related_word(X, LX) <=  ancestor_ly(Y, LX, X)  # Lenguajes LY
 
 
 + etymology("spa", "padre", "spa", "ego")
 + etymological_origin_of("spa", "ego", "spa", "padre")
-+ etymologically_related('afr', 'aanval', 'afr', 'aanvaller')
 + has_derived_form("eng", "tatarabuelo", "spa", "bisabuelo")
 + has_derived_form("ita", "ttatatattaatarabuelo", "eng", "tatarabuelo")
 + has_derived_form("ita", "tio_bisabuelo", "ind", "tio_abuelo_seg")
@@ -142,13 +147,16 @@ lang_related_word(X, LX) <=  ancestor_ly(Y, LX, X)  # Lenguajes LY
 + has_derived_form("spa", "bisabuelo", "lat", "abuelo")
 + has_derived_form("por", "bisabuelo", "mal", "tio_abuelo")
 + has_derived_form("tha", "abuelo", "nap", "padre")
-+ has_derived_form("cab", "abuelo", "spa", "tio")
++ has_derived_form("cab", "ego", "spa", "tio")
 + has_derived_form("chi", "padre", "nor", "ego")
 + has_derived_form("nap", "padre", "ape", "hermano")
-+ has_derived_form("can", "tio", "", "primo")
++ has_derived_form("can", "tio", "jul", "primo")
 + has_derived_form("ale", "tio_abuelo", "spa", "tio_seg")
 + has_derived_form("ara", "tio_seg", "spa", "primo_seg")
 
++ has_derived_form("otr", "ego2", "spa", "julian")
+
 print(lang_related_word('abuelo', LX))
 
-print(ancestor('abuelo', 'nap', B))
+print('\n-------------\n')
+print(ancestor('padre', 'spa', Y))
