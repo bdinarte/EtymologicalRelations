@@ -125,11 +125,15 @@ parent_ly(X, Y, LY) <= son_ly(Y, X, LY)
 ancestor_ly(A, LX, B) <= parent_ly(A, B, LX)
 ancestor_ly(X, LX, Y) <= parent_ly(X, A, LX) & ancestor_ly(A, LY, Y)
 
+pyDatalog.create_terms('ancestor_lx')
+
+ancestor_lx(X, LX, Y) <= parent(X, Y, LX)
+ancestor_lx(X, LY, Y) <= parent(X, A, LX) & ancestor_lx(A, LY, Y)
 
 # Determina el conjunto de lenguajes LX & LY relacionados a una palabra X
 lang_related_word(X, LX) <=  son(X, Y, LX)          # Lenguajes con word X lado hijo
 lang_related_word(X, LX) <=  son_ly(Y, X, LX)       # Lenguajes con word X lado padre
-lang_related_word(X, LX) <=  ancestor(X, LX, B)     # Lenguajes LX
+lang_related_word(X, LX) <=  ancestor_lx(X, LX, B)     # Lenguajes LX
 lang_related_word(X, LX) <=  ancestor_ly(Y, LX, X)  # Lenguajes LY
 
 
