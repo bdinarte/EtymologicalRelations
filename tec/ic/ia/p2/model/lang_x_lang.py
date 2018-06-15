@@ -137,8 +137,9 @@ all_lang_inputs(Lang1, Lang2, Total) <= (
 # Términos para la función max_input
 pyDatalog.create_terms('max_input, max_orig, max_dest, Max_Orig, Max_Dest')
 
-(max_orig[Total] == max_(Lang1, order_by=Total)) <= (
-    all_lang_inputs(Lang1, Lang2, Total)
+(max_orig[Max_Orig] == max_(Max_Orig, order_by=Total)) <= (
+    all_lang_inputs(Lang1, Lang2, Total) &
+    (Max_Orig == (Total, Lang1, Lang2))
 )
 
 # Relaciones para la función max_input
@@ -146,3 +147,22 @@ max_input(Max_Orig) <= (
     all_lang_inputs(Lang1, Lang2, Total) &
     (Max_Orig == max_orig[Lang1, Total])
 )
+
+
++ etymology('abs', 'beta', 'zsm', 'beta')
++ etymology('aaq', 'prueba1', 'eng', 'prueba1')
++ etymology('aaq', 'senabe', 'eng', 'sannup')
++ etymological_origin_of('abe', 'waniigan', 'eng', 'waniigan')
++ etymological_origin_of('aaq', 'prueba2', 'eng', 'prueba2')
++ etymology('aaq', 'prueba3', 'eng', 'prueba3')
++ has_derived_form('equ', 'father', 'isd', 'son')
++ has_derived_form('equ', 'father', 'isd', 'son2')
++ etymology('isd', 'son3', 'equ', 'father3')
++ etymological_origin_of('sas', 'mom', 'isd', 'son4')
++ has_derived_form('sss', 'mom', 'isd', 'son5')
++ etymologically_related('lla','ma','alp','aca')
+
+max_orig(Total) <= (Total == max_orig[Max_Orig])
+
+query_results = max_orig(Total)
+print(query_results)
