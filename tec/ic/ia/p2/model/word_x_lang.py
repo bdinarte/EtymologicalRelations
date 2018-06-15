@@ -33,11 +33,17 @@ word_related_lang(Word, Lang, False) <= ~word_related_lang(Word, Lang)
 word_related_lang(Word, Lang) <= (
     etymology(Lang, Word, X, Y)
 )
+word_related_lang(Word, Lang) <= (
+    etymology(X, Y, Lang, Word)
+)
 
 # Verifica si existe un hecho en el KB que tenga la relación
 # etymological_origin_of para la palabra y lenguaje especificado
 word_related_lang(Word, Lang) <= (
     etymological_origin_of(X, Y, Lang, Word)
+)
+word_related_lang(Word, Lang) <= (
+    etymological_origin_of(Lang, Word, X, Y)
 )
 
 # Verifica si existe un hecho en el KB que tenga la relación
@@ -45,11 +51,17 @@ word_related_lang(Word, Lang) <= (
 word_related_lang(Word, Lang) <= (
     etymologically_related(Lang, Word, X, Y)
 )
+word_related_lang(Word, Lang) <= (
+    etymologically_related(X, Y, Lang, Word)
+)
 
 # Verifica si existe un hecho en el KB que tenga la relación
 # has_derived_form para la palabra y lenguaje especificado
 word_related_lang(Word, Lang) <= (
     has_derived_form(X, Y, Lang, Word)
+)
+word_related_lang(Word, Lang) <= (
+    has_derived_form(Lang, Word, X, Y)
 )
 
 
@@ -69,8 +81,8 @@ word_related_lang(Word, Lang) <= (
 #   Sino
 #       Devuelve vacío
 
-son(X, Y, LX) <= etymology(LY, Y, LX, X)
-son(X, Y, LX) <= etymological_origin_of(LX, X, LY, Y)
+son(X, Y, LX) <= etymology(LX, X, LY, Y)
+son(X, Y, LX) <= etymological_origin_of(LY, Y, LX, X)
 son(X, Y, LX) <= has_derived_form(LY, Y, LX, X)
 
 
@@ -88,7 +100,6 @@ parent(X, Y, LX) <= son(Y, X, LX)
 # una palabra de origen
 
 ancestor(X, LX, Y) <= parent(X, Y, LX)
-ancestor(X, LX, Y) <= parent(X, A, LX) & ancestor(A, LX, Y)
 
 
 # -----------------------------------------------------------------------------
@@ -105,8 +116,8 @@ ancestor(X, LX, Y) <= parent(X, A, LX) & ancestor(A, LX, Y)
 #   Sino
 #       Devuelve vacío
 
-son_ly(X, Y, LY) <= etymology(LY, Y, LX, X)
-son_ly(X, Y, LY) <= etymological_origin_of(LX, X, LY, Y)
+son_ly(X, Y, LY) <= etymology(LX, X, LY, Y)
+son_ly(X, Y, LY) <= etymological_origin_of(LY, Y, LX, X)
 son_ly(X, Y, LY) <= has_derived_form(LY, Y, LX, X)
 
 
@@ -123,12 +134,10 @@ parent_ly(X, Y, LY) <= son_ly(Y, X, LY)
 # Determina el conjunto de lenguajes (LY )relacionadas a una palabra de origen
 
 ancestor_ly(A, LX, B) <= parent_ly(A, B, LX)
-ancestor_ly(X, LX, Y) <= parent_ly(X, A, LX) & ancestor_ly(A, LY, Y)
 
 pyDatalog.create_terms('ancestor_lx')
 
 ancestor_lx(X, LX, Y) <= parent(X, Y, LX)
-ancestor_lx(X, LY, Y) <= parent(X, A, LX) & ancestor_lx(A, LY, Y)
 
 # Determina el conjunto de lenguajes LX & LY relacionados a una palabra X
 lang_related_word(X, LX) <=  son(X, Y, LX)          # Lenguajes con word X lado hijo
@@ -137,8 +146,8 @@ lang_related_word(X, LX) <=  ancestor_lx(X, LX, B)     # Lenguajes LX
 lang_related_word(X, LX) <=  ancestor_ly(Y, LX, X)  # Lenguajes LY
 
 
-+ etymology("spa", "padre", "spa", "ego")
-+ etymological_origin_of("spa", "ego", "spa", "padre")
++ etymology("spa", "ego", "spa", "padre")
++ etymological_origin_of("spa", "ego2", "spa", "padre")
 + has_derived_form("eng", "tatarabuelo", "spa", "bisabuelo")
 + has_derived_form("ita", "ttatatattaatarabuelo", "eng", "tatarabuelo")
 + has_derived_form("ita", "tio_bisabuelo", "ind", "tio_abuelo_seg")
@@ -155,8 +164,12 @@ lang_related_word(X, LX) <=  ancestor_ly(Y, LX, X)  # Lenguajes LY
 + has_derived_form("ara", "tio_seg", "spa", "primo_seg")
 
 + has_derived_form("otr", "ego2", "spa", "julian")
++ etymologically_related("lat", "joder", "sch", "dinarte")
 
-print(lang_related_word('abuelo', LX))
+print(lang_related_word('kkkkkkk', LX))
 
 print('\n-------------\n')
-print(ancestor('padre', 'spa', Y))
+print(ancestor('kkkkkk', 'spa', Y))
+
+print('\n-------------\n')
+print(word_related_lang('jjjjjjj', 'spa', Y))
