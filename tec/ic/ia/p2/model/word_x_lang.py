@@ -69,8 +69,8 @@ word_related_lang(Word, Lang) <= (
 #   Sino
 #       Devuelve vacío
 
-son(X, Y, LX) <= etymology(LX, X, LY, Y)
-son(X, Y, LX) <= etymological_origin_of(LY, Y, LX, X)
+son(X, Y, LX) <= etymology(LY, Y, LX, X)
+son(X, Y, LX) <= etymological_origin_of(LX, X, LY, Y)
 son(X, Y, LX) <= has_derived_form(LY, Y, LX, X)
 
 
@@ -88,7 +88,7 @@ parent(X, Y, LX) <= son(Y, X, LX)
 # una palabra de origen
 
 ancestor(A, LX, B) <= parent(A, B, LX)
-ancestor(X, LX, Y) <= parent(X, A, LX) & ancestor(A, LX, Y)
+ancestor(X, LX, Y) <= parent(X, Y, LX) & ancestor(Y, LX, A)
 
 
 # -----------------------------------------------------------------------------
@@ -105,8 +105,8 @@ ancestor(X, LX, Y) <= parent(X, A, LX) & ancestor(A, LX, Y)
 #   Sino
 #       Devuelve vacío
 
-son_ly(X, Y, LY) <= etymology(LX, X, LY, Y)
-son_ly(X, Y, LY) <= etymological_origin_of(LY, Y, LX, X)
+son_ly(X, Y, LY) <= etymology(LY, Y, LX, X)
+son_ly(X, Y, LY) <= etymological_origin_of(LX, X, LY, Y)
 son_ly(X, Y, LY) <= has_derived_form(LY, Y, LX, X)
 
 
@@ -123,9 +123,32 @@ parent_ly(X, Y, LY) <= son_ly(Y, X, LY)
 # Determina el conjunto de lenguajes (LY )relacionadas a una palabra de origen
 
 ancestor_ly(A, LX, B) <= parent_ly(A, B, LX)
-ancestor_ly(X, LX, Y) <= parent_ly(X, Y, LX) & ancestor_ly(A, LX, X)
+ancestor_ly(X, LX, Y) <= parent_ly(X, A, LX) & ancestor_ly(A, LY, Y)
 
 
 # Determina el conjunto de lenguajes LX & LY relacionados a una palabra X
 lang_related_word(X, LX) <=  ancestor(X, LX, B)     # Lenguajes LX
 lang_related_word(X, LX) <=  ancestor_ly(Y, LX, X)  # Lenguajes LY
+
+
++ etymology("spa", "padre", "spa", "ego")
++ etymological_origin_of("spa", "ego", "spa", "padre")
++ etymologically_related('afr', 'aanval', 'afr', 'aanvaller')
++ has_derived_form("eng", "tatarabuelo", "spa", "bisabuelo")
++ has_derived_form("ita", "ttatatattaatarabuelo", "eng", "tatarabuelo")
++ has_derived_form("ita", "tio_bisabuelo", "ind", "tio_abuelo_seg")
++ has_derived_form("afr", "tio_abuelo_seg", "hun", "tio_ter")
++ has_derived_form("por", "tio_ter", "cat", "primo_ter")
++ has_derived_form("spa", "bisabuelo", "lat", "abuelo")
++ has_derived_form("por", "bisabuelo", "mal", "tio_abuelo")
++ has_derived_form("tha", "abuelo", "nap", "padre")
++ has_derived_form("cab", "abuelo", "spa", "tio")
++ has_derived_form("chi", "padre", "nor", "ego")
++ has_derived_form("nap", "padre", "ape", "hermano")
++ has_derived_form("can", "tio", "", "primo")
++ has_derived_form("ale", "tio_abuelo", "spa", "tio_seg")
++ has_derived_form("ara", "tio_seg", "spa", "primo_seg")
+
+print(lang_related_word('abuelo', LX))
+
+print(ancestor('abuelo', 'nap', B))
