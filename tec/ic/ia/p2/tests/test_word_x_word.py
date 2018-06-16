@@ -42,6 +42,10 @@ def setup_module(module):
     + etymological_origin_of("spa", "bisabuelo", "por", "tio_abuelo")
     + etymological_origin_of("nor", "tio", "ita", "primo")
 
+    + etymology_active(True)
+    + has_derived_form_active(True)
+    + etymological_origin_of_active(True)
+
 # -----------------------------------------------------------------------------
 
 def test_siblings():

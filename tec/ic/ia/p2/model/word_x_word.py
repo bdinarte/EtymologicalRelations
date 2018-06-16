@@ -12,15 +12,24 @@ pyDatalog.create_terms("etymology, etymological_origin_of")
 pyDatalog.create_terms("child, is_child, parent, ancestor")
 pyDatalog.create_terms("siblings, are_siblings, ancestor_distance")
 pyDatalog.create_terms("cousins, are_cousins, cousins_distance")
-pyDatalog.create_terms("uncle, is_uncle")
+pyDatalog.create_terms("uncle, is_uncle, has_derived_form_active")
+pyDatalog.create_terms("etymology_active, etymological_origin_of_active")
 
 # -----------------------------------------------------------------------------
 
 # X proviene de Y.
 child(X, Y) <= child(X, Y) & ~(X == Y)
-child(X, Y) <= etymology(LX, X, LY, Y)
-child(X, Y) <= etymological_origin_of(LY, Y, LX, X)
-child(X, Y) <= has_derived_form(LY, Y, LX, X)
+
+child(X, Y) <= (etymology(LX, X, LY, Y) &
+                etymology_active(True))
+
+child(X, Y) <= (etymological_origin_of(LY, Y, LX, X) &
+                etymological_origin_of_active(True))
+
+child(X, Y) <= (has_derived_form(LY, Y, LX, X) &
+                has_derived_form_active(True))
+
+# -----------------------------------------------------------------------------
 
 # Si X proviene de Y entonces True.
 # Forma para obtener una relación con false en vez de una lista vacía.
