@@ -114,10 +114,4 @@ venv.bak/
 
 tec/ic/ia/p2/files/
 
-tec/ic/ia/p2/controller/data_loader\.py
-
-tec/ic/ia/p2/controller/data_loader_2\.py
-
-tec/ic/ia/p2/controller/data_loader_3\.py
-
 tec/ic/ia/p2/tests/tests_julian\.py
