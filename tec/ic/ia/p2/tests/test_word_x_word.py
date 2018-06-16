@@ -37,10 +37,14 @@ def setup_module(module):
     + has_derived_form("lat", "padre", "ape", "hermano")
     + has_derived_form("lat", "tio_seg", "ita", "primo_seg")
 
+    + etymological_origin_of("por", "padre", "spa", "prueba")
     + etymological_origin_of("ind", "tio_bisabuelo", "ape", "tio_abuelo_seg")
     + etymological_origin_of("spa", "padre", "spa", "ego")
     + etymological_origin_of("spa", "bisabuelo", "por", "tio_abuelo")
     + etymological_origin_of("nor", "tio", "ita", "primo")
+
+    + etymologically_related("spa", "ego", "ape", "hermano")
+    + etymologically_related("nor", "tio", "lat", "padre")
 
     + etymology_active(True)
     + has_derived_form_active(True)
@@ -53,19 +57,8 @@ def test_siblings():
     Verfica todos los pares de hermanos que existen en la KB de pruebas
     """
 
-    answer = siblings(X, Y).data
-
-    expected = [
-        ("ego", "hermano"),
-        ("tio_abuelo", "abuelo"),
-        ("hermano", "ego"),
-        ("bisabuelo", "tio_bisabuelo"),
-        ("tio", "padre"),
-        ("abuelo", "tio_abuelo"),
-        ("tio_bisabuelo", "bisabuelo"),
-        ("padre", "tio")
-    ]
-
+    answer = siblings("prueba", Y).data
+    expected = [("ego",), ("hermano",)]
     assert set(expected) == set(answer)
 
 # -----------------------------------------------------------------------------
