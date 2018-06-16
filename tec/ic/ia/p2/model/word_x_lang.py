@@ -15,17 +15,21 @@ pyDatalog.create_terms('etymological_origin_of_active,'
                        'etymology_active,'
                        'etymologically_related_active')
 
-pyDatalog.create_terms('word_related_lang, set_of_words_in_lang, Word, '
-                       'Lang, X, Y, LX, LY, A, B')
+pyDatalog.create_terms('Word, Lang, X, Y, LX, LY')
 
-pyDatalog.create_terms("son, ancestor, parent, lang_related_word,"
-                       "son_ly, ancestor_ly, parent_ly, ancestor_lx")
+pyDatalog.create_terms("word_related_lang,"
+                       "words_in_lang,"
+                       "derived,"
+                       "lang_related_word," 
+                       "origin_langs,"
+                       "derived_langs")
 
 
 + etymological_origin_of_active(True)
 + has_derived_form_active(True)
 + etymology_active(True)
 + etymologically_related_active(True)
+
 
 # -----------------------------------------------------------------------------
 #   Determinar si una palabra está relacionada con un idioma (Si / No)
@@ -95,89 +99,43 @@ word_related_lang(Word, Lang) <= (
 #   X = Primera palabra
 #   Y = Segunda palabra
 #   Si se cumple es que X si es hija de Y
-#       De cumplirse 'devuelve' el lenguaje asociado (LX) a la palabra X
+#       De cumplirse 'devuelve' el lenguaje asociado (LX/LY) según fue el
+#       llamado
 #   Sino
 #       Devuelve vacío
 
-son(X, Y, LX) <= (
+derived(X, Y, LX, LY) <= (
         etymology(LX, X, LY, Y)
         & etymology_active(True)
 )
 
-son(X, Y, LX) <= (
+derived(X, Y, LX, LY) <= (
         etymological_origin_of(LY, Y, LX, X)
         & etymological_origin_of_active(True)
 )
 
-son(X, Y, LX) <= (
+derived(X, Y, LX, LY) <= (
         has_derived_form(LY, Y, LX, X)
         & has_derived_form_active(True)
 )
 
+# Determina el conjunto de palabras relacionadas (Y) a un lenguaje(LX) y a
+# una palabra de origen (X)
 
-# Esta regla se utiliza para determinar si una letra (X), es padre de alguna
-# otra (Y), utilizando la regla de hijo definida previamente
-#   Entonces: X es padre de Y, Si Y es hija de X
-# Note que en esta se llama la regla son para determinar el conjunto de
-# lenguajes origen asociados a la palabra X
-
-parent(X, Y, LX) <= son(Y, X, LX)
-
-
-# Similar a es ancestro
-# Determina el conjunto de palabras relacionadas a un lenguaje(LX) y a
-# una palabra de origen
-
-ancestor(X, LX, Y) <= parent(X, Y, LX)
+words_in_lang(X, LX, Y) <= derived(Y, X, LX, LY)
 
 
 # -----------------------------------------------------------------------------
 #   Listar los idiomas relacionados con una palabra
 # -----------------------------------------------------------------------------
 
-# Lo que se pretende con esta regla es determinar los lenguajes relacionados
-# a la palabra 'destino'/'producto' en el hecho, por medio de
-# la verificación de si dicha palabra es hija de alguna otra
-#   X = Primera palabra
-#   Y = Segunda palabra
-#   Si se cumple es que X si es hija de Y
-#       De cumplirse 'devuelve' el lenguaje asociado (LY) a la palabra Y
-#   Sino
-#       Devuelve vacío
-
-son_ly(X, Y, LY) <= (
-        etymology(LX, X, LY, Y)
-        & etymology_active(True)
-)
-son_ly(X, Y, LY) <= (
-        etymological_origin_of(LY, Y, LX, X)
-        & etymological_origin_of_active(True)
-)
-son_ly(X, Y, LY) <= (
-        has_derived_form(LY, Y, LX, X)
-        & has_derived_form_active(True)
-)
-
-
-# Esta regla se utiliza para determinar si una letra (X), es padre de alguna
-# otra (Y), utilizando la regla de hijo definida previamente
-#   Entonces: X es padre de Y, Si Y es hija de X
-# Note que en esta se llama la regla son_ly para determinar el conjunto de
-# lenguajes destino/producto asociados a la palabra Y
-
-parent_ly(X, Y, LY) <= son_ly(Y, X, LY)
-
-
-# Similar a es ancestro
-# Determina el conjunto de lenguajes (LY )relacionadas a una palabra de origen
-
-ancestor_ly(A, LX, B) <= parent_ly(A, B, LX)
-
-
-ancestor_lx(X, LX, Y) <= parent(X, Y, LX)
+# Determina el conjunto de lenguajes de origen/destino
+# relacionadas a una palabra de origen
+origin_langs(X, LX, Y) <= derived(Y, X, LY, LX)  # Fathers / origin
+derived_langs(X, LX, Y) <= derived(Y, X, LX, LY)  # Sons / derived
 
 # Determina el conjunto de lenguajes LX & LY relacionados a una palabra X
-lang_related_word(X, LX) <=  son(X, Y, LX)          # Lenguajes con word X lado hijo
-lang_related_word(X, LX) <=  son_ly(Y, X, LX)       # Lenguajes con word X lado padre
-lang_related_word(X, LX) <=  ancestor_lx(X, LX, B)     # Lenguajes LX
-lang_related_word(X, LX) <=  ancestor_ly(Y, LX, X)  # Lenguajes LY
+lang_related_word(X, LX) <=  derived(X, Y, LX, LY)
+lang_related_word(X, LX) <=  derived(Y, X, LY, LX)
+lang_related_word(X, LX) <=  derived_langs(X, LX, Y)    # Sons / derived
+lang_related_word(X, LX) <=  origin_langs(Y, LX, X)     # Fathers / origin
