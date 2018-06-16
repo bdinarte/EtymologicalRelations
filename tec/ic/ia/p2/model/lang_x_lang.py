@@ -23,25 +23,42 @@ pyDatalog.create_terms('Lang1, Lang2, Word1, Word2, Total')
 # ----------------------------------------------------------------------------
 
 # Términos para la función words_in_common
-pyDatalog.create_terms('lang_common_words')
+pyDatalog.create_terms('lang_common_words, word_related_lang, '
+                       'Lang, Word, X, Y')
 
 # Relaciones para la función words_in_common
-lang_common_words(Lang1, Word1, Lang2, Word1) <= (
-    etymology(Lang1, Word1, Lang2, Word1) &
-    etymology_active(True)
+# Verifica si existe un hecho en el KB que tenga la relación
+word_related_lang(Word, Lang) <= (
+    etymology(Lang, Word, X, Y) & etymology_active(True)
 )
-lang_common_words(Lang1, Word1, Lang2, Word1) <= (
-    etymological_origin_of(Lang1, Word1, Lang2, Word1) &
+word_related_lang(Word, Lang) <= (
+    etymology(X, Y, Lang, Word) & etymology_active(True)
+)
+word_related_lang(Word, Lang) <= (
+    etymological_origin_of(X, Y, Lang, Word) &
     etymological_origin_of_active(True)
 )
-lang_common_words(Lang1, Word1, Lang2, Word1) <= (
-    has_derived_form(Lang1, Word1, Lang2, Word1) &
-    has_derived_form_active(True)
+word_related_lang(Word, Lang) <= (
+    etymological_origin_of(Lang, Word, X, Y) &
+    etymological_origin_of_active(True)
 )
-lang_common_words(Lang1, Word1, Lang2, Word1) <= (
-    etymologically_related(Lang1, Word1, Lang2, Word1) &
+word_related_lang(Word, Lang) <= (
+    etymologically_related(Lang, Word, X, Y) &
     etymologically_related_active(True)
 )
+word_related_lang(Word, Lang) <= (
+    etymologically_related(X, Y, Lang, Word) &
+    etymologically_related_active(True)
+)
+word_related_lang(Word, Lang) <= (
+    has_derived_form(X, Y, Lang, Word) & has_derived_form_active(True)
+)
+word_related_lang(Word, Lang) <= (
+    has_derived_form(Lang, Word, X, Y) & has_derived_form_active(True)
+)
+# Retorna las palabras en común
+lang_common_words(Lang1, Lang2, Word) <= (word_related_lang(Word, Lang1) &
+                                          word_related_lang(Word, Lang2))
 
 # ----------------------------------------------------------------------------
 
@@ -50,7 +67,7 @@ pyDatalog.create_terms('count_lang_common_words')
 
 # Relaciones para la función words_in_common
 (count_lang_common_words[Lang1, Lang2] == len_(Word1)) <= (
-    lang_common_words(Lang1, Word1, Lang2, Word1)
+    lang_common_words(Lang1, Lang2, Word1)
 )
 
 # ----------------------------------------------------------------------------
