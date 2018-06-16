@@ -71,7 +71,7 @@ def test_word_related_language_true():
     assert answer
 
 
-# -------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 def test_word_related_language_false():
     """
@@ -104,7 +104,7 @@ def test_word_related_language_false():
     assert not answer
 
 
-# -------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 def test_set_of_words_in_language():
     """
@@ -147,7 +147,7 @@ def test_set_of_words_in_language():
     assert words == expected_words
 
 
-# -------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 def test_set_of_languages_related_word():
     """
@@ -194,7 +194,7 @@ def test_set_of_languages_related_word():
     assert langs == expected_langs
 
 
-# -------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 def test_set_of_words_in_language_empty():
     """
@@ -218,7 +218,7 @@ def test_set_of_words_in_language_empty():
     assert words == expected_words
 
 
-# -------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 def test_set_of_languages_related_word_empty():
     """
@@ -238,3 +238,82 @@ def test_set_of_languages_related_word_empty():
     expected_langs = []
 
     assert langs == expected_langs
+
+
+# -----------------------------------------------------------------------------
+
+def test_derived():
+    """
+
+    """
+
+    word = 'padre'
+    origin_langs = []
+    derived_langs = []
+
+    query = derived(X, word, LX, LY)
+    derived_langs = [i[1] for i in query.data]
+    derived_langs.sort()
+
+
+    expected_langs = ['ape', 'por', 'spa', 'spa']
+
+    assert derived_langs == expected_langs
+
+
+# -----------------------------------------------------------------------------
+
+def test_derived_empty():
+    """
+
+    """
+
+    word = 'hola'
+    origin_langs = []
+    derived_langs = []
+
+    query = derived(X, word, LX, LY)
+    derived_langs = [i[1] for i in query.data]
+
+    expected_langs = []
+
+    assert derived_langs == expected_langs
+
+
+# -----------------------------------------------------------------------------
+
+def test_derived_origin():
+    """
+
+    """
+
+    word = 'padre'
+    origin_langs = []
+    derived_langs = []
+
+    query = derived(X, word, LX, LY)
+    origin_langs = [i[0] for i in query.data]
+    origin_langs.sort()
+
+    expected_langs = ['ego', 'ego', 'hermano', 'prueba']
+
+    assert origin_langs == expected_langs
+
+
+# -----------------------------------------------------------------------------
+
+def test_derived_origin_empty():
+    """
+
+    """
+
+    word = 'hola'
+    origin_langs = []
+    derived_langs = []
+
+    query = derived(X, word, LX, LY)
+    origin_langs = [i[0] for i in query.data]
+
+    expected_langs = []
+
+    assert origin_langs == expected_langs
