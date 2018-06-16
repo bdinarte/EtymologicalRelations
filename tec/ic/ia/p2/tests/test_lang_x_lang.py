@@ -31,6 +31,11 @@ def setup_module(module):
     + etymologically_related("spa", "ego", "ape", "hermano")
     + etymologically_related("nor", "tio", "lat", "padre")
 
+    + etymology_active(True)
+    + has_derived_form_active(True)
+    + etymological_origin_of_active(True)
+    + etymologically_related_active(True)
+
 # ----------------------------------------------------------------------------
 
 
