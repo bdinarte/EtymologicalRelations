@@ -344,6 +344,7 @@ class UserInterface(Tk):
     def amount_of_common_words(self):
         first_lang = self.lang_x.get()
         second_lang = self.lang_y.get()
+        self.list_lang_x_lang.delete(0, self.list_lang_x_lang.size())
         answer = count_common_words(first_lang, second_lang)
         self.result_lang_x_lang.set(answer)
 
@@ -364,12 +365,33 @@ class UserInterface(Tk):
     # -------------------------------------------------------------------------
 
     def greater_contribution(self):
-        self.result_lang_x_lang.set("Latín")
+        second_lang = self.lang_y.get()
+        answer = get_max_input(second_lang)
+
+        self.list_lang_x_lang.delete(0, self.list_lang_x_lang.size())
+
+        if second_lang == '':
+            self.result_lang_x_lang.set('Máximo global')
+        else:
+            self.result_lang_x_lang.set('Máximo para: ' + second_lang)
+
+        self.list_lang_x_lang.insert(END, answer)
 
     # -------------------------------------------------------------------------
 
     def contribution_by_lang(self):
-        self.result_lang_x_lang.set("Porcentajes")
+        second_lang = self.lang_y.get()
+        answer = get_all_lang_inputs(second_lang)
+
+        self.list_lang_x_lang.delete(0, self.list_lang_x_lang.size())
+
+        if second_lang == '':
+            self.result_lang_x_lang.set('Todos los aportes')
+        else:
+            self.result_lang_x_lang.set('Aportes para: ' + second_lang)
+
+        for item in answer:
+            self.list_lang_x_lang.insert(END, item)
 
 # -----------------------------------------------------------------------------
 
