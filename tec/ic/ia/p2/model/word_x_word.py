@@ -14,6 +14,7 @@ pyDatalog.create_terms("siblings, are_siblings, ancestor_distance")
 pyDatalog.create_terms("cousins, are_cousins, cousins_distance")
 pyDatalog.create_terms("uncle, is_uncle, has_derived_form_active")
 pyDatalog.create_terms("etymology_active, etymological_origin_of_active")
+pyDatalog.create_terms("etymologically_related_active")
 
 # -----------------------------------------------------------------------------
 
