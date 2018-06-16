@@ -5,6 +5,8 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 from tkinter import *
+from tests.test_database import *
+from controller.data_loader import *
 from controller.word_x_word import *
 from controller.word_x_lang import *
 from controller.lang_x_lang import *
@@ -63,7 +65,7 @@ class UserInterface(Tk):
         self.entry_word_y = Entry(self.lf_word_x_word, textvariable=self.word_y)
         self.entry_result_word_x_word = Entry(self.lf_word_x_word, textvariable=self.result_word_x_word)
 
-        self.btn_is_son = Button(self.lf_word_x_word, text="Es hija X de Y", command=self.exec_is_child)
+        self.btn_is_son = Button(self.lf_word_x_word, text="Es hija X de Y", command=self.is_child)
         self.btn_is_uncle = Button(self.lf_word_x_word, text="Es tía X de Y", command=self.is_uncle)
         self.btn_are_cousins = Button(self.lf_word_x_word, text="Son primas", command=self.are_cousins)
         self.btn_are_siblings = Button(self.lf_word_x_word, text="Son hermanas", command=self.are_siblings)
@@ -196,11 +198,11 @@ class UserInterface(Tk):
 
     # -------------------------------------------------------------------------
 
-    def exec_is_child(self):
+    def is_child(self):
         parent_word = self.word_x.get()
         child_word = self.word_y.get()
         answer = exec_is_child(parent_word, child_word)
-        self.result_word_x_word.set(answer)
+        self.result_word_x_word.set("SI" if answer else "NO")
 
     # -------------------------------------------------------------------------
 
@@ -208,7 +210,7 @@ class UserInterface(Tk):
         uncle_word = self.word_x.get()
         nephew_word = self.word_y.get()
         answer = exec_is_uncle(uncle_word, nephew_word)
-        self.result_word_x_word.set(answer)
+        self.result_word_x_word.set("SI" if answer else "NO")
 
     # -------------------------------------------------------------------------
 
@@ -216,7 +218,7 @@ class UserInterface(Tk):
         first_word = self.word_x.get()
         second_word = self.word_y.get()
         answer = exec_are_cousins(first_word, second_word)
-        self.result_word_x_word.set(answer)
+        self.result_word_x_word.set("SI" if answer else "NO")
 
     # -------------------------------------------------------------------------
 
@@ -224,15 +226,16 @@ class UserInterface(Tk):
         first_word = self.word_x.get()
         second_word = self.word_y.get()
         answer = exec_are_siblings(first_word, second_word)
-        self.result_word_x_word.set(answer)
+        self.result_word_x_word.set("SI" if answer else "NO")
 
     # -------------------------------------------------------------------------
 
     def cousins_level(self):
         first_word = self.word_x.get()
         second_word = self.word_y.get()
-        answer = exec_cousins_level(first_word, second_word)
-        self.result_word_x_word.set(answer)
+        level = exec_cousins_level(first_word, second_word)
+        string = "No son primos" if level is 0 else "Son primos " + str(level) + "°"
+        self.result_word_x_word.set(string)
 
     # -------------------------------------------------------------------------
 
@@ -307,6 +310,8 @@ class UserInterface(Tk):
 
 
 if __name__ == '__main__':
+    filename = "C:\\Git\\EtymologicalRelations\\tec\\ic\\ia\\p2\\files\\etymwn3.tsv"
+    load_facts_from_database(filename)
     UserInterface().mainloop()
 
 # -----------------------------------------------------------------------------
