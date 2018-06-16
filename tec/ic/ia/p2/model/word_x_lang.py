@@ -20,7 +20,7 @@ pyDatalog.create_terms('Word, Lang, X, Y, LX, LY')
 pyDatalog.create_terms("word_related_lang,"
                        "words_in_lang,"
                        "derived,"
-                       "lang_related_word," 
+                       "langs_related_word," 
                        "origin_langs,"
                        "derived_langs")
 
@@ -135,7 +135,7 @@ origin_langs(X, LX, Y) <= derived(Y, X, LY, LX)  # Fathers / origin
 derived_langs(X, LX, Y) <= derived(Y, X, LX, LY)  # Sons / derived
 
 # Determina el conjunto de lenguajes LX & LY relacionados a una palabra X
-lang_related_word(X, LX) <=  derived(X, Y, LX, LY)
-lang_related_word(X, LX) <=  derived(Y, X, LY, LX)
-lang_related_word(X, LX) <=  derived_langs(X, LX, Y)    # Sons / derived
-lang_related_word(X, LX) <=  origin_langs(Y, LX, X)     # Fathers / origin
+langs_related_word(X, LX) <=  derived(X, Y, LX, LY)
+langs_related_word(X, LX) <=  derived(Y, X, LY, LX)
+langs_related_word(X, LX) <=  derived_langs(X, LX, Y)    # Sons / derived
+langs_related_word(X, LX) <=  origin_langs(Y, LX, X)     # Fathers / origin
