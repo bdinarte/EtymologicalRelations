@@ -5,9 +5,9 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 from tkinter import *
-from tests.test_database import *
+from controller.common import *
 from controller.data_loader import *
-from controller.word_x_word import *
+# from controller.word_x_word import *
 from controller.word_x_lang import *
 from controller.lang_x_lang import *
 
@@ -59,17 +59,28 @@ class UserInterface(Tk):
 
         self.label_word_x = Label(self.lf_word_x_word, text="Palabra X")
         self.label_word_y = Label(self.lf_word_x_word, text="Palabra Y")
-        self.label_result_word_x_word = Label(self.lf_word_x_word, text="Resultado")
+        self.label_result_word_x_word = Label(
+            self.lf_word_x_word, text="Resultado")
 
-        self.entry_word_x = Entry(self.lf_word_x_word, textvariable=self.word_x)
-        self.entry_word_y = Entry(self.lf_word_x_word, textvariable=self.word_y)
-        self.entry_result_word_x_word = Entry(self.lf_word_x_word, textvariable=self.result_word_x_word)
+        self.entry_word_x = Entry(
+            self.lf_word_x_word, textvariable=self.word_x)
+        self.entry_word_y = Entry(
+            self.lf_word_x_word, textvariable=self.word_y)
+        self.entry_result_word_x_word = Entry(
+            self.lf_word_x_word, textvariable=self.result_word_x_word)
 
-        self.btn_is_son = Button(self.lf_word_x_word, text="Es hija X de Y", command=self.is_child)
-        self.btn_is_uncle = Button(self.lf_word_x_word, text="Es tía X de Y", command=self.is_uncle)
-        self.btn_are_cousins = Button(self.lf_word_x_word, text="Son primas", command=self.are_cousins)
-        self.btn_are_siblings = Button(self.lf_word_x_word, text="Son hermanas", command=self.are_siblings)
-        self.btn_cousin_grade = Button(self.lf_word_x_word, text="Grado primas", command=self.cousins_level)
+        self.btn_is_son = Button(
+            self.lf_word_x_word, text="Es hija X de Y", command=self.is_child)
+        self.btn_is_uncle = Button(
+            self.lf_word_x_word, text="Es tía X de Y", command=self.is_uncle)
+        self.btn_are_cousins = Button(
+            self.lf_word_x_word, text="Son primas", command=self.are_cousins)
+        self.btn_are_siblings = Button(
+            self.lf_word_x_word, text="Son hermanas",
+            command=self.are_siblings)
+        self.btn_cousin_grade = Button(
+            self.lf_word_x_word, text="Grado primas",
+            command=self.cousins_level)
 
     # -------------------------------------------------------------------------
 
@@ -81,15 +92,25 @@ class UserInterface(Tk):
 
         self.label_word_p = Label(self.lf_word_x_lang, text="Palabra P")
         self.label_lang_d = Label(self.lf_word_x_lang, text="Idioma D")
-        self.label_result_word_x_lang = Label(self.lf_word_x_lang, text="Resultado")
+        self.label_result_word_x_lang = Label(
+            self.lf_word_x_lang, text="Resultado")
 
-        self.entry_word_p = Entry(self.lf_word_x_lang, textvariable=self.word_p)
-        self.entry_word_d = Entry(self.lf_word_x_lang, textvariable=self.lang_d)
-        self.entry_result_word_x_lang = Entry(self.lf_word_x_lang, textvariable=self.result_word_x_lang)
+        self.entry_word_p = Entry(
+            self.lf_word_x_lang, textvariable=self.word_p)
+        self.entry_word_d = Entry(
+            self.lf_word_x_lang, textvariable=self.lang_d)
+        self.entry_result_word_x_lang = Entry(
+            self.lf_word_x_lang, textvariable=self.result_word_x_lang)
 
-        self.btn_p_is_related_d = Button(self.lf_word_x_lang, text="P se relaciona con D", command=self.p_is_related_d)
-        self.btn_p_yields_d = Button(self.lf_word_x_lang, text="Palabras originadas por P en D", command=self.p_yields_d)
-        self.btn_langs_related_p = Button(self.lf_word_x_lang, text="Idiomas relacionados con P", command=self.langs_related_p)
+        self.btn_p_is_related_d = Button(
+            self.lf_word_x_lang, text="P se relaciona con D",
+            command=self.p_is_related_d)
+        self.btn_p_yields_d = Button(
+            self.lf_word_x_lang, text="Palabras originadas por P en D",
+            command=self.p_yields_d)
+        self.btn_langs_related_p = Button(
+            self.lf_word_x_lang, text="Idiomas relacionados con P",
+            command=self.langs_related_p)
         self.list_word_x_lang = Listbox(self.lf_word_x_lang)
 
     # -------------------------------------------------------------------------
@@ -102,28 +123,50 @@ class UserInterface(Tk):
 
         self.label_lang_x = Label(self.lf_lang_x_lang, text="Idioma X")
         self.label_lang_y = Label(self.lf_lang_x_lang, text="Idioma Y")
-        self.label_result_lang_x_lang = Label(self.lf_lang_x_lang, text="Resultado")
+        self.label_result_lang_x_lang = Label(
+            self.lf_lang_x_lang, text="Resultado")
 
-        self.entry_lang_x = Entry(self.lf_lang_x_lang, textvariable=self.lang_x)
-        self.entry_lang_y = Entry(self.lf_lang_x_lang, textvariable=self.lang_y)
-        self.entry_result_lang_x_lang = Entry(self.lf_lang_x_lang, textvariable=self.result_lang_x_lang)
+        self.entry_lang_x = Entry(
+            self.lf_lang_x_lang, textvariable=self.lang_x)
+        self.entry_lang_y = Entry(
+            self.lf_lang_x_lang, textvariable=self.lang_y)
+        self.entry_result_lang_x_lang = Entry(
+            self.lf_lang_x_lang, textvariable=self.result_lang_x_lang)
 
-        self.btn_amount_of_common_words = Button(self.lf_lang_x_lang, text="Cantidad palabras comunes", command=self.amount_of_common_words)
-        self.btn_common_words = Button(self.lf_lang_x_lang, text="Listar palabras comunes", command=self.common_words)
-        self.btn_greater_contribution = Button(self.lf_lang_x_lang,
-                                               text="Idioma que más aporto a otro", command=self.greater_contribution)
-        self.btn_contribution_by_lang = Button(self.lf_lang_x_lang, text="Porcentajes de aporte", command=self.contribution_by_lang)
+        self.btn_amount_of_common_words = Button(
+            self.lf_lang_x_lang, text="Cantidad palabras comunes",
+            command=self.amount_of_common_words)
+        self.btn_common_words = Button(
+            self.lf_lang_x_lang, text="Listar palabras comunes",
+            command=self.common_words)
+        self.btn_greater_contribution = Button(
+            self.lf_lang_x_lang, text="Idioma que más aporto a otro",
+            command=self.greater_contribution)
+        self.btn_contribution_by_lang = Button(
+            self.lf_lang_x_lang, text="Porcentajes de aporte",
+            command=self.contribution_by_lang)
         self.list_lang_x_lang = Listbox(self.lf_lang_x_lang)
 
     # -------------------------------------------------------------------------
 
     def create_widgets_relations(self):
-        self.cb_etymology = Checkbutton(self.lf_relations, text="rel:etymology")
-        self.cb_etymological_origin_of = Checkbutton(self.lf_relations, text="rel:etymological_origin_of")
-        self.cb_etymologically_related = Checkbutton(self.lf_relations, text="rel:etymologically_related")
-        self.cb_has_derived_form = Checkbutton(self.lf_relations, text="rel:has_derived_form")
-        self.cb_is_derived_from = Checkbutton(self.lf_relations, text="rel:is_derived_from")
-        self.cb_variant_orthography = Checkbutton(self.lf_relations, text="variant:orthography")
+
+        self.val_etym = BooleanVar()
+        self.val_etym_o = BooleanVar()
+        self.val_etym_r = BooleanVar()
+        self.val_has_d = BooleanVar()
+        self.cb_etymology = Checkbutton(
+            self.lf_relations, text="rel:etymology",
+            command=self.etym_clicked, variable=self.val_etym)
+        self.cb_etymological_origin_of = Checkbutton(
+            self.lf_relations, text="rel:etymological_origin_of",
+            command=self.etym_o_clicked, variable=self.val_etym_o)
+        self.cb_etymologically_related = Checkbutton(
+            self.lf_relations, text="rel:etymologically_related",
+            command=self.etym_r_clicked, variable=self.val_etym_r)
+        self.cb_has_derived_form = Checkbutton(
+            self.lf_relations, text="rel:has_derived_form",
+            command=self.has_d_clicked, variable=self.val_has_d)
 
     # -------------------------------------------------------------------------
 
@@ -192,9 +235,30 @@ class UserInterface(Tk):
         self.cb_etymological_origin_of.grid(row=1, column=0, columnspan=2)
         self.cb_etymologically_related.grid(row=2, column=0, columnspan=2)
         self.cb_has_derived_form.grid(row=3, column=0, columnspan=2)
-        self.cb_is_derived_from.grid(row=4, column=0, columnspan=2)
-        self.cb_variant_orthography.grid(row=5, column=0, columnspan=2)
 
+    # -------------------------------------------------------------------------
+
+    def etym_clicked(self):
+        switch_etymology_state(
+            self.val_etym.get())
+
+    # -------------------------------------------------------------------------
+
+    def etym_o_clicked(self):
+        switch_etymological_origin_of_state(
+            self.val_etym_o.get())
+
+    # -------------------------------------------------------------------------
+
+    def etym_r_clicked(self):
+        switch_etymologically_related_state(
+            self.val_etym_r.get())
+
+    # -------------------------------------------------------------------------
+
+    def has_d_clicked(self):
+        switch_has_derived_form_state(
+            self.val_has_d.get())
 
     # -------------------------------------------------------------------------
 
@@ -234,7 +298,8 @@ class UserInterface(Tk):
         first_word = self.word_x.get()
         second_word = self.word_y.get()
         level = exec_cousins_level(first_word, second_word)
-        string = "No son primos" if level is 0 else "Son primos " + str(level) + "°"
+        string = "No son primos" if level is 0 else "Son primos " + \
+            str(level) + "°"
         self.result_word_x_word.set(string)
 
     # -------------------------------------------------------------------------
@@ -310,7 +375,7 @@ class UserInterface(Tk):
 
 
 if __name__ == '__main__':
-    filename = "C:\\Git\\EtymologicalRelations\\tec\\ic\\ia\\p2\\files\\etymwn3.tsv"
+    filename = "..\\files\\etymwn3.tsv"
     load_facts_from_database(filename)
     UserInterface().mainloop()
 

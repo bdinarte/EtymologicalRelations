@@ -15,10 +15,6 @@ pyDatalog.create_terms('etymological_origin_of,'
                        'etymologically_related')
 pyDatalog.create_terms('Lang1, Lang2, Word1, Word2, Total')
 
-+ etymological_origin_of_active(True)
-+ has_derived_form_active(True)
-+ etymology_active(True)
-+ etymologically_related_active(True)
 
 # ----------------------------------------------------------------------------
 
