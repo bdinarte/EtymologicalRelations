@@ -244,7 +244,16 @@ def test_set_of_languages_related_word_empty():
 
 def test_derived():
     """
+    Esta prueba esta destinada a verificar el correcto funcionamiento de la
+    regla 'derived' que se encarga de determinar los lenguajes que estan
+    asociados a una palabra, ya sea que el lenguaje es de la palabra origen
+    o de la palabra destino/generada.
 
+        En este caso, la respuesta esperada es el conjunto de lenguajes
+        derivados de la palabra 'padre':
+        -> ape
+        -> por
+        -> spa (x2), ya que existen dos hechos distintos de donde se generan
     """
 
     word = 'padre'
@@ -255,7 +264,6 @@ def test_derived():
     derived_langs = [i[1] for i in query.data]
     derived_langs.sort()
 
-
     expected_langs = ['ape', 'por', 'spa', 'spa']
 
     assert derived_langs == expected_langs
@@ -265,7 +273,15 @@ def test_derived():
 
 def test_derived_empty():
     """
+    Esta prueba esta destinada a verificar el correcto funcionamiento de la
+    regla 'derived' que se encarga de determinar los lenguajes que estan
+    asociados a una palabra, ya sea que el lenguaje es de la palabra origen
+    o de la palabra destino/generada.
 
+        En este caso, la respuesta esperada es el conjunto de lenguajes
+        derivados de la palabra 'hola':
+        -> Se espera una lista vacía, ya que la palabra 'hola' no existe en
+        ninguno de los hechos.
     """
 
     word = 'hola'
@@ -284,7 +300,16 @@ def test_derived_empty():
 
 def test_derived_origin():
     """
+    Esta prueba esta destinada a verificar el correcto funcionamiento de la
+    regla 'derived' que se encarga de determinar los lenguajes que estan
+    asociados a una palabra, ya sea que el lenguaje es de la palabra origen
+    o de la palabra destino/generada.
 
+        En este caso, la respuesta esperada es el conjunto de lenguajes
+        que originan la palabra 'padre':
+        -> ego (x2), ya que existen dos hechos distintos de donde se generan
+        -> hermano
+        -> prueba
     """
 
     word = 'padre'
@@ -304,7 +329,15 @@ def test_derived_origin():
 
 def test_derived_origin_empty():
     """
+    Esta prueba esta destinada a verificar el correcto funcionamiento de la
+    regla 'derived' que se encarga de determinar los lenguajes que estan
+    asociados a una palabra, ya sea que el lenguaje es de la palabra origen
+    o de la palabra destino/generada.
 
+        En este caso, la respuesta esperada es el conjunto de lenguajes
+        que originan la palabra 'padre':
+        -> Se espera una lista vacía, ya que la palabra 'hola' no existe en
+        ninguno de los hechos.
     """
 
     word = 'hola'

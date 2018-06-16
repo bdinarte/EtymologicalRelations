@@ -58,8 +58,8 @@ def load_facts_from_database(filename):
         for i, line in enumerate(input):
             match_and_assert_fact(pattern,  line)
 
-            if int(i) % 50000 == 0:
-                print(i)
+            if int(i+1) % 50000 == 0:
+                print('Cargados: ' + str(i+1))
 
 # -----------------------------------------------------------------------------
 

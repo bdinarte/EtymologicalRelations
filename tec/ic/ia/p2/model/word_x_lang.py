@@ -25,12 +25,6 @@ pyDatalog.create_terms("word_related_lang,"
                        "derived_langs")
 
 
-+ etymological_origin_of_active(True)
-+ has_derived_form_active(True)
-+ etymology_active(True)
-+ etymologically_related_active(True)
-
-
 # -----------------------------------------------------------------------------
 #   Determinar si una palabra está relacionada con un idioma (Si / No)
 # -----------------------------------------------------------------------------
