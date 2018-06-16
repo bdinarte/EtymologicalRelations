@@ -1,5 +1,5 @@
 
-from ..controller.word_x_lang import *
+from ..model.word_x_lang import *
 
 
 # -----------------------------------------------------------------------------
@@ -62,12 +62,14 @@ def test_word_related_language_true():
 
     """
 
-    word_aux = 'ego'
-    language_aux = 'spa'
+    word = 'ego'
+    language = 'spa'
 
-    answer = word_related_language(word_aux, language_aux)
+    query = word_related_lang(word, language, Y)
+    answer = query.v()[0]
 
     assert answer
+
 
 # -------------------------------------------------------------------------
 
@@ -93,12 +95,14 @@ def test_word_related_language_false():
         'spa' : 'hola'
     """
 
-    word_aux = 'hola'
-    language_aux = 'spa'
+    word = 'hola'
+    language = 'spa'
 
-    answer = word_related_language(word_aux, language_aux)
+    query = word_related_lang(word, language, Y)
+    answer = query.v()[0]
 
     assert not answer
+
 
 # -------------------------------------------------------------------------
 
@@ -130,15 +134,18 @@ def test_set_of_words_in_language():
         -> prueba
     """
 
-    word_aux = 'padre'
-    language_aux = 'spa'
+    word = 'padre'
+    language = 'spa'
 
-    words = set_of_words_in_language(word_aux, language_aux)
+    query = words_in_lang(word, language, X)
+    words = [i[0] for i in query.data]
+
     words.sort()
 
     expected_words = ['ego', 'prueba']
 
     assert words == expected_words
+
 
 # -------------------------------------------------------------------------
 
@@ -168,21 +175,66 @@ def test_set_of_languages_related_word():
     Note que estos se originan de los siguientes hechos:
         + etymology("por", "ego", "chi", "padre")
         + etymology("por", "padre", "chi", "abuelo")
-
         + has_derived_form("lat", "padre", "ape", "hermano")
-
         + etymological_origin_of("por", "padre", "spa", "prueba")
         + etymological_origin_of("spa", "padre", "spa", "ego")
-
         + etymologically_related("nor", "tio", "lat", "padre")
 
     """
 
-    word_aux = 'padre'
+    word = 'padre'
 
-    langs = set_of_languages_related_word(word_aux)
+    query = langs_related_word(word, LX)
+    langs = [i[0] for i in query.data]
+
     langs.sort()
 
     expected_langs = ['ape', 'chi', 'lat', 'por', 'spa']
+
+    assert langs == expected_langs
+
+
+# -------------------------------------------------------------------------
+
+def test_set_of_words_in_language_empty():
+    """
+    La respuesta esperada es un set de 'words', que dados los hechos
+    definidos en el setup_module, una palabra de origen y un lenguaje de
+    destino, la palabra origen da lugar a ciertos lenguajes
+
+        En este caso se está probando que no se encuentra ninguna relación
+        entre la palabra 'bisabuelo' y el lenguaje de destino 'chi',
+        impidiendo que se generen palabras derivadas
+    """
+
+    word = 'bisabuelo'
+    language = 'chi'
+
+    query = words_in_lang(word, language, X)
+    words = [i[0] for i in query.data]
+
+    expected_words = []
+
+    assert words == expected_words
+
+
+# -------------------------------------------------------------------------
+
+def test_set_of_languages_related_word_empty():
+    """
+    La respuesta esperada es un set de 'languages', que dados los hechos
+    definidos en el setup_module y una palabra base, la misma se relaciona
+    con ciertos lenguajes
+
+        En este caso se está probando que no se encuentra ninguna relación
+        entre la palabra 'hola' y algún lenguaje determinado
+    """
+
+    word = 'hola'
+
+    query = langs_related_word(word, LX)
+    langs = [i[0] for i in query.data]
+
+    expected_langs = []
 
     assert langs == expected_langs
