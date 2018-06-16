@@ -7,21 +7,26 @@ from ..controller.word_x_lang import *
 # -----------------------------------------------------------------------------
 
 def setup_module(module):
-    + etymology("afr", "Dinsdag", "afr", "dinsdag")
-    + etymologically_related('afr', 'aanval', 'afr', 'aanvaller')
-    + etymological_origin_of("afr", "-lik", "eng", "persoonlik")
-    + etymological_origin_of("afr", "-lik", "afr", "tydelik")
-    + etymological_origin_of("afr", "-lik", "zsm", "wetenskaplik")
-    + etymological_origin_of("afr", "-lik", "afr", "wetlik")
-    + etymological_origin_of("afr", "-tjie", "afr", "dogtertjie")
-    + etymological_origin_of("afr", "-tjie", "afr", "seuntjie")
-    + etymological_origin_of("afr", "-tji", "afr", "uitjie")
-    + etymological_origin_of("afr", "Afrikaner", "por", "africâner")
-    + etymological_origin_of("zsm", "wetenskaplik", "spa", "tydelik")
-    + has_derived_form("afr", "-lik", "afr", "wetenskaplik")
-    + has_derived_form("por", "lan", "ita", "April")
-    + has_derived_form("ita", "April", "afr", "-lik")
-    + has_derived_form("afr", "Desember", "afr", "Decembermaande")
+    + etymology("spa", "ego", "lat", "padre")
+    + etymology("por", "tio_ter", "chi", "tio_abuelo_seg")
+    + etymology("lat", "padre", "chi", "abuelo")
+    + etymology("spa", "tio_seg", "spa", "tio_abuelo")
+
+    + has_derived_form("ind", "tatarabuelo", "por", "bisabuelo")
+    + has_derived_form("ind", "tatarabuelo", "ind", "tio_bisabuelo")
+    + has_derived_form("por", "tio_ter", "lat", "primo_ter")
+    + has_derived_form("por", "bisabuelo", "chi", "abuelo")
+    + has_derived_form("chi", "abuelo", "nor", "tio")
+    + has_derived_form("lat", "padre", "ape", "hermano")
+    + has_derived_form("lat", "tio_seg", "ita", "primo_seg")
+
+    + etymological_origin_of("ind", "tio_bisabuelo", "chi", "tio_abuelo_seg")
+    + etymological_origin_of("lat", "padre", "spa", "ego")
+    + etymological_origin_of("por", "bisabuelo", "spa", "tio_abuelo")
+    + etymological_origin_of("nor", "tio", "ita", "primo")
+
+    + etymologically_related("spa", "ego", "ape", "hermano")
+    + etymologically_related("nor", "tio", "lat", "padre")
 
 
 # -----------------------------------------------------------------------------

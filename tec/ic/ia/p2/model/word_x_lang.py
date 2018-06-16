@@ -7,15 +7,25 @@ from pyDatalog import pyDatalog
 # ------------------------------ Creating Terms -------------------------------
 # -----------------------------------------------------------------------------
 
-pyDatalog.create_terms('word_related_lang, set_of_words_in_lang, Word, '
-                       'Lang, X, Y, LX, LY, A, B')
-
 pyDatalog.create_terms('etymology, etymological_origin_of,'
                        'etymologically_related, has_derived_form')
 
-pyDatalog.create_terms("son, ancestor, parent, lang_related_word,"
-                       "son_ly, ancestor_ly, parent_ly")
+pyDatalog.create_terms('etymological_origin_of_active,'
+                       'has_derived_form_active,'
+                       'etymology_active,'
+                       'etymologically_related_active')
 
+pyDatalog.create_terms('word_related_lang, set_of_words_in_lang, Word, '
+                       'Lang, X, Y, LX, LY, A, B')
+
+pyDatalog.create_terms("son, ancestor, parent, lang_related_word,"
+                       "son_ly, ancestor_ly, parent_ly, ancestor_lx")
+
+
++ etymological_origin_of_active(True)
++ has_derived_form_active(True)
++ etymology_active(True)
++ etymologically_related_active(True)
 
 # -----------------------------------------------------------------------------
 #   Determinar si una palabra está relacionada con un idioma (Si / No)
@@ -32,36 +42,44 @@ word_related_lang(Word, Lang, False) <= ~word_related_lang(Word, Lang)
 # etymology para la palabra y lenguaje especificado
 word_related_lang(Word, Lang) <= (
     etymology(Lang, Word, X, Y)
+    & etymology_active(True)
 )
 word_related_lang(Word, Lang) <= (
     etymology(X, Y, Lang, Word)
+    & etymology_active(True)
 )
 
 # Verifica si existe un hecho en el KB que tenga la relación
 # etymological_origin_of para la palabra y lenguaje especificado
 word_related_lang(Word, Lang) <= (
     etymological_origin_of(X, Y, Lang, Word)
+    & etymological_origin_of_active(True)
 )
 word_related_lang(Word, Lang) <= (
     etymological_origin_of(Lang, Word, X, Y)
+    & etymological_origin_of_active(True)
 )
 
 # Verifica si existe un hecho en el KB que tenga la relación
 # etymologically_related para la palabra y lenguaje especificado
 word_related_lang(Word, Lang) <= (
     etymologically_related(Lang, Word, X, Y)
+    & etymologically_related_active(True)
 )
 word_related_lang(Word, Lang) <= (
     etymologically_related(X, Y, Lang, Word)
+    & etymologically_related_active(True)
 )
 
 # Verifica si existe un hecho en el KB que tenga la relación
 # has_derived_form para la palabra y lenguaje especificado
 word_related_lang(Word, Lang) <= (
     has_derived_form(X, Y, Lang, Word)
+    & has_derived_form_active(True)
 )
 word_related_lang(Word, Lang) <= (
     has_derived_form(Lang, Word, X, Y)
+    & has_derived_form_active(True)
 )
 
 
@@ -81,9 +99,20 @@ word_related_lang(Word, Lang) <= (
 #   Sino
 #       Devuelve vacío
 
-son(X, Y, LX) <= etymology(LX, X, LY, Y)
-son(X, Y, LX) <= etymological_origin_of(LY, Y, LX, X)
-son(X, Y, LX) <= has_derived_form(LY, Y, LX, X)
+son(X, Y, LX) <= (
+        etymology(LX, X, LY, Y)
+        & etymology_active(True)
+)
+
+son(X, Y, LX) <= (
+        etymological_origin_of(LY, Y, LX, X)
+        & etymological_origin_of_active(True)
+)
+
+son(X, Y, LX) <= (
+        has_derived_form(LY, Y, LX, X)
+        & has_derived_form_active(True)
+)
 
 
 # Esta regla se utiliza para determinar si una letra (X), es padre de alguna
@@ -116,9 +145,18 @@ ancestor(X, LX, Y) <= parent(X, Y, LX)
 #   Sino
 #       Devuelve vacío
 
-son_ly(X, Y, LY) <= etymology(LX, X, LY, Y)
-son_ly(X, Y, LY) <= etymological_origin_of(LY, Y, LX, X)
-son_ly(X, Y, LY) <= has_derived_form(LY, Y, LX, X)
+son_ly(X, Y, LY) <= (
+        etymology(LX, X, LY, Y)
+        & etymology_active(True)
+)
+son_ly(X, Y, LY) <= (
+        etymological_origin_of(LY, Y, LX, X)
+        & etymological_origin_of_active(True)
+)
+son_ly(X, Y, LY) <= (
+        has_derived_form(LY, Y, LX, X)
+        & has_derived_form_active(True)
+)
 
 
 # Esta regla se utiliza para determinar si una letra (X), es padre de alguna
@@ -135,7 +173,6 @@ parent_ly(X, Y, LY) <= son_ly(Y, X, LY)
 
 ancestor_ly(A, LX, B) <= parent_ly(A, B, LX)
 
-pyDatalog.create_terms('ancestor_lx')
 
 ancestor_lx(X, LX, Y) <= parent(X, Y, LX)
 
@@ -144,37 +181,3 @@ lang_related_word(X, LX) <=  son(X, Y, LX)          # Lenguajes con word X lado 
 lang_related_word(X, LX) <=  son_ly(Y, X, LX)       # Lenguajes con word X lado padre
 lang_related_word(X, LX) <=  ancestor_lx(X, LX, B)     # Lenguajes LX
 lang_related_word(X, LX) <=  ancestor_ly(Y, LX, X)  # Lenguajes LY
-
-
-+ etymology("spa", "ego", "spa", "padre")
-+ etymological_origin_of("spa", "ego2", "spa", "padre")
-+ has_derived_form("eng", "tatarabuelo", "spa", "bisabuelo")
-+ has_derived_form("ita", "ttatatattaatarabuelo", "eng", "tatarabuelo")
-+ has_derived_form("ita", "tio_bisabuelo", "ind", "tio_abuelo_seg")
-+ has_derived_form("afr", "tio_abuelo_seg", "hun", "tio_ter")
-+ has_derived_form("por", "tio_ter", "cat", "primo_ter")
-+ has_derived_form("spa", "bisabuelo", "lat", "abuelo")
-+ has_derived_form("por", "bisabuelo", "mal", "tio_abuelo")
-+ has_derived_form("tha", "abuelo", "nap", "padre")
-+ has_derived_form("cab", "ego", "spa", "tio")
-+ has_derived_form("chi", "padre", "nor", "ego")
-+ has_derived_form("nap", "padre", "ape", "hermano")
-+ has_derived_form("can", "tio", "jul", "primo")
-+ has_derived_form("ale", "tio_abuelo", "spa", "tio_seg")
-+ has_derived_form("ara", "tio_seg", "spa", "primo_seg")
-
-+ has_derived_form("otr", "ego2", "spa", "julian")
-+ etymologically_related("lat", "joder", "sch", "dinarte")
-
-print(lang_related_word('kkkkkkk', LX))
-
-print('\n-------------\n')
-print(ancestor('kkkkkk', 'spa', Y))
-
-print('\n-------------\n')
-
-pyDatalog.create_terms('ancestor_dinarte')
-
-ancestor_dinarte(LX, LY, Word) <= word_related_lang(Word, LX) & word_related_lang(Word, LY)
-
-print(ancestor_dinarte('spa', 'por',  Word))
