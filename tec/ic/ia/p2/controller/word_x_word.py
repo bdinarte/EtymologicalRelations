@@ -6,54 +6,73 @@ sys.path.insert(0, os.path.abspath('..'))
 
 from model.word_x_word import *
 
-# TODO: Hechos para probar la interfaz gráfica
-+ etymology("-", "padre", "-", "ego")
-+ is_derived_from("-", "ego", "-", "padre")
-+ etymological_origin_of("-", "ego", "-", "padre")
-+ has_derived_form("-", "tatarabuelo", "-", "bisabuelo")
-+ has_derived_form("-", "tatarabuelo", "-", "tio_bisabuelo")
-+ has_derived_form("-", "tio_bisabuelo", "-", "tio_abuelo_seg")
-+ has_derived_form("-", "tio_abuelo_seg", "-", "tio_ter")
-+ has_derived_form("-", "tio_ter", "-", "primo_ter")
-+ has_derived_form("-", "bisabuelo", "-", "abuelo")
-+ has_derived_form("-", "bisabuelo", "-", "tio_abuelo")
-+ has_derived_form("-", "abuelo", "-", "padre")
-+ has_derived_form("-", "abuelo", "-", "tio")
-+ has_derived_form("-", "padre", "-", "ego")
-+ has_derived_form("-", "padre", "-", "hermano")
-+ has_derived_form("-", "tio", "-", "primo")
-+ has_derived_form("-", "tio_abuelo", "-", "tio_seg")
-+ has_derived_form("-", "tio_seg", "-", "primo_seg")
-
 # -----------------------------------------------------------------------------
 
 def exec_are_siblings(first_word, second_word):
-    answer = are_siblings(first_word, second_word, R).v()[0]
-    return "SI" if answer else "NO"
+    """
+    Determina si dos palabras son hermanas, es decir,
+    tienen un padre en común.
+    :param first_word: <string> Palabra 1
+    :param second_word: <string> Palabra 2
+    :return: True si first_word es hermana de second_word
+    """
+
+    return are_siblings(first_word, second_word, R).v()[0]
 
 # -----------------------------------------------------------------------------
 
 def exec_are_cousins(first_word, second_word):
-    answer = are_cousins(first_word, second_word, R).v()[0]
-    return "SI" if answer else "NO"
+    """
+    Determina si dos palabras son primas. Esto es significa que tienen
+    al menos un ancestro en común con la misma lejanía y no es el padre
+    :param first_word: <string> Palabra 1
+    :param second_word: <string> Palabra 2
+    :return: True si first_word es prima de second_word
+    """
+
+    return are_cousins(first_word, second_word, R).v()[0]
 
 # -----------------------------------------------------------------------------
 
-def exec_is_child(parent_word, child_word):
-    answer = is_child(parent_word, child_word, R).v()[0]
-    return "SI" if answer else "NO"
+def exec_is_child(child_word, parent_word):
+    """
+    Determina si la primera palabra es hija de la segunda. Por ejemplo, al
+    decir que la segunda palabra tiene como forma derivada la primera
+    :param child_word: <string> Posible palabra derivada
+    :param parent_word: <string> Posible palabra de la que se deriva
+    :return: True si child_word es hija de parent_word
+    """
+
+    return is_child(child_word, parent_word, R).v()[0]
 
 # -----------------------------------------------------------------------------
 
 def exec_is_uncle(uncle_word, nephew_word):
-    answer = is_uncle(uncle_word, nephew_word, R).v()[0]
-    return "SI" if answer else "NO"
+    """
+    Determina si la primera palabra es tía de la segunda. En este caso
+    se consideran todas las variedades de tíos incluyendo tíos abuelos,
+    tios bisabuelos, tios segundos. De forma general se considera como tío
+    cualquier ancestro de un primo de nephew_word que no sea ancestros de este.
+    :param uncle_word: <string> Posible tío
+    :param nephew_word: <string> Posible sobrino
+    :return: True si uncle_word si es tío de nephew_word
+    """
+
+    return is_uncle(uncle_word, nephew_word, R).v()[0]
 
 # -----------------------------------------------------------------------------
 
-def exec_cousins_level(first_word, second_word):
-    level = cousins_level(first_word, second_word, L).v()[0]
-    return "No son primos" if level is 0 else "Son primos " + str(level) + "°"
+def exec_cousins_distance(first_word, second_word):
+    """
+    Determina la lejanía entre dos palabras que son primas. Por ejemplo, para
+    un primo tercero, la distancia es 3. Si ambas palabras no son primas
+    entonces la distancia es cero.
+    :param first_word: <string> Palabra 1
+    :param second_word: <string> Palabra 2
+    :return: 0 si no son primas, sino, la lejanía de primos entre ambas
+    """
+
+    return cousins_distance(first_word, second_word, L).v()[0]
 
 # -----------------------------------------------------------------------------
 
