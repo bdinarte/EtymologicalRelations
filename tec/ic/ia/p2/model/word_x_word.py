@@ -7,13 +7,14 @@ from pyDatalog import pyDatalog
 pyDatalog.create_terms("X, LX, Y, LY, R, H, P, A, T, PR, B")
 pyDatalog.create_terms("TA, TS, PS, TTA, TB, TAS, TT, L, L1, L2")
 
-pyDatalog.create_terms("has_derived_form")
+pyDatalog.create_terms("has_derived_form, etymologically_related")
 pyDatalog.create_terms("etymology, etymological_origin_of")
 pyDatalog.create_terms("child, is_child, parent, ancestor")
 pyDatalog.create_terms("siblings, are_siblings, ancestor_distance")
 pyDatalog.create_terms("cousins, are_cousins, cousins_distance")
 pyDatalog.create_terms("uncle, is_uncle, has_derived_form_active")
 pyDatalog.create_terms("etymology_active, etymological_origin_of_active")
+pyDatalog.create_terms("etymologically_related_active")
 
 # -----------------------------------------------------------------------------
 
