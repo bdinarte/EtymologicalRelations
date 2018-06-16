@@ -42,7 +42,7 @@ def set_of_words_in_language(word, language):
     que pueden ser generadas por una palabra específica
     """
 
-    query = ancestor(word, language, X)
+    query = words_in_lang(word, language, X)
 
     words = [i[0] for i in query.data]
 
@@ -61,7 +61,7 @@ def set_of_languages_related_word(word):
     con una palabra en específico
     """
 
-    query = lang_related_word(word, LX)
+    query = langs_related_word(word, LX)
 
     langs = [i[0] for i in query.data]
 
