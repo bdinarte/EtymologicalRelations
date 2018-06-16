@@ -10,16 +10,16 @@ pyDatalog.create_terms("TA, TS, PS, TTA, TB, TAS, TT, L, L1, L2")
 pyDatalog.create_terms("has_derived_form")
 pyDatalog.create_terms("etymology, etymological_origin_of")
 pyDatalog.create_terms("child, is_child, parent, ancestor")
-pyDatalog.create_terms("siblings, are_siblings, ancestor_level")
-pyDatalog.create_terms("cousins, are_cousins, cousins_level")
+pyDatalog.create_terms("siblings, are_siblings, ancestor_distance")
+pyDatalog.create_terms("cousins, are_cousins, cousins_distance")
 pyDatalog.create_terms("uncle, is_uncle")
 
 # -----------------------------------------------------------------------------
 
 # X proviene de Y.
 child(X, Y) <= child(X, Y) & ~(X == Y)
-child(X, Y) <= etymology(LY, Y, LX, X)
-child(X, Y) <= etymological_origin_of(LX, X, LY, Y)
+child(X, Y) <= etymology(LX, X, LY, Y)
+child(X, Y) <= etymological_origin_of(LY, Y, LX, X)
 child(X, Y) <= has_derived_form(LY, Y, LX, X)
 
 # Si X proviene de Y entonces True.
@@ -57,9 +57,9 @@ are_siblings(X, Y, False) <= ~siblings(X, Y)
 # L es la cantidad de ancestros que existen antes de llegar al ancestro X.
 # Sirve para determinar los primos a partir del segundo.
 # Sirve para determinar las clases de cada uno de los tíos.
-ancestor_level(X, Y, 1) <= parent(X, Y)
-ancestor_level(X, Y, L) <= (
-    parent(X, H) & ancestor_level(H, Y, L2) & (L == L2 + 1) & ~(X == Y)
+ancestor_distance(X, Y, 1) <= parent(X, Y)
+ancestor_distance(X, Y, L) <= (
+    parent(X, H) & ancestor_distance(H, Y, L2) & (L == L2 + 1) & ~(X == Y)
 )
 
 # -----------------------------------------------------------------------------
@@ -68,8 +68,8 @@ ancestor_level(X, Y, L) <= (
 # Son primos si tienen un ancestro con la misma lejanía
 cousins(X, Y) <= cousins(Y, X)
 cousins(X, Y) <= (
-    ancestor_level(A, X, L) &
-    ancestor_level(A, Y, L) &
+    ancestor_distance(A, X, L) &
+    ancestor_distance(A, Y, L) &
     ~siblings(X, Y) & ~(X == Y)
 )
 
@@ -85,15 +85,15 @@ are_cousins(X, Y, False) <= ~cousins(X, Y)
 # Determina el grado de primos basado en la cantidad de ancestros
 # que existen antes de llegar a un ancestro A que tengan en común X y Y
 
-(cousins_level[X, Y] == min_(L2, order_by=L2)) <= (
+(cousins_distance[X, Y] == min_(L2, order_by=L2)) <= (
     cousins(X, Y) &
-    ancestor_level(A, X, L) &
-    ancestor_level(A, Y, L) &
+    ancestor_distance(A, X, L) &
+    ancestor_distance(A, Y, L) &
     ~(X == Y) & (L2 == L - 1)
 )
 
-cousins_level(X, Y, 0) <= ~cousins(X, Y)
-cousins_level(X, Y, L) <= (cousins_level[X, Y] == L)
+cousins_distance(X, Y, 0) <= ~cousins(X, Y)
+cousins_distance(X, Y, L) <= (cousins_distance[X, Y] == L)
 
 # -----------------------------------------------------------------------------
 
