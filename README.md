@@ -11,14 +11,83 @@ ________________
 ### Operación 1
 **Descipción:** Determinar si dos palabras son heman@s
 
+Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
+por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
+la palabra **Y** o no.
+
+Entonces, suponiendo que el usuario proporciona la palabra  **'X = hijo1'** y **'Y = hijo2,'**
+el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
+donde _X_ and _Y_ tienen un **padre en común**.
+
+**Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra1
+y la palabra2 en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
+la siguiente imagen:
+
+![img_op1](/imgs/op1.png)
+
+Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se encuentra relacionada a
+la palabra **Y** bajo el concepto de herman@s.
+
 ### Operación 2
 **Descipción:** Determinar si dos palabras son prim@s
+
+Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
+por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
+la palabra **Y** o no.
+
+Entonces, suponiendo que el usuario proporciona la palabra  **'X = primo1'** y **'Y = primo2,'**
+el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
+donde _X_ and _Y_ tienen un **abuelo en común**.
+
+**Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra1
+y la palabra2 en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
+la siguiente imagen:
+
+![img_op2](/imgs/op2.png)
+
+Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se encuentra relacionada a
+la palabra **Y** bajo el concepto de prim@s.
 
 ### Operación 3
 **Descipción:** Determinar si una palabra es hij@ de otra
 
+Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
+por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
+la palabra **Y** o no.
+
+Entonces, suponiendo que el usuario proporciona la palabra  **'X = padre'** y **'Y = hijo,'**
+el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
+donde _Y_ tiene como padre a la palabra _X._
+
+**Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra1
+y la palabra2 en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
+la siguiente imagen:
+
+![img_op3](/imgs/op3.png)
+
+Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se encuentra relacionada a
+la palabra **Y** bajo el concepto de hij@.
+
 ### Operación 4
 **Descipción:** Determinar si una palabra es ti@
+
+Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
+por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
+la palabra **Y** o no.
+
+Entonces, suponiendo que el usuario proporciona la palabra  **'X = tio'** y **'Y = sobrino,'**
+el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
+donde _Y_ tiene como padre una palabra _Z,_ tal que la palabra Z tiene de hermano la palabra _X._
+Entonces se cumpliría que la palabra X es ti@ de la palabra Y.
+
+**Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra1
+y la palabra2 en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
+la siguiente imagen:
+
+![img_op4](/imgs/op4.png)
+
+Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se encuentra relacionada a
+la palabra **Y** bajo el concepto de ti@.
 
 ### Operación 5
 **Descipción:** Determinar si son prim@s y en qué grado.
@@ -26,17 +95,110 @@ ________________
 ### Operación 6
 **Descipción:** Determinar si una palabra está relacionada con un idioma (Si / No)
 
+Lo que pretende esta funcionalidad es que a partir de una palabra y un idioma proporcionados
+por el usuario, el sistema brinde una respuesta indicando si la palabra está relacionada con
+el lenguaje o no.
+
+Entonces, suponiendo que el usuario proporciona la palabra **'padre'** y el idioma **'spa,'**
+el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación,
+ya sea que el _idioma:palabra_ se encuentre al lado derivado o al contrario(generador).
+
+**Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra
+y el idioma en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
+la siguiente imagen:
+
+![img_op6](/imgs/op6.png)
+
+Note que la salida es simplemente un **Si/No** indicando si la palabra se encuentra relacionada al
+lenguaje proporcionado.
+  
+
 ### Operación 7
 **Descipción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
 
+Lo que pretende esta funcionalidad es que a partir de una palabra y un idioma proporcionados
+por el usuario, el sistema brinde una respuesta indicando todas las palabras que son originadas
+a partir de la ingresada en la interfaz y además que dichas palabras de encuentren en el idioma
+indicado.
+
+Entonces, suponiendo que el usuario proporciona la palabra base: **'padre'** y el idioma: **'spa,'**
+el sistema procede a verificar en la base de conocimiento para ver si existen hechos que cumpla la relación
+donde la palabra generadora sea _'padre'_ y que el lenguaje de la palabra generada sea _'spa'_.
+
+**Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra
+y el idioma en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
+la siguiente imagen:
+
+![img_op7](/imgs/op7.png)
+
+Note que la salida difiere de la operación anterior, ya que en esta no es simplemente un valor booleano,
+sino que se espera una lista de idiomas, y de no encontrar ningún hecho simplemente despliega una 
+lista vacía de elementos.
+ 
 ### Operación 8
 **Descipción:** Listar los idiomas relacionados con una palabra
+
+Lo que pretende esta funcionalidad es que a partir de una palabra proporcionada
+por el usuario, el sistema brinde una respuesta indicando todas los lenguajes que están relacionados
+de manera directa con la misma. Ya sea que la palabra esté escrita en un idioma o que sea generada
+de otra palabra en un idioma determinado. En síntesis, la respuesta se compone de los lenguajes originarios
+y de los generados, donde exista la palabra especificada en la interfaz.
+
+Entonces, suponiendo que el usuario proporciona la palabra base: **'padre'**
+el sistema procede a verificar en la base de conocimiento para ver si existen hechos que cumpla la relación
+donde la palabra generadora/generada sea _'padre',_ entonces de cumplirse, se toman en cuenta los lenguajes
+que incorpora el hecho del KB.
+
+**Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra
+en el campo de texto respectivo. Un ejemplo de este ingreso se encuentra en 
+la siguiente imagen:
+
+![img_op8](/imgs/op8.png)
+
+Note que en la salida se espera una lista de idiomas, y de no encontrar ningún hecho simplemente despliega una 
+lista vacía.
 
 ### Operación 9
 **Descipción:** Contar todas las palabras comunes entre dos idiomas
 
+Lo que pretende esta funcionalidad es que a partir de dos idiomas **(X, Y)** proporcionados
+por el usuario, el sistema brinde una respuesta indicando la cantidad de palabras que se encuentran
+relacionadas de manera común entre los lenguajes (**X** and **Y**).
+
+Entonces, suponiendo que el usuario proporciona el lenguaje **'X = spa'** y **'Y = por,'**
+el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
+donde _Y_ tiene un conjunto de palabras _Z,_ tal que ese conjunto Z se encuentra en el idioma _X._
+Entonces se cumpliría que las palabras en ese conjunto, son comunes entre Y y X.
+
+**Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar ambos idiomas
+en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
+la siguiente imagen:
+
+![img_op9](/imgs/op9.png)
+
+Note que en la salida se espera un valor numérico, indicando la cantidad de palabras en común, las
+cuales denominamos como el conjunto Z en el ejemplo anterior.
+
 ### Operación 10
 **Descipción:** Listar todas las palabras comunes entre dos idiomas
+
+Lo que pretende esta funcionalidad es que a partir de dos idiomas **(X, Y)** proporcionados
+por el usuario, el sistema brinde una respuesta indicando la palabras que se encuentran
+relacionadas de manera común entre los lenguajes (**X** and **Y**).
+
+Entonces, suponiendo que el usuario proporciona el lenguaje **'X = spa'** y **'Y = por,'**
+el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
+donde _Y_ tiene un conjunto de palabras _Z,_ tal que ese conjunto Z se encuentra en el idioma _X._
+Entonces se cumpliría que las palabras en ese conjunto, son comunes entre Y y X.
+
+**Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar ambos idiomas
+en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
+la siguiente imagen:
+
+![img_op10](/imgs/op10.png)
+
+Note que en la salida se espera una lista de palabras, y de no encontrar ningún hecho simplemente despliega una 
+lista vacía.
 
 ### Operación 11
 **Descipción:** Idioma que más aportó a otro.
