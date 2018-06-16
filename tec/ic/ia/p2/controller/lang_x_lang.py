@@ -16,7 +16,7 @@ def words_in_common(language1, language2):
     if language1 == language2:
         return {'Se ingresó el mismo lenguaje.'}
 
-    query_results = lang_common_words(language1, Word1, language2, Word2)
+    query_results = lang_common_words(language1, language2, Word1)
 
     if not query_results.v():
         return {'No hay palabras en común.'}
@@ -85,10 +85,18 @@ def get_all_lang_inputs(language=''):
     if not query_results.v():
         return ['No hay aportes.']
 
-    existing_results = [result[0] + ' aporta a '
-                        + result[1] + ' un '
-                        + str(round(result[2], 2) * 100) + '%.'
-                        for result in query_results.data]
+    if language == '':
+        existing_results = [result[0] + ' aporta a '
+                            + result[1] + ' un '
+                            + str(round(result[2], 2) * 100) + '%.'
+                            for result in query_results.data]
+    else:
+        existing_results = [result[0] + ' aporta a '
+                            + language + ' un '
+                            + str(round(result[1], 2) * 100) + '%.'
+                            for result in query_results.data]
+
+    existing_results.sort()
 
     return existing_results
 
@@ -104,7 +112,7 @@ def get_max_input(language=''):
         query_results = max_input(Total, language)
 
     if not query_results.v():
-        return 'No hay aportes.'
+        return 'No hay aporte.'
 
     max_input_string = str('Idioma: ' + query_results.data[0][0][1] + ' a: '
                            + query_results.data[0][0][2] + ' con '
