@@ -241,7 +241,7 @@ def test_get_all_lang_inputs_for_all():
     """
 
     obtained_results = get_all_lang_inputs()
-    expected_results = ['chi aporta a nor un 100.0%.',
+    expected_results = {'chi aporta a nor un 100.0%.',
                         'chi aporta a por un 60.0%.',
                         'chi aporta a spa un 33.0%.',
                         'ind aporta a ape un 33.0%.',
@@ -254,7 +254,7 @@ def test_get_all_lang_inputs_for_all():
                         'por aporta a lat un 100.0%.',
                         'por aporta a spa un 33.0%.',
                         'spa aporta a por un 20.0%.',
-                        'spa aporta a spa un 33.0%.']
+                        'spa aporta a spa un 33.0%.'}
 
     assert obtained_results == expected_results
 
@@ -268,9 +268,9 @@ def test_get_all_lang_inputs_for_one():
     """
 
     obtained_results = get_all_lang_inputs('por')
-    expected_results = ['chi aporta a por un 60.0%.',
+    expected_results = {'chi aporta a por un 60.0%.',
                         'ind aporta a por un 20.0%.',
-                        'spa aporta a por un 20.0%.']
+                        'spa aporta a por un 20.0%.'}
 
     assert obtained_results == expected_results
 

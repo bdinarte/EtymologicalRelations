@@ -96,9 +96,7 @@ def get_all_lang_inputs(language=''):
                             + str(round(result[1], 2) * 100) + '%.'
                             for result in query_results.data]
 
-    existing_results.sort()
-
-    return existing_results
+    return set(existing_results)
 
 
 # ----------------------------------------------------------------------------
