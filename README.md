@@ -271,6 +271,13 @@ ________________
 ### Operación 1
 **Descripción:** Determinar si dos palabras son heman@s
 
+En esta funcionalidad se determinó como dato curioso la palabra **eng: bovine,** de la cual derivan múltiples
+palabras, convirtiendo a estas en herman@s.
+
+Un ejemplo claro de esta relación se muestra en la siguiente imagen:
+
+![img_dc_1](/imgs/dc_1.png)  
+
 ### Operación 2
 **Descripción:** Determinar si dos palabras son prim@s
 
