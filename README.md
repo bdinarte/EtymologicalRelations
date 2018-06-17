@@ -1,6 +1,12 @@
 # EtymologicalRelations
 Procesamiento de datos mediante un motor de derivación lógico.
 
+Instituto Tecnológico de Costa Rica.
+
+Escuela de Ingeniería en Computación.
+
+Curso de Inteligencia Artificial, I Semestre del 2018.
+
 
 ## Descripción de Instalación
 ________________
@@ -8,7 +14,7 @@ ________________
 ### Archivo de datos
 El archivo de datos, se espera tenga formato de tres columnas por filas, con cada valor de la fila 
 estando separado por una tabulación. El nombre del archivo debe ser "etymwn.tsv". Y debe colocarse
-en la carpeta **p2\files\**, siendo **p2** la carpeta principal del proyecto. 
+en la carpeta **p2/files/**, siendo **p2** la carpeta principal del proyecto. 
 
 ## Manual de Usuario
 ________________
@@ -96,6 +102,21 @@ la palabra **Y** bajo el concepto de ti@.
 
 ### Operación 5
 **Descripción:** Determinar si son prim@s y en qué grado.
+
+Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
+por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
+la palabra **Y** o no, bajo la relación de primos.
+
+Entonces, suponiendo que el usuario proporciona la palabra  **'X = primo1'** y **'Y = primo2,'**
+el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
+donde _Y_ tiene un ti@ _Z,_ y _X_ tiene un ti@ _W,_ tal que Z y W son herman@s en algún nivel (N).
+Entonces se cumplirá que la palabra X es prima de la palabra Y en el nivel N.
+
+**Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra1
+y la palabra2 en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
+la siguiente imagen:
+
+![img_op5](/imgs/op5.png)
 
 ### Operación 6
 **Descripción:** Determinar si una palabra está relacionada con un idioma (Si / No)
@@ -250,14 +271,39 @@ ________________
 ### Operación 1
 **Descripción:** Determinar si dos palabras son heman@s
 
+En esta funcionalidad se determinó como dato curioso la palabra **eng: bovine,** de la cual derivan múltiples
+palabras, convirtiendo a estas en herman@s.
+
+Un ejemplo claro de esta relación se muestra en la siguiente imagen:
+
+![img_dc_1](/imgs/dc_1.png)  
+
 ### Operación 2
 **Descripción:** Determinar si dos palabras son prim@s
 
 ### Operación 3
 **Descripción:** Determinar si una palabra es hij@ de otra
 
+Un dato curioso de esta funcionalidad lo encontramos con la palabra **consobrinus,** que es hij@ de: **con-** y **sobrinus**, que provienen del Latín.
+El dato más curioso en este caso, es que dicho hij@ produce la palabra **cousin** del inglés, la cula es sumamente reconocida y utilizada.
+
+Para entender mejor este dato, basta con visualizar la siguiente imagen donde se muestran algunas de las relaciones anteriormente
+mencionadas.
+
+![img_dc_3](/imgs/dc_3.png)  
+
 ### Operación 4
 **Descripción:** Determinar si una palabra es ti@
+
+El dato curioso para esta funcionalidad se puede basar en las relaciones de la _operación #3,_ 
+donde se encuentran  las palabras: **con-** y **soror**, que provienen del Latín.
+El dato más curioso en este caso, es que _soror_ es ti@ de _con_ y de esta relación se produce 
+la palabra **cousin** del inglés, la cula es sumamente reconocida y utilizada (tal como se mencionó en el caso anterior).
+
+Para entender mejor este dato, basta con visualizar la siguiente imagen donde se muestran algunas de las relaciones anteriormente
+mencionadas.
+
+![img_dc_4](/imgs/dc_4.png)  
 
 ### Operación 5
 **Descripción:** Determinar si son prim@s y en qué grado.
@@ -265,11 +311,33 @@ ________________
 ### Operación 6
 **Descripción:** Determinar si una palabra está relacionada con un idioma (Si / No)
 
+ Para esta funcionalidad específica el grupo de trabajo se dio a la tarea de buscar alguna palabra que se encontrara 
+ relacionada con múltiples lenguajes y que tuviera un significado similar en todos ellos. Y finalmente, se optó por
+ **mama** que hace referencia a _mamá_ en el lenguaje Español. Entonces, al ejecutar esta funcionalidad se encontraban bastantes
+ casos donde dicha palabra está relacionada con un idioma determinado.
+ 
+ Ejemplos de estos idiomas se encuentra en la siguiente imagen:
+ 
+![img_dc_6](/imgs/dc_6.png)
+
 ### Operación 7
 **Descripción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
 
+Un dato curioso en esta funcionalidad es que la palabra en latín **aequus,** que siginifica _igual, llano, justo, equilibrado, equitativo_
+tiene relación con las palabras en castellano _adecuado, ecuación, equilátero, equilibrio, entre otras._
+Denotando así la importancia que tiene una simple palabra y lenguaje, para substraer palabras derivadas en un 
+lenguaje destino específico. 
+
 ### Operación 8
 **Descripción:** Listar los idiomas relacionados con una palabra
+
+Una palabra que resulta ser muy interesante de analizar en este apartado es **'gol'**, que está relacionada con **'eng : goal'**
+y que se relaciona con la temática del fútbol. ¿Pero porqué es interesante? Pues resulta que dicha palabra no varía entre múltiples lenguajes
+e inclusive tiene el mismo significado, por lo que brinda un valor agregado al utilizarla en esta funcionalidad.    
+
+A continuación, se muestra una imagen con algunos ejemplos de la palabra **'gol'** relacionada con múltiples lenguajes:
+ 
+![img_dc_8](/imgs/dc_8.png)
 
 ### Operación 9
 **Descripción:** Contar todas las palabras comunes entre dos idiomas
@@ -346,8 +414,11 @@ se definen hechos específicos que poseen un valor booleano dependiendo de que
 relación debe tomarse en cuenta para la consulta. Los hechos definidos son:
 
 > etymology_active(True / False)
+
 > has_derived_form_active(True / False)
+
 > etymologically_related_active(True / False)
+
 > etymological_origin_of_active(True / False)
 
 ## Distribución de Trabajo
