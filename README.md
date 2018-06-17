@@ -5,9 +5,14 @@ Procesamiento de datos mediante un motor de derivación lógico.
 ## Descripción de Instalación
 ________________
 
+### Archivo de datos
+El archivo de datos, se espera tenga formato de tres columnas por filas, con cada valor de la fila 
+estando separado por una tabulación. El nombre del archivo debe ser "etymwn.tsv". Y debe colocarse
+en la carpeta **p2\files\**, siendo **p2** la carpeta principal del proyecto. 
 
 ## Manual de Usuario
 ________________
+
 ### Operación 1
 **Descripción:** Determinar si dos palabras son heman@s
 
@@ -219,7 +224,13 @@ realizados al idioma Y.
 ### Operación 12
 **Descripción:** Listar todos los idiomas que aportaron a otro.
 
-Esta funcionalidad permite ...
+Esta funcionalidad permite consultar todos los porcentajes de aporte que cada idioma a realizado a los demás,
+el porcentaje se calcula de la misma forma a como se describe en la operación anterior. 
+
+**Utilización de la interfaz:** Al igual que la operación anterior, no es necesario ingresar ningún lenguaje, lo 
+que resulta en el cálculo de los porcentajes de todos los aportes realizados entre los idiomas. Pero también es
+posible definir el idioma Y, para así obtener los porcentajes de todos los aportes que cualquier idioma genera
+para dicho idioma Y.
 
 ![img_op12](/imgs/op12.png)
 
