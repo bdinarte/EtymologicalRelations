@@ -5,11 +5,16 @@ Procesamiento de datos mediante un motor de derivación lógico.
 ## Descripción de Instalación
 ________________
 
+### Archivo de datos
+El archivo de datos, se espera tenga formato de tres columnas por filas, con cada valor de la fila 
+estando separado por una tabulación. El nombre del archivo debe ser "etymwn.tsv". Y debe colocarse
+en la carpeta **p2\files\**, siendo **p2** la carpeta principal del proyecto. 
 
 ## Manual de Usuario
 ________________
+
 ### Operación 1
-**Descipción:** Determinar si dos palabras son heman@s
+**Descripción:** Determinar si dos palabras son heman@s
 
 Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
 por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
@@ -29,7 +34,7 @@ Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se 
 la palabra **Y** bajo el concepto de herman@s.
 
 ### Operación 2
-**Descipción:** Determinar si dos palabras son prim@s
+**Descripción:** Determinar si dos palabras son prim@s
 
 Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
 por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
@@ -49,7 +54,7 @@ Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se 
 la palabra **Y** bajo el concepto de prim@s.
 
 ### Operación 3
-**Descipción:** Determinar si una palabra es hij@ de otra
+**Descripción:** Determinar si una palabra es hij@ de otra
 
 Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
 por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
@@ -69,7 +74,7 @@ Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se 
 la palabra **Y** bajo el concepto de hij@.
 
 ### Operación 4
-**Descipción:** Determinar si una palabra es ti@
+**Descripción:** Determinar si una palabra es ti@
 
 Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
 por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
@@ -90,10 +95,10 @@ Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se 
 la palabra **Y** bajo el concepto de ti@.
 
 ### Operación 5
-**Descipción:** Determinar si son prim@s y en qué grado.
+**Descripción:** Determinar si son prim@s y en qué grado.
 
 ### Operación 6
-**Descipción:** Determinar si una palabra está relacionada con un idioma (Si / No)
+**Descripción:** Determinar si una palabra está relacionada con un idioma (Si / No)
 
 Lo que pretende esta funcionalidad es que a partir de una palabra y un idioma proporcionados
 por el usuario, el sistema brinde una respuesta indicando si la palabra está relacionada con
@@ -114,16 +119,16 @@ lenguaje proporcionado.
   
 
 ### Operación 7
-**Descipción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
+**Descripción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
 
 Lo que pretende esta funcionalidad es que a partir de una palabra y un idioma proporcionados
 por el usuario, el sistema brinde una respuesta indicando todas las palabras que son originadas
 a partir de la ingresada en la interfaz y además que dichas palabras de encuentren en el idioma
 indicado.
 
-Entonces, suponiendo que el usuario proporciona la palabra base: **'padre'** y el idioma: **'spa,'**
+Entonces, suponiendo que el usuario proporciona la palabra base: **'-lik'** y el idioma: **'afr,'**
 el sistema procede a verificar en la base de conocimiento para ver si existen hechos que cumpla la relación
-donde la palabra generadora sea _'padre'_ y que el lenguaje de la palabra generada sea _'spa'_.
+donde la palabra generadora sea _'-lik'_ y que el lenguaje de la palabra generada sea _'afr'_.
 
 **Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra
 y el idioma en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
@@ -136,7 +141,7 @@ sino que se espera una lista de idiomas, y de no encontrar ningún hecho simplem
 lista vacía de elementos.
  
 ### Operación 8
-**Descipción:** Listar los idiomas relacionados con una palabra
+**Descripción:** Listar los idiomas relacionados con una palabra
 
 Lo que pretende esta funcionalidad es que a partir de una palabra proporcionada
 por el usuario, el sistema brinde una respuesta indicando todas los lenguajes que están relacionados
@@ -144,9 +149,9 @@ de manera directa con la misma. Ya sea que la palabra esté escrita en un idioma
 de otra palabra en un idioma determinado. En síntesis, la respuesta se compone de los lenguajes originarios
 y de los generados, donde exista la palabra especificada en la interfaz.
 
-Entonces, suponiendo que el usuario proporciona la palabra base: **'padre'**
+Entonces, suponiendo que el usuario proporciona la palabra base: **'bruin'**
 el sistema procede a verificar en la base de conocimiento para ver si existen hechos que cumpla la relación
-donde la palabra generadora/generada sea _'padre',_ entonces de cumplirse, se toman en cuenta los lenguajes
+donde la palabra generadora/generada sea _'bruin',_ entonces de cumplirse, se toman en cuenta los lenguajes
 que incorpora el hecho del KB.
 
 **Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra
@@ -159,13 +164,13 @@ Note que en la salida se espera una lista de idiomas, y de no encontrar ningún 
 lista vacía.
 
 ### Operación 9
-**Descipción:** Contar todas las palabras comunes entre dos idiomas
+**Descripción:** Contar todas las palabras comunes entre dos idiomas
 
 Lo que pretende esta funcionalidad es que a partir de dos idiomas **(X, Y)** proporcionados
 por el usuario, el sistema brinde una respuesta indicando la cantidad de palabras que se encuentran
 relacionadas de manera común entre los lenguajes (**X** and **Y**).
 
-Entonces, suponiendo que el usuario proporciona el lenguaje **'X = spa'** y **'Y = por,'**
+Entonces, suponiendo que el usuario proporciona el lenguaje **'X = eng'** y **'Y = afr,'**
 el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
 donde _Y_ tiene un conjunto de palabras _Z,_ tal que ese conjunto Z se encuentra en el idioma _X._
 Entonces se cumpliría que las palabras en ese conjunto, son comunes entre Y y X.
@@ -180,13 +185,13 @@ Note que en la salida se espera un valor numérico, indicando la cantidad de pal
 cuales denominamos como el conjunto Z en el ejemplo anterior.
 
 ### Operación 10
-**Descipción:** Listar todas las palabras comunes entre dos idiomas
+**Descripción:** Listar todas las palabras comunes entre dos idiomas
 
 Lo que pretende esta funcionalidad es que a partir de dos idiomas **(X, Y)** proporcionados
 por el usuario, el sistema brinde una respuesta indicando la palabras que se encuentran
 relacionadas de manera común entre los lenguajes (**X** and **Y**).
 
-Entonces, suponiendo que el usuario proporciona el lenguaje **'X = spa'** y **'Y = por,'**
+Entonces, suponiendo que el usuario proporciona el lenguaje **'X = eng'** y **'Y = afr,'**
 el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
 donde _Y_ tiene un conjunto de palabras _Z,_ tal que ese conjunto Z se encuentra en el idioma _X._
 Entonces se cumpliría que las palabras en ese conjunto, son comunes entre Y y X.
@@ -197,53 +202,86 @@ la siguiente imagen:
 
 ![img_op10](/imgs/op10.png)
 
-Note que en la salida se espera una lista de palabras, y de no encontrar ningún hecho simplemente despliega una 
-lista vacía.
+Note que en la salida se espera una lista de palabras. De no encontrar palabras, se despliega un mensaje
+indicando dicho resultado. 
 
 ### Operación 11
-**Descipción:** Idioma que más aportó a otro.
+**Descripción:** Idioma que más aportó a otro.
+
+Esta opción permite consultar la base de conocimiento para determinar cual lenguaje ha aportado el mayor
+porcentaje de palabras o derivaciones a otro lenguaje. El cálculo de dicho porcentaje se hace al contar la 
+cantidad de palabras que un determinado lenguaje aportó al otro y posteriormente diviendo entre el total 
+de palabras que ha recibido dicho lenguaje. Esto se realiza con todos los lenguajes existentes dentro de 
+la base de conocimiento.
+
+**Utilización de la interfaz:** Para utilizar esta funcionalidad no es necesario ingresar ningún lenguaje,
+al ejecutarse de esta manera, el porcentaje es calculado entre todos los lenguajes disponibles. Pero es
+posible definir el idioma Y, para así calcular el mayor porcentaje de aporte únicamente entre los aportes
+realizados al idioma Y.
+
+![img_op11_1](/imgs/op11_1.png)
+![img_op11_2](/imgs/op11_2.png)
+
+Note que en la salida se espera un texto indicando el idioma origen del aporte, el idioma que recibió el
+aporte y el porcentaje que representa dicho aporte sobre el total de palabras recibidas. En caso de no 
+haber aporte, la salida contendrá un texto indicando dicho resultado.
 
 ### Operación 12
-**Descipción:** Listar todos los idiomas que aportaron a otro.
+**Descripción:** Listar todos los idiomas que aportaron a otro.
 
+Esta funcionalidad permite consultar todos los porcentajes de aporte que cada idioma a realizado a los demás,
+el porcentaje se calcula de la misma forma a como se describe en la operación anterior. 
+
+**Utilización de la interfaz:** Al igual que la operación anterior, no es necesario ingresar ningún lenguaje, lo 
+que resulta en el cálculo de los porcentajes de todos los aportes realizados entre los idiomas. Pero también es
+posible definir el idioma Y, para así obtener los porcentajes de todos los aportes que cualquier idioma genera
+para dicho idioma Y.
+
+![img_op12_1](/imgs/op12_1.png)
+![img_op12_2](/imgs/op12_2.png)
+
+Note que en la salida se esperan líneas de texto indicando los idiomas origen de cada aporte, con sus 
+con sus correspondientes idiomas receptores de cada aporte y el porcentaje que representa dicho aporte 
+sobre el total de palabras recibidas para cada idioma. En caso de no haber aportes, la salida contendrá 
+un texto indicando dicho resultado.
 
 ## Resultados Interesantes
 ________________
 ### Operación 1
-**Descipción:** Determinar si dos palabras son heman@s
+**Descripción:** Determinar si dos palabras son heman@s
 
 ### Operación 2
-**Descipción:** Determinar si dos palabras son prim@s
+**Descripción:** Determinar si dos palabras son prim@s
 
 ### Operación 3
-**Descipción:** Determinar si una palabra es hij@ de otra
+**Descripción:** Determinar si una palabra es hij@ de otra
 
 ### Operación 4
-**Descipción:** Determinar si una palabra es ti@
+**Descripción:** Determinar si una palabra es ti@
 
 ### Operación 5
-**Descipción:** Determinar si son prim@s y en qué grado.
+**Descripción:** Determinar si son prim@s y en qué grado.
 
 ### Operación 6
-**Descipción:** Determinar si una palabra está relacionada con un idioma (Si / No)
+**Descripción:** Determinar si una palabra está relacionada con un idioma (Si / No)
 
 ### Operación 7
-**Descipción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
+**Descripción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
 
 ### Operación 8
-**Descipción:** Listar los idiomas relacionados con una palabra
+**Descripción:** Listar los idiomas relacionados con una palabra
 
 ### Operación 9
-**Descipción:** Contar todas las palabras comunes entre dos idiomas
+**Descripción:** Contar todas las palabras comunes entre dos idiomas
 
 ### Operación 10
-**Descipción:** Listar todas las palabras comunes entre dos idiomas
+**Descripción:** Listar todas las palabras comunes entre dos idiomas
 
 ### Operación 11
-**Descipción:** Idioma que más aportó a otro.
+**Descripción:** Idioma que más aportó a otro.
 
 ### Operación 12
-**Descipción:** Listar todos los idiomas que aportaron a otro.
+**Descripción:** Listar todos los idiomas que aportaron a otro.
 
 
 ## Detalles de Implementación y Diseño
@@ -267,10 +305,10 @@ la parte del modelo.
 La sección del modelo, contiene todo lo relacionado a la lógica, es donde se definen las 
 reglas y donde se hacen las inferencias respectivas a cada método.
 
-El módulo de test, contiene todas las pruebas desarrollas por medio de pytest
+El módulo de **test**, contiene todas las pruebas desarrollas por medio de pytest
 para cada una de las funcionalidades que contempla el proyecto.
 
-Por último, el folder util almacena código que está relacionado a herramientas, entre 
+Por último, la carpeta **util** almacena código que está relacionado a herramientas, entre 
 estas se encuentran las de lectura y escritura de archivos, entre otras.
 
 ### Implementación
@@ -292,14 +330,25 @@ La lista de relaciones que se consideraron a lo largo del desarrollo de este pro
 
 Para dar un ejemplo claro de porqué se tomó esta decisión es la eliminación de la
 relación: **is_derived_from**, que es recíproca a la relación **has_derived_form.**
-* Esto se concluyó por medio de la verificación a nivel de código, de que realmente 
+* Esto se concluyó por medio de la verificación a nivel de datos, de que realmente 
 si existe la regla has_derived_form, también estaba la contraparte is_derived_from, 
-con los valores de lengauje y palabra correspondientes.
+con los valores de lenguaje y palabra correspondientes.
 
-* Inclusive si lo vemos a nivel de registros, podemos determinar que existen la misma 
-cantidad de relaciones is_derived_from que de has_derived_form, lo que también da un 
-indicio claro de que los registros son recíprocos.
+* Inclusive si lo vemos a nivel general, podemos determinar que existe la misma cantidad
+de relaciones is_derived_from que de has_derived_form, lo que también da un indicio
+fuerte de que los registros son recíprocos.
 
+#### Manejo de los tipos de relaciones
+Parte de las instrucciones del proyecto incluye que en la interfaz gráfica sea posible 
+seleccionar cuáles relaciones se consideran al ejecutar cada operación de consulta. 
+Lo anterior debe poder realizarse sin reiniciar por completo la aplicación, es por eso que 
+se definen hechos específicos que poseen un valor booleano dependiendo de que 
+relación debe tomarse en cuenta para la consulta. Los hechos definidos son:
+
+> etymology_active(True / False)
+> has_derived_form_active(True / False)
+> etymologically_related_active(True / False)
+> etymological_origin_of_active(True / False)
 
 ## Distribución de Trabajo
 ________________

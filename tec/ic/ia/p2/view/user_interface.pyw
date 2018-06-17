@@ -321,7 +321,10 @@ class UserInterface(Tk):
         self.list_word_x_lang.delete(0)
 
         for item in answer:
-            self.list_word_x_lang.insert(END, item)
+            try:
+                self.list_word_x_lang.insert(END, item)
+            except Exception:
+                pass
 
         self.result_word_x_lang.set("OK")
 
@@ -335,7 +338,10 @@ class UserInterface(Tk):
         answer = set_of_languages_related_word(word)
 
         for item in answer:
-            self.list_word_x_lang.insert(END, item)
+            try:
+                self.list_word_x_lang.insert(END, item)
+            except Exception:
+                pass
 
         self.result_word_x_lang.set("OK")
 
@@ -358,7 +364,10 @@ class UserInterface(Tk):
         self.list_lang_x_lang.delete(0, self.list_lang_x_lang.size())
 
         for item in answer:
-            self.list_lang_x_lang.insert(END, item)
+            try:
+                self.list_lang_x_lang.insert(END, item)
+            except Exception:
+                pass
 
         self.result_lang_x_lang.set("Palabras comunes")
 
@@ -391,13 +400,16 @@ class UserInterface(Tk):
             self.result_lang_x_lang.set('Aportes para: ' + second_lang)
 
         for item in answer:
-            self.list_lang_x_lang.insert(END, item)
+            try:
+                self.list_lang_x_lang.insert(END, item)
+            except Exception:
+                pass
 
 # -----------------------------------------------------------------------------
 
 
 if __name__ == '__main__':
-    filename = "..\\files\\etymwn3.tsv"
+    filename = "..\\files\\etymwn2.tsv"
     load_facts_from_database(filename)
     UserInterface().mainloop()
 
