@@ -277,8 +277,26 @@ ________________
 ### Operación 3
 **Descripción:** Determinar si una palabra es hij@ de otra
 
+Un dato curioso de esta funcionalidad lo encontramos con la palabra **consobrinus,** que es hij@ de: **con-** y **sobrinus**, que provienen del Latín.
+El dato más curioso en este caso, es que dicho hij@ produce la palabra **cousin** del inglés, la cula es sumamente reconocida y utilizada.
+
+Para entender mejor este dato, basta con visualizar la siguiente imagen donde se muestran algunas de las relaciones anteriormente
+mencionadas.
+
+![img_dc_3](/imgs/dc_3.png)  
+
 ### Operación 4
 **Descripción:** Determinar si una palabra es ti@
+
+El dato curioso para esta funcionalidad se puede basar en las relaciones de la _operación #3,_ 
+donde se encuentran  las palabras: **con-** y **soror**, que provienen del Latín.
+El dato más curioso en este caso, es que _soror_ es ti@ de _con_ y de esta relación se produce 
+la palabra **cousin** del inglés, la cula es sumamente reconocida y utilizada (tal como se mencionó en el caso anterior).
+
+Para entender mejor este dato, basta con visualizar la siguiente imagen donde se muestran algunas de las relaciones anteriormente
+mencionadas.
+
+![img_dc_4](/imgs/dc_4.png)  
 
 ### Operación 5
 **Descripción:** Determinar si son prim@s y en qué grado.
