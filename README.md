@@ -48,7 +48,7 @@ la palabra **Y** o no.
 
 Entonces, suponiendo que el usuario proporciona la palabra  **'X = primo1'** y **'Y = primo2,'**
 el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
-donde _X_ and _Y_ tienen un **abuelo en común**.
+donde _X_ and _Y_ tienen un **ancestro en común**.
 
 **Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra1
 y la palabra2 en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
@@ -86,10 +86,11 @@ Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** pr
 por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
 la palabra **Y** o no.
 
+Esta funcionalidad tiene la cualidad de que toma en cuenta tanto el tío directo, como los tíos abuelos, tíos segundos y demás/ 
+
 Entonces, suponiendo que el usuario proporciona la palabra  **'X = tio'** y **'Y = sobrino,'**
 el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
-donde _Y_ tiene como padre una palabra _Z,_ tal que la palabra Z tiene de hermano la palabra _X._
-Entonces se cumpliría que la palabra X es ti@ de la palabra Y.
+donde existe un primo P tal que todos los ancestros T de P que no sean los ancestros directos de Y son tíos de Y. 
 
 **Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra1
 y la palabra2 en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
