@@ -39,11 +39,6 @@ def match_and_assert_fact(pattern, line):
 # -----------------------------------------------------------------------------
 
 def assert_fact_from_match(match):
-    print("+ {}({}, {}, {}, {})".format(
-        match.group(3),
-        match.group(1), match.group(2),
-        match.group(4), match.group(5)
-    ))
     pyDatalog.assert_fact(
         match.group(3),
         match.group(1), match.group(2),
