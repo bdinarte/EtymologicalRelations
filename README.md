@@ -9,7 +9,7 @@ ________________
 ## Manual de Usuario
 ________________
 ### Operación 1
-**Descipción:** Determinar si dos palabras son heman@s
+**Descripción:** Determinar si dos palabras son heman@s
 
 Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
 por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
@@ -29,7 +29,7 @@ Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se 
 la palabra **Y** bajo el concepto de herman@s.
 
 ### Operación 2
-**Descipción:** Determinar si dos palabras son prim@s
+**Descripción:** Determinar si dos palabras son prim@s
 
 Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
 por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
@@ -49,7 +49,7 @@ Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se 
 la palabra **Y** bajo el concepto de prim@s.
 
 ### Operación 3
-**Descipción:** Determinar si una palabra es hij@ de otra
+**Descripción:** Determinar si una palabra es hij@ de otra
 
 Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
 por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
@@ -69,7 +69,7 @@ Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se 
 la palabra **Y** bajo el concepto de hij@.
 
 ### Operación 4
-**Descipción:** Determinar si una palabra es ti@
+**Descripción:** Determinar si una palabra es ti@
 
 Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** proporcionadas
 por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
@@ -90,10 +90,10 @@ Note que la salida es simplemente un **Si/No** indicando si la palabra **X** se 
 la palabra **Y** bajo el concepto de ti@.
 
 ### Operación 5
-**Descipción:** Determinar si son prim@s y en qué grado.
+**Descripción:** Determinar si son prim@s y en qué grado.
 
 ### Operación 6
-**Descipción:** Determinar si una palabra está relacionada con un idioma (Si / No)
+**Descripción:** Determinar si una palabra está relacionada con un idioma (Si / No)
 
 Lo que pretende esta funcionalidad es que a partir de una palabra y un idioma proporcionados
 por el usuario, el sistema brinde una respuesta indicando si la palabra está relacionada con
@@ -114,7 +114,7 @@ lenguaje proporcionado.
   
 
 ### Operación 7
-**Descipción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
+**Descripción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
 
 Lo que pretende esta funcionalidad es que a partir de una palabra y un idioma proporcionados
 por el usuario, el sistema brinde una respuesta indicando todas las palabras que son originadas
@@ -136,7 +136,7 @@ sino que se espera una lista de idiomas, y de no encontrar ningún hecho simplem
 lista vacía de elementos.
  
 ### Operación 8
-**Descipción:** Listar los idiomas relacionados con una palabra
+**Descripción:** Listar los idiomas relacionados con una palabra
 
 Lo que pretende esta funcionalidad es que a partir de una palabra proporcionada
 por el usuario, el sistema brinde una respuesta indicando todas los lenguajes que están relacionados
@@ -159,7 +159,7 @@ Note que en la salida se espera una lista de idiomas, y de no encontrar ningún 
 lista vacía.
 
 ### Operación 9
-**Descipción:** Contar todas las palabras comunes entre dos idiomas
+**Descripción:** Contar todas las palabras comunes entre dos idiomas
 
 Lo que pretende esta funcionalidad es que a partir de dos idiomas **(X, Y)** proporcionados
 por el usuario, el sistema brinde una respuesta indicando la cantidad de palabras que se encuentran
@@ -180,7 +180,7 @@ Note que en la salida se espera un valor numérico, indicando la cantidad de pal
 cuales denominamos como el conjunto Z en el ejemplo anterior.
 
 ### Operación 10
-**Descipción:** Listar todas las palabras comunes entre dos idiomas
+**Descripción:** Listar todas las palabras comunes entre dos idiomas
 
 Lo que pretende esta funcionalidad es que a partir de dos idiomas **(X, Y)** proporcionados
 por el usuario, el sistema brinde una respuesta indicando la palabras que se encuentran
@@ -197,53 +197,53 @@ la siguiente imagen:
 
 ![img_op10](/imgs/op10.png)
 
-Note que en la salida se espera una lista de palabras, y de no encontrar ningún hecho simplemente despliega una 
-lista vacía.
+Note que en la salida se espera una lista de palabras. De no encontrar palabras, se despliega un mensaje
+indicando dicho resultado.
 
 ### Operación 11
-**Descipción:** Idioma que más aportó a otro.
+**Descripción:** Idioma que más aportó a otro.
 
 ### Operación 12
-**Descipción:** Listar todos los idiomas que aportaron a otro.
+**Descripción:** Listar todos los idiomas que aportaron a otro.
 
 
 ## Resultados Interesantes
 ________________
 ### Operación 1
-**Descipción:** Determinar si dos palabras son heman@s
+**Descripción:** Determinar si dos palabras son heman@s
 
 ### Operación 2
-**Descipción:** Determinar si dos palabras son prim@s
+**Descripción:** Determinar si dos palabras son prim@s
 
 ### Operación 3
-**Descipción:** Determinar si una palabra es hij@ de otra
+**Descripción:** Determinar si una palabra es hij@ de otra
 
 ### Operación 4
-**Descipción:** Determinar si una palabra es ti@
+**Descripción:** Determinar si una palabra es ti@
 
 ### Operación 5
-**Descipción:** Determinar si son prim@s y en qué grado.
+**Descripción:** Determinar si son prim@s y en qué grado.
 
 ### Operación 6
-**Descipción:** Determinar si una palabra está relacionada con un idioma (Si / No)
+**Descripción:** Determinar si una palabra está relacionada con un idioma (Si / No)
 
 ### Operación 7
-**Descipción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
+**Descripción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
 
 ### Operación 8
-**Descipción:** Listar los idiomas relacionados con una palabra
+**Descripción:** Listar los idiomas relacionados con una palabra
 
 ### Operación 9
-**Descipción:** Contar todas las palabras comunes entre dos idiomas
+**Descripción:** Contar todas las palabras comunes entre dos idiomas
 
 ### Operación 10
-**Descipción:** Listar todas las palabras comunes entre dos idiomas
+**Descripción:** Listar todas las palabras comunes entre dos idiomas
 
 ### Operación 11
-**Descipción:** Idioma que más aportó a otro.
+**Descripción:** Idioma que más aportó a otro.
 
 ### Operación 12
-**Descipción:** Listar todos los idiomas que aportaron a otro.
+**Descripción:** Listar todos los idiomas que aportaron a otro.
 
 
 ## Detalles de Implementación y Diseño
