@@ -164,11 +164,10 @@ def get_max_input(language=''):
     if not query_results.v():
         return 'No hay aporte.'
 
-    query_results = [i[0] for i in query_results.data]
-    query_results.sort(reverse=True)
+    query_results = query_results.data[0][0]
 
-    max_input_string = str('Idioma: ' + query_results[0][1] + ' a: '
-                           + query_results[0][2] + ' con '
-                           + str(query_results[0][0]*100) + '%.')
+    max_input_string = str('Idioma: ' + query_results[1] + ' a: '
+                           + query_results[2] + ' con '
+                           + str(query_results[0]*100) + '%.')
 
     return max_input_string

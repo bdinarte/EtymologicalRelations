@@ -342,8 +342,23 @@ A continuación, se muestra una imagen con algunos ejemplos de la palabra **'gol
 ### Operación 9
 **Descripción:** Contar todas las palabras comunes entre dos idiomas
 
+Se realizó un conteo entre el idioma Malayo (usualmente hablado en Malasia) representado como **zsm** y un lenguaje criollo basado en él, 
+conocido como Malayo de Ambon o también Ambonés (hablado en la isla de Ambon, que se encuentra en un grupo de islas de Indonesia) y que 
+se representa como **abs**. A pesar de que el segundo se basa en el primero, en la base de datos únicamente se encontró una relación 
+según lo indicado por la operación 9.
+
+Dado que es difícil de creer que dichos lenguajes tengan tan poco en común, esto debe significar simplemente que los datos no están nada 
+completos. La incompletitud de los datos era esperada, pero lo interesante de todo esto es que en la base se haya incluido una única palabra
+ de relación entre ambos idiomas tan cercanos.
+
 ### Operación 10
 **Descripción:** Listar todas las palabras comunes entre dos idiomas
+
+Habiendo obtenido el resultado mencionado en la operación 9, se procedió a listar la palabra en común entre ambos idiomas Malayo **abs** 
+y el Ambonés **zsm**, con lo cuál se obtiene el resultado de que la palabra en común entre ambos idiomas es **beta**, lo curioso de esto
+es que además de lo mencionado en la operación 9, la única palabra que se decidió incluir en la base de datos fue **beta**. Una palabra que
+ni siquiera parece tener un significado destacado en los ambos lenguajes, pues su traducción es la misma en el idioma Español.  Entonces
+¿por qué incluir una palabra que no tiene mayor importancia en la base de datos y no incluir ninguna otra palabra?
 
 ### Operación 11
 **Descripción:** Idioma que más aportó a otro.
