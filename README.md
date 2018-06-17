@@ -198,14 +198,30 @@ la siguiente imagen:
 ![img_op10](/imgs/op10.png)
 
 Note que en la salida se espera una lista de palabras. De no encontrar palabras, se despliega un mensaje
-indicando dicho resultado.
+indicando dicho resultado. 
 
 ### Operación 11
 **Descripción:** Idioma que más aportó a otro.
 
+Esta opción permite consultar la base de conocimiento para determinar cual lenguaje ha aportado el mayor
+porcentaje de palabras o derivaciones a otro lenguaje. El cálculo de dicho porcentaje se hace al contar la 
+cantidad de palabras que un determinado lenguaje aportó al otro y posteriormente diviendo entre el total 
+de palabras que ha recibido dicho lenguaje. Esto se realiza con todos los lenguajes existentes dentro de 
+la base de conocimiento.
+
+**Utilización de la interfaz:** Para utilizar esta funcionalidad no es necesario ingresar ningún lenguaje,
+al ejecutarse de esta manera, el porcentaje es calculado entre todos los lenguajes disponibles. Pero es
+posible definir el idioma Y, para así calcular el mayor porcentaje de aporte únicamente entre los aportes
+realizados al idioma Y.
+
+![img_op10](/imgs/op11.png)
+
 ### Operación 12
 **Descripción:** Listar todos los idiomas que aportaron a otro.
 
+Esta funcionalidad permite ...
+
+![img_op12](/imgs/op12.png)
 
 ## Resultados Interesantes
 ________________
