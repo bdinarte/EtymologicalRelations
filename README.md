@@ -219,7 +219,12 @@ al ejecutarse de esta manera, el porcentaje es calculado entre todos los lenguaj
 posible definir el idioma Y, para así calcular el mayor porcentaje de aporte únicamente entre los aportes
 realizados al idioma Y.
 
-![img_op10](/imgs/op11.png)
+![img_op11_1](/imgs/op11_1.png)
+![img_op11_2](/imgs/op11_2.png)
+
+Note que en la salida se espera un texto indicando el idioma origen del aporte, el idioma que recibió el
+aporte y el porcentaje que representa dicho aporte sobre el total de palabras recibidas. En caso de no 
+haber aporte, la salida contendrá un texto indicando dicho resultado.
 
 ### Operación 12
 **Descripción:** Listar todos los idiomas que aportaron a otro.
@@ -232,7 +237,13 @@ que resulta en el cálculo de los porcentajes de todos los aportes realizados en
 posible definir el idioma Y, para así obtener los porcentajes de todos los aportes que cualquier idioma genera
 para dicho idioma Y.
 
-![img_op12](/imgs/op12.png)
+![img_op12_1](/imgs/op12_1.png)
+![img_op12_2](/imgs/op12_2.png)
+
+Note que en la salida se esperan líneas de texto indicando los idiomas origen de cada aporte, con sus 
+con sus correspondientes idiomas receptores de cada aporte y el porcentaje que representa dicho aporte 
+sobre el total de palabras recibidas para cada idioma. En caso de no haber aportes, la salida contendrá 
+un texto indicando dicho resultado.
 
 ## Resultados Interesantes
 ________________
