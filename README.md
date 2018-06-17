@@ -267,10 +267,10 @@ la parte del modelo.
 La sección del modelo, contiene todo lo relacionado a la lógica, es donde se definen las 
 reglas y donde se hacen las inferencias respectivas a cada método.
 
-El módulo de test, contiene todas las pruebas desarrollas por medio de pytest
+El módulo de **test**, contiene todas las pruebas desarrollas por medio de pytest
 para cada una de las funcionalidades que contempla el proyecto.
 
-Por último, el folder util almacena código que está relacionado a herramientas, entre 
+Por último, la carpeta **util** almacena código que está relacionado a herramientas, entre 
 estas se encuentran las de lectura y escritura de archivos, entre otras.
 
 ### Implementación
@@ -292,14 +292,25 @@ La lista de relaciones que se consideraron a lo largo del desarrollo de este pro
 
 Para dar un ejemplo claro de porqué se tomó esta decisión es la eliminación de la
 relación: **is_derived_from**, que es recíproca a la relación **has_derived_form.**
-* Esto se concluyó por medio de la verificación a nivel de código, de que realmente 
+* Esto se concluyó por medio de la verificación a nivel de datos, de que realmente 
 si existe la regla has_derived_form, también estaba la contraparte is_derived_from, 
-con los valores de lengauje y palabra correspondientes.
+con los valores de lenguaje y palabra correspondientes.
 
-* Inclusive si lo vemos a nivel de registros, podemos determinar que existen la misma 
-cantidad de relaciones is_derived_from que de has_derived_form, lo que también da un 
-indicio claro de que los registros son recíprocos.
+* Inclusive si lo vemos a nivel general, podemos determinar que existe la misma cantidad
+de relaciones is_derived_from que de has_derived_form, lo que también da un indicio
+fuerte de que los registros son recíprocos.
 
+#### Manejo de los tipos de relaciones
+Parte de las instrucciones del proyecto incluye que en la interfaz gráfica sea posible 
+seleccionar cuáles relaciones se consideran al ejecutar cada operación de consulta. 
+Lo anterior debe poder realizarse sin reiniciar por completo la aplicación, es por eso que 
+se definen hechos específicos que poseen un valor booleano dependiendo de que 
+relación debe tomarse en cuenta para la consulta. Los hechos definidos son:
+
+> etymology_active(True / False)
+> has_derived_form_active(True / False)
+> etymologically_related_active(True / False)
+> etymological_origin_of_active(True / False)
 
 ## Distribución de Trabajo
 ________________
