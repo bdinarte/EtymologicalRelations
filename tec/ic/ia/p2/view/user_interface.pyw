@@ -5,9 +5,12 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 from tkinter import *
+from tkinter import filedialog
+from tkinter import messagebox
+
 from controller.common import *
 from controller.data_loader import *
-# from controller.word_x_word import *
+from controller.word_x_word import *
 from controller.word_x_lang import *
 from controller.lang_x_lang import *
 
@@ -34,20 +37,83 @@ class UserInterface(Tk):
         self.lf_word_x_word = LabelFrame(text="Operaciones entre palabras")
         self.lf_word_x_lang = LabelFrame(text="Operaciones palabra e idioma")
         self.lf_lang_x_lang = LabelFrame(text="Operaciones idioma e idioma")
-        self.lf_relations = LabelFrame(text="Opciones generales")
 
-        self.lf_word_x_word.grid(row=0, column=0)
-        self.lf_word_x_lang.grid(row=0, column=1)
-        self.lf_lang_x_lang.grid(row=1, column=0)
+        self.lf_relations = LabelFrame(text="Opciones generales")
+        self.lf_database = LabelFrame(text="Base de datos")
+        self.lf_database.grid(row=0, column=0)
+        self.lf_word_x_word.grid(row=1, column=0)
+        self.lf_word_x_lang.grid(row=2, column=0)
+        self.lf_lang_x_lang.grid(row=3, column=0)
         self.lf_relations.grid(row=1, column=1)
 
     # -------------------------------------------------------------------------
 
+    def open_database(self):
+
+        self.database_text.set(
+            filedialog.askopenfilename(
+                initialdir=os.path.split(__file__),
+                title="Selecciona el archivo .tsv con la base de datos",
+                filetypes=(("tsv files", "*.tsv"), ("all files","*.*"),)
+            )
+        )
+
+    # -------------------------------------------------------------------------
+
+    def load_database(self):
+
+        filename = self.database_text.get()
+
+        try:
+
+            load_facts_from_database(self.database_text.get())
+
+            messagebox.showinfo("Información",
+                                "Base de datos " +
+                                os.path.split(filename)[1] +
+                                " cargada con éxito")
+
+        except:
+
+            messagebox.showerror("Error",
+                                 "No se ha podido cargar la base de datos " +
+                                 os.path.split(filename)[1])
+
+    # -------------------------------------------------------------------------
+
     def create_widgets(self):
+        self.create_database_widgets()
         self.create_widgets_word_x_word()
         self.create_widgets_word_x_lang()
         self.create_widgets_lang_x_lang()
         self.create_widgets_relations()
+
+    # -------------------------------------------------------------------------
+
+    def create_database_widgets(self):
+
+        self.grid_columnconfigure(1, weight=1)
+
+        self.database_text = StringVar()
+
+        self.database_entry = Entry(
+            self.lf_database,
+            textvariable=self.database_text,
+            state="disable")
+
+        self.database_open_button = Button(
+            self.lf_database,
+            text="...",
+            command=self.open_database)
+
+        self.database_load_button = Button(
+            self.lf_database,
+            text="Carga base",
+            command=self.load_database)
+
+        self.database_entry.pack(fill="y")
+        self.database_open_button.pack(fill="y")
+        self.database_load_button.pack(fill="y")
 
     # -------------------------------------------------------------------------
 
@@ -59,27 +125,46 @@ class UserInterface(Tk):
 
         self.label_word_x = Label(self.lf_word_x_word, text="Palabra X")
         self.label_word_y = Label(self.lf_word_x_word, text="Palabra Y")
+
         self.label_result_word_x_word = Label(
-            self.lf_word_x_word, text="Resultado")
+            self.lf_word_x_word,
+            text="Resultado")
 
         self.entry_word_x = Entry(
-            self.lf_word_x_word, textvariable=self.word_x)
+            self.lf_word_x_word,
+            textvariable=self.word_x)
+
         self.entry_word_y = Entry(
-            self.lf_word_x_word, textvariable=self.word_y)
+            self.lf_word_x_word,
+            textvariable=self.word_y)
+
         self.entry_result_word_x_word = Entry(
-            self.lf_word_x_word, textvariable=self.result_word_x_word)
+            self.lf_word_x_word,
+            textvariable=self.result_word_x_word)
 
         self.btn_is_son = Button(
-            self.lf_word_x_word, text="Es hija X de Y", command=self.is_child)
+            self.lf_word_x_word,
+            text="Es hija X de Y",
+            command=self.is_child)
+
         self.btn_is_uncle = Button(
-            self.lf_word_x_word, text="Es tía X de Y", command=self.is_uncle)
+            self.lf_word_x_word,
+            text="Es tía X de Y",
+            command=self.is_uncle)
+
         self.btn_are_cousins = Button(
-            self.lf_word_x_word, text="Son primas", command=self.are_cousins)
+            self.lf_word_x_word,
+            text="Son primas",
+            command=self.are_cousins)
+
         self.btn_are_siblings = Button(
-            self.lf_word_x_word, text="Son hermanas",
+            self.lf_word_x_word,
+            text="Son hermanas",
             command=self.are_siblings)
+
         self.btn_cousin_grade = Button(
-            self.lf_word_x_word, text="Grado primas",
+            self.lf_word_x_word,
+            text="Grado primas",
             command=self.cousins_level)
 
     # -------------------------------------------------------------------------
@@ -92,25 +177,38 @@ class UserInterface(Tk):
 
         self.label_word_p = Label(self.lf_word_x_lang, text="Palabra P")
         self.label_lang_d = Label(self.lf_word_x_lang, text="Idioma D")
+
         self.label_result_word_x_lang = Label(
-            self.lf_word_x_lang, text="Resultado")
+            self.lf_word_x_lang,
+            text="Resultado")
 
         self.entry_word_p = Entry(
-            self.lf_word_x_lang, textvariable=self.word_p)
+            self.lf_word_x_lang,
+            textvariable=self.word_p)
+
         self.entry_word_d = Entry(
-            self.lf_word_x_lang, textvariable=self.lang_d)
+            self.lf_word_x_lang,
+            textvariable=self.lang_d)
+
         self.entry_result_word_x_lang = Entry(
-            self.lf_word_x_lang, textvariable=self.result_word_x_lang)
+            self.lf_word_x_lang,
+            textvariable=self.result_word_x_lang)
 
         self.btn_p_is_related_d = Button(
-            self.lf_word_x_lang, text="P se relaciona con D",
+            self.lf_word_x_lang,
+            text="P se relaciona con D",
             command=self.p_is_related_d)
+
         self.btn_p_yields_d = Button(
-            self.lf_word_x_lang, text="Palabras originadas por P en D",
+            self.lf_word_x_lang,
+            text="Palabras originadas por P en D",
             command=self.p_yields_d)
+
         self.btn_langs_related_p = Button(
-            self.lf_word_x_lang, text="Idiomas relacionados con P",
+            self.lf_word_x_lang,
+            text="Idiomas relacionados con P",
             command=self.langs_related_p)
+
         self.list_word_x_lang = Listbox(self.lf_word_x_lang)
 
     # -------------------------------------------------------------------------
@@ -123,28 +221,43 @@ class UserInterface(Tk):
 
         self.label_lang_x = Label(self.lf_lang_x_lang, text="Idioma X")
         self.label_lang_y = Label(self.lf_lang_x_lang, text="Idioma Y")
+
         self.label_result_lang_x_lang = Label(
-            self.lf_lang_x_lang, text="Resultado")
+            self.lf_lang_x_lang,
+            text="Resultado")
 
         self.entry_lang_x = Entry(
-            self.lf_lang_x_lang, textvariable=self.lang_x)
+            self.lf_lang_x_lang,
+            textvariable=self.lang_x)
+
         self.entry_lang_y = Entry(
-            self.lf_lang_x_lang, textvariable=self.lang_y)
+            self.lf_lang_x_lang,
+            textvariable=self.lang_y)
+
         self.entry_result_lang_x_lang = Entry(
-            self.lf_lang_x_lang, textvariable=self.result_lang_x_lang)
+            self.lf_lang_x_lang,
+            textvariable=self.result_lang_x_lang)
 
         self.btn_amount_of_common_words = Button(
-            self.lf_lang_x_lang, text="Cantidad palabras comunes",
+            self.lf_lang_x_lang,
+            text="Cantidad palabras comunes",
             command=self.amount_of_common_words)
+
         self.btn_common_words = Button(
-            self.lf_lang_x_lang, text="Listar palabras comunes",
+            self.lf_lang_x_lang,
+            text="Listar palabras comunes",
             command=self.common_words)
+
         self.btn_greater_contribution = Button(
-            self.lf_lang_x_lang, text="Idioma que más aporto a otro",
+            self.lf_lang_x_lang,
+            text="Idioma que más aporto a otro",
             command=self.greater_contribution)
+
         self.btn_contribution_by_lang = Button(
-            self.lf_lang_x_lang, text="Porcentajes de aporte",
+            self.lf_lang_x_lang,
+            text="Porcentajes de aporte",
             command=self.contribution_by_lang)
+
         self.list_lang_x_lang = Listbox(self.lf_lang_x_lang)
 
     # -------------------------------------------------------------------------
@@ -155,18 +268,35 @@ class UserInterface(Tk):
         self.val_etym_o = BooleanVar()
         self.val_etym_r = BooleanVar()
         self.val_has_d = BooleanVar()
+
+        self.val_etym.set(1)
+        self.val_etym_o.set(1)
+        self.val_etym_r.set(1)
+        self.val_has_d.set(1)
+
         self.cb_etymology = Checkbutton(
-            self.lf_relations, text="rel:etymology",
-            command=self.etym_clicked, variable=self.val_etym)
+            self.lf_relations,
+            text="rel:etymology",
+            command=self.etym_clicked,
+            variable=self.val_etym)
+
         self.cb_etymological_origin_of = Checkbutton(
-            self.lf_relations, text="rel:etymological_origin_of",
-            command=self.etym_o_clicked, variable=self.val_etym_o)
+            self.lf_relations,
+            text="rel:etymological_origin_of",
+            command=self.etym_o_clicked,
+            variable=self.val_etym_o)
+
         self.cb_etymologically_related = Checkbutton(
-            self.lf_relations, text="rel:etymologically_related",
-            command=self.etym_r_clicked, variable=self.val_etym_r)
+            self.lf_relations,
+            text="rel:etymologically_related",
+            command=self.etym_r_clicked,
+            variable=self.val_etym_r)
+
         self.cb_has_derived_form = Checkbutton(
-            self.lf_relations, text="rel:has_derived_form",
-            command=self.has_d_clicked, variable=self.val_has_d)
+            self.lf_relations,
+            text="rel:has_derived_form",
+            command=self.has_d_clicked,
+            variable=self.val_has_d)
 
     # -------------------------------------------------------------------------
 
@@ -239,26 +369,22 @@ class UserInterface(Tk):
     # -------------------------------------------------------------------------
 
     def etym_clicked(self):
-        switch_etymology_state(
-            self.val_etym.get())
+        switch_etymology_state(self.val_etym.get())
 
     # -------------------------------------------------------------------------
 
     def etym_o_clicked(self):
-        switch_etymological_origin_of_state(
-            self.val_etym_o.get())
+        switch_etymological_origin_of_state(self.val_etym_o.get())
 
     # -------------------------------------------------------------------------
 
     def etym_r_clicked(self):
-        switch_etymologically_related_state(
-            self.val_etym_r.get())
+        switch_etymologically_related_state(self.val_etym_r.get())
 
     # -------------------------------------------------------------------------
 
     def has_d_clicked(self):
-        switch_has_derived_form_state(
-            self.val_has_d.get())
+        switch_has_derived_form_state(self.val_has_d.get())
 
     # -------------------------------------------------------------------------
 
@@ -297,7 +423,7 @@ class UserInterface(Tk):
     def cousins_level(self):
         first_word = self.word_x.get()
         second_word = self.word_y.get()
-        level = exec_cousins_level(first_word, second_word)
+        level = exec_cousins_distance(first_word, second_word)
         string = "No son primos" if level is 0 else "Son primos " + \
             str(level) + "°"
         self.result_word_x_word.set(string)
@@ -308,7 +434,7 @@ class UserInterface(Tk):
         word = self.word_p.get()
         lang = self.lang_d.get()
         answer = word_related_language(word, lang)
-        self.result_word_x_lang.set(answer)
+        self.result_word_x_lang.set("SI" if answer else "NO")
 
     # -------------------------------------------------------------------------
 
@@ -318,7 +444,7 @@ class UserInterface(Tk):
         lang = self.lang_d.get()
         answer = set_of_words_in_language(word, lang)
 
-        self.list_word_x_lang.delete(0)
+        self.list_word_x_lang.delete(0, self.list_word_x_lang.size())
 
         for item in answer:
             try:
@@ -336,6 +462,8 @@ class UserInterface(Tk):
         self.lang_d.set("No aplica")
 
         answer = set_of_languages_related_word(word)
+
+        self.list_word_x_lang.delete(0, self.list_word_x_lang.size())
 
         for item in answer:
             try:
@@ -409,8 +537,6 @@ class UserInterface(Tk):
 
 
 if __name__ == '__main__':
-    filename = "..\\files\\etymwn2.tsv"
-    load_facts_from_database(filename)
     UserInterface().mainloop()
 
 # -----------------------------------------------------------------------------
