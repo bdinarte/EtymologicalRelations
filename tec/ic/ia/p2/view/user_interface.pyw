@@ -23,7 +23,7 @@ class UserInterface(Tk):
 
     def __init__(self, master=None):
         Tk.__init__(self, master)
-        self.geometry("1220x700")
+        self.geometry("1330x600")
         self.title("Etymological Relations")
         self.config(padx=20, pady=20)
         self.create_frames()
@@ -34,17 +34,27 @@ class UserInterface(Tk):
 
     def create_frames(self):
 
+        self.lf_database = LabelFrame(text="Base de datos")
+        self.lf_relations = LabelFrame(text="Relaciones a considerar")
+
         self.lf_word_x_word = LabelFrame(text="Operaciones entre palabras")
         self.lf_word_x_lang = LabelFrame(text="Operaciones palabra e idioma")
         self.lf_lang_x_lang = LabelFrame(text="Operaciones idioma e idioma")
 
-        self.lf_relations = LabelFrame(text="Opciones generales")
-        self.lf_database = LabelFrame(text="Base de datos")
-        self.lf_database.grid(row=0, column=0)
-        self.lf_word_x_word.grid(row=1, column=0)
-        self.lf_word_x_lang.grid(row=2, column=0)
-        self.lf_lang_x_lang.grid(row=3, column=0)
-        self.lf_relations.grid(row=1, column=1)
+        self.lf_database.grid(row=0, column=1, sticky=N+S+E+W,
+                              padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.lf_relations.grid(row=2, column=0, sticky=N+S+E+W,
+                               padx=5, pady=5, ipadx=5, ipady=5, columnspan=2)
+
+        self.lf_word_x_word.grid(row=0, column=0, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.lf_word_x_lang.grid(row=1, column=0, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.lf_lang_x_lang.grid(row=1, column=1, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
 
     # -------------------------------------------------------------------------
 
@@ -92,9 +102,12 @@ class UserInterface(Tk):
 
     def create_database_widgets(self):
 
-        self.grid_columnconfigure(1, weight=1)
-
         self.database_text = StringVar()
+
+        self.database_label = Label(
+            self.lf_database,
+            text = "Ruta de los datos"
+        )
 
         self.database_entry = Entry(
             self.lf_database,
@@ -111,9 +124,20 @@ class UserInterface(Tk):
             text="Carga base",
             command=self.load_database)
 
-        self.database_entry.pack(fill="y")
-        self.database_open_button.pack(fill="y")
-        self.database_load_button.pack(fill="y")
+        self.database_label.grid(row=0, column=0, sticky=N+S+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.database_entry.grid(row=1, column=0, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.database_open_button.grid(row=1, column=1, sticky=N+S+E+W,
+                                       padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.database_load_button.grid(row=2, column=0, sticky=N+S+E+W,
+                                       padx=5, pady=5, ipadx=5, ipady=5,
+                                       columnspan=2)
+
+        self.database_entry.configure(width=90)
 
     # -------------------------------------------------------------------------
 
@@ -144,27 +168,27 @@ class UserInterface(Tk):
 
         self.btn_is_son = Button(
             self.lf_word_x_word,
-            text="Es hija X de Y",
+            text="Es hij@ X de Y",
             command=self.is_child)
 
         self.btn_is_uncle = Button(
             self.lf_word_x_word,
-            text="Es tía X de Y",
+            text="Es tí@ X de Y",
             command=self.is_uncle)
 
         self.btn_are_cousins = Button(
             self.lf_word_x_word,
-            text="Son primas",
+            text="Son prim@s",
             command=self.are_cousins)
 
         self.btn_are_siblings = Button(
             self.lf_word_x_word,
-            text="Son hermanas",
+            text="Son herman@s",
             command=self.are_siblings)
 
         self.btn_cousin_grade = Button(
             self.lf_word_x_word,
-            text="Grado primas",
+            text="Grado prim@s",
             command=self.cousins_level)
 
     # -------------------------------------------------------------------------
@@ -306,65 +330,134 @@ class UserInterface(Tk):
         # Operaciones palabra entre palabra
         # ---------------------------------------------------------------------
 
-        self.label_word_x.grid(row=0, column=0, sticky=NW, padx=5)
-        self.label_word_y.grid(row=0, column=1, sticky=NW, padx=5)
-        self.label_result_word_x_word.grid(row=0, column=2, sticky=NW, padx=5)
+        self.label_word_x.grid(row=0, column=0, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
 
-        self.entry_word_x.grid(row=1, column=0)
-        self.entry_word_y.grid(row=1, column=1)
-        self.entry_result_word_x_word.grid(row=1, column=2)
+        self.label_word_y.grid(row=0, column=1, sticky=N+S+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
 
-        self.btn_cousin_grade.grid(row=1, column=3)
-        self.btn_is_son.grid(row=2, column=0)
-        self.btn_is_uncle.grid(row=2, column=1)
-        self.btn_are_siblings.grid(row=2, column=2)
-        self.btn_are_cousins.grid(row=2, column=3)
+        self.label_result_word_x_word.grid(row=0, column=2, sticky=N+S+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.entry_word_x.grid(row=1, column=0, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.entry_word_y.grid(row=1, column=1, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.entry_result_word_x_word.grid(row=1, column=2, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_cousin_grade.grid(row=1, column=3, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_is_son.grid(row=2, column=0, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_is_uncle.grid(row=2, column=1, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_are_siblings.grid(row=2, column=2, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_are_cousins.grid(row=2, column=3, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
 
         # ---------------------------------------------------------------------
         # Operaciones palabra e idioma
         # ---------------------------------------------------------------------
 
-        self.label_lang_d.grid(row=0, column=0, sticky=NW, padx=5)
-        self.label_word_p.grid(row=0, column=1, sticky=NW, padx=5)
-        self.label_result_word_x_lang.grid(row=0, column=2, sticky=NW, padx=5)
+        self.label_lang_d.grid(row=0, column=0, sticky=N+S+W,
+                               padx=5, pady=5, ipadx=5, ipady=5)
 
-        self.entry_word_d.grid(row=1, column=0)
-        self.entry_word_p.grid(row=1, column=1)
-        self.entry_result_word_x_lang.grid(row=1, column=2)
+        self.label_word_p.grid(row=0, column=1, sticky=N+S+W,
+                               padx=5, pady=5, ipadx=5, ipady=5)
 
-        self.btn_p_is_related_d.grid(row=1, column=3, columnspan=2)
-        self.btn_p_yields_d.grid(row=2, column=3, columnspan=2)
-        self.btn_langs_related_p.grid(row=3, column=3, columnspan=2)
+        self.label_result_word_x_lang.grid(row=0, column=2, sticky=N+S+W,
+                                           padx=5, pady=5, ipadx=5, ipady=5)
 
-        self.list_word_x_lang.grid(row=2, column=0, columnspan=1, rowspan=8)
+        self.entry_word_d.grid(row=1, column=0, sticky=N+S+E+W,
+                               padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.entry_word_p.grid(row=1, column=1, sticky=N+S+E+W,
+                               padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.entry_result_word_x_lang.grid(row=1, column=2, sticky=N+S+E+W,
+                                           padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_p_is_related_d.grid(row=2, column=3,
+                                     columnspan=2, sticky=N+S+E+W,
+                                     padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_p_yields_d.grid(row=3, column=3,
+                                 columnspan=2, sticky=N+S+E+W,
+                                 padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_langs_related_p.grid(row=4, column=3,
+                                      columnspan=2, sticky=N+S+E+W,
+                                      padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.list_word_x_lang.grid(row=2, column=0,
+                                   columnspan=3, rowspan=3, sticky=N+S+E+W,
+                                   padx=5, pady=5, ipadx=5, ipady=5)
 
         # ---------------------------------------------------------------------
         # Operaciones idioma entre idioma
         # ---------------------------------------------------------------------
 
-        self.label_lang_x.grid(row=0, column=0, sticky=NW, padx=5)
-        self.label_lang_y.grid(row=0, column=1, sticky=NW, padx=5)
-        self.label_result_lang_x_lang.grid(row=0, column=2, sticky=NW, padx=5)
+        self.label_lang_x.grid(row=0, column=0, sticky=N+S+W,
+                               padx=5, pady=5, ipadx=5, ipady=5)
 
-        self.entry_lang_x.grid(row=1, column=0)
-        self.entry_lang_y.grid(row=1, column=1)
-        self.entry_result_lang_x_lang.grid(row=1, column=2)
+        self.label_lang_y.grid(row=0, column=1, sticky=N+S+W,
+                               padx=5, pady=5, ipadx=5, ipady=5)
 
-        self.btn_amount_of_common_words.grid(row=1, column=3, columnspan=2)
-        self.btn_common_words.grid(row=2, column=3, columnspan=2)
-        self.btn_greater_contribution.grid(row=3, column=3, columnspan=2)
-        self.btn_contribution_by_lang.grid(row=4, column=3, columnspan=2)
+        self.label_result_lang_x_lang.grid(row=0, column=2, sticky=N+S+W,
+                                           padx=5, pady=5, ipadx=5, ipady=5)
 
-        self.list_lang_x_lang.grid(row=2, column=0, columnspan=1, rowspan=8)
+        self.entry_lang_x.grid(row=1, column=0, sticky=N+S+E+W,
+                               padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.entry_lang_y.grid(row=1, column=1, sticky=N+S+E+W,
+                               padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.entry_result_lang_x_lang.grid(row=1, column=2, sticky=N+S+E+W,
+                                           padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_amount_of_common_words.grid(row=2, column=3, sticky=N+S+E+W,
+                                           padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_common_words.grid(row=3, column=3, sticky=N+S+E+W,
+                                           padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_greater_contribution.grid(row=4, column=3, sticky=N+S+E+W,
+                                           padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.btn_contribution_by_lang.grid(row=5, column=3, sticky=N+S+E+W,
+                                           padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.list_lang_x_lang.grid(row=2, column=0,
+                                   columnspan=3, rowspan=4, sticky=N+S+E+W,
+                                   padx=5, pady=5, ipadx=5, ipady=5)
 
         # ---------------------------------------------------------------------
         # Checkbox de relaciones
         # ---------------------------------------------------------------------
 
-        self.cb_etymology.grid(row=0, column=0, columnspan=2)
-        self.cb_etymological_origin_of.grid(row=1, column=0, columnspan=2)
-        self.cb_etymologically_related.grid(row=2, column=0, columnspan=2)
-        self.cb_has_derived_form.grid(row=3, column=0, columnspan=2)
+        self.cb_etymology.grid(row=0, column=1,
+                               columnspan=2, sticky=N+S+E+W,
+                               padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.cb_etymological_origin_of.grid(row=0, column=3,
+                                            columnspan=2, sticky=N+S+E+W,
+                                            padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.cb_etymologically_related.grid(row=0, column=5,
+                                            columnspan=2, sticky=N+S+E+W,
+                                            padx=5, pady=5, ipadx=5, ipady=5)
+
+        self.cb_has_derived_form.grid(row=0, column=7,
+                                      columnspan=2, sticky=N+S+E+W,
+                                      padx=5, pady=5, ipadx=5, ipady=5)
 
     # -------------------------------------------------------------------------
 
