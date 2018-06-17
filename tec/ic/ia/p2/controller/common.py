@@ -6,10 +6,10 @@ pyDatalog.create_terms('etymology_active,'
                        'has_derived_form_active,'
                        'etymologically_related_active')
 
-+ etymology_active(False)
-+ has_derived_form_active(False)
-+ etymologically_related_active(False)
-+ etymological_origin_of_active(False)
++ etymology_active(True)
++ has_derived_form_active(True)
++ etymologically_related_active(True)
++ etymological_origin_of_active(True)
 
 
 def switch_etymology_state(new_state):
