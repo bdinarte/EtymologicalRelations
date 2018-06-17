@@ -165,7 +165,7 @@ Lo que pretende esta funcionalidad es que a partir de dos idiomas **(X, Y)** pro
 por el usuario, el sistema brinde una respuesta indicando la cantidad de palabras que se encuentran
 relacionadas de manera común entre los lenguajes (**X** and **Y**).
 
-Entonces, suponiendo que el usuario proporciona el lenguaje **'X = spa'** y **'Y = por,'**
+Entonces, suponiendo que el usuario proporciona el lenguaje **'X = eng'** y **'Y = afr,'**
 el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
 donde _Y_ tiene un conjunto de palabras _Z,_ tal que ese conjunto Z se encuentra en el idioma _X._
 Entonces se cumpliría que las palabras en ese conjunto, son comunes entre Y y X.
@@ -186,7 +186,7 @@ Lo que pretende esta funcionalidad es que a partir de dos idiomas **(X, Y)** pro
 por el usuario, el sistema brinde una respuesta indicando la palabras que se encuentran
 relacionadas de manera común entre los lenguajes (**X** and **Y**).
 
-Entonces, suponiendo que el usuario proporciona el lenguaje **'X = spa'** y **'Y = por,'**
+Entonces, suponiendo que el usuario proporciona el lenguaje **'X = eng'** y **'Y = afr,'**
 el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
 donde _Y_ tiene un conjunto de palabras _Z,_ tal que ese conjunto Z se encuentra en el idioma _X._
 Entonces se cumpliría que las palabras en ese conjunto, son comunes entre Y y X.
