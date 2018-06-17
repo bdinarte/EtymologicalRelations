@@ -121,9 +121,9 @@ por el usuario, el sistema brinde una respuesta indicando todas las palabras que
 a partir de la ingresada en la interfaz y además que dichas palabras de encuentren en el idioma
 indicado.
 
-Entonces, suponiendo que el usuario proporciona la palabra base: **'padre'** y el idioma: **'spa,'**
+Entonces, suponiendo que el usuario proporciona la palabra base: **'-lik'** y el idioma: **'afr,'**
 el sistema procede a verificar en la base de conocimiento para ver si existen hechos que cumpla la relación
-donde la palabra generadora sea _'padre'_ y que el lenguaje de la palabra generada sea _'spa'_.
+donde la palabra generadora sea _'-lik'_ y que el lenguaje de la palabra generada sea _'afr'_.
 
 **Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra
 y el idioma en los campos de texto respectivos. Un ejemplo de este ingreso se encuentra en 
@@ -144,9 +144,9 @@ de manera directa con la misma. Ya sea que la palabra esté escrita en un idioma
 de otra palabra en un idioma determinado. En síntesis, la respuesta se compone de los lenguajes originarios
 y de los generados, donde exista la palabra especificada en la interfaz.
 
-Entonces, suponiendo que el usuario proporciona la palabra base: **'padre'**
+Entonces, suponiendo que el usuario proporciona la palabra base: **'bruin'**
 el sistema procede a verificar en la base de conocimiento para ver si existen hechos que cumpla la relación
-donde la palabra generadora/generada sea _'padre',_ entonces de cumplirse, se toman en cuenta los lenguajes
+donde la palabra generadora/generada sea _'bruin',_ entonces de cumplirse, se toman en cuenta los lenguajes
 que incorpora el hecho del KB.
 
 **Utilización de la interfaz:** Para llevar a cabo esta funcionalidad, basta con ingresar la palabra
