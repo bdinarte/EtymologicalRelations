@@ -143,6 +143,10 @@ are_cousins(X, LX, Y, LY, False) <= ~cousins(X, LX, Y, LY)
 # Determina el grado de primos basado en la cantidad de ancestros
 # que existen antes de llegar a un ancestro A que tengan en común X y Y
 
+(cousins_distance[X, LX, Y, LY] == 1) <= (
+        cousins(X, LX, Y, LY)
+)
+
 (cousins_distance[X, LX, Y, LY] == min_(D, order_by=D)) <= (
         ancestor_distance(A, LA, X, LX, D2) &
         ancestor_distance(A, LA, Y, LY, D2) &
@@ -155,7 +159,6 @@ are_cousins(X, LX, Y, LY, False) <= ~cousins(X, LX, Y, LY)
         ~(LX == LY) & ~siblings(X, LX, Y, LY) & (D == D2 - 1)
 )
 
-cousins_distance(X, LX, Y, LY, 0) <= ~cousins(X, LX, Y, LY)
 cousins_distance(X, LX, Y, LY, D) <= (cousins_distance[X, LX, Y, LY] == D)
 cousins_distance(X, LX, Y, LY, D) <= cousins_distance(Y, LY, X, LX, D)
 
