@@ -162,6 +162,8 @@ are_cousins(X, Y, False) <= ~cousins(X, LX, Y, LY)
 cousins_distance(X, LX, Y, LY, D) <= (cousins_distance[X, LX, Y, LY] == D)
 cousins_distance(X, LX, Y, LY, D) <= cousins_distance(Y, LY, X, LX, D)
 
+cousins_distance(X, Y, D) <= cousins_distance(X, LX, Y, LY, D) 
+
 # -----------------------------------------------------------------------------
 
 # T es el tío de X

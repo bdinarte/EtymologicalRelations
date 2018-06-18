@@ -72,7 +72,8 @@ def exec_cousins_distance(first_word, second_word):
     :return: 0 si no son primas, sino, la lejanía de primos entre ambas
     """
 
-    return cousins_distance(first_word, second_word, L).v()[0]
+    result = cousins_distance(first_word, second_word, L)
+    return 0 if result == [] else result
 
 # -----------------------------------------------------------------------------
 
