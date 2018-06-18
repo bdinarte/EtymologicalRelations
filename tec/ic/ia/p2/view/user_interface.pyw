@@ -274,12 +274,12 @@ class UserInterface(Tk):
 
         self.btn_greater_contribution = Button(
             self.lf_lang_x_lang,
-            text="Idioma que más aporto a otro",
+            text="Idioma que más aporto a Y",
             command=self.greater_contribution)
 
         self.btn_contribution_by_lang = Button(
             self.lf_lang_x_lang,
-            text="Porcentajes de aporte",
+            text="Porcentajes de aporte a Y",
             command=self.contribution_by_lang)
 
         self.list_lang_x_lang = Listbox(self.lf_lang_x_lang)

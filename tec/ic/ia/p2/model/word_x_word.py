@@ -135,8 +135,8 @@ cousins(X, LX, Y, LY) <= (
 
 # Si X es primo de Y entonces True.
 # Forma para obtener una relación con false en vez de una lista vacía.
-are_cousins(X, LX, Y, LY, True) <= cousins(X, LX, Y, LY)
-are_cousins(X, LX, Y, LY, False) <= ~cousins(X, LX, Y, LY)
+are_cousins(X, Y, True) <= cousins(X, LX, Y, LY)
+are_cousins(X, Y, False) <= ~cousins(X, LX, Y, LY)
 
 # -----------------------------------------------------------------------------
 

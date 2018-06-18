@@ -171,165 +171,127 @@ def test_are_cousins_negative_case():
 #     answer = are_cousins("ego", "ego", R).data
 #     expected = [(False,)]
 #     assert set(answer) == set(expected)
+#
+#
+# -----------------------------------------------------------------------------
 
+def test_child_has_one_parent():
+    """
+    Verifica que ego tenga solo un padre
+    """
+    answer = child("ego", "spa", Y, LY).data
+    expected = [('padre', 'spa')]
+    assert set(answer) == set(expected)
 
-# # -----------------------------------------------------------------------------
-#
-# def test_child_has_one_parent():
-#     """
-#     Verifica que ego tenga solo un padre
-#     """
-#     answer = child("ego", P).data
-#     expected = [("padre",)]
-#     assert set(answer) == set(expected)
-#
-# def test_child_get_all_of():
-#     """
-#     Verifica que el abuelo de ego tiene solo los dos hijos
-#     """
-#     answer = child(P, "bisabuelo").data
-#     expected = [("abuelo",), ("tio_abuelo",)]
-#     assert set(answer) == set(expected)
-#
-# def test_child_get_all_of_empty():
-#     """
-#     Verifica que ego no tienen hijos
-#     """
-#     answer = child(P, "ego").data
-#     assert set(answer) == set([])
-#
-# def test_child_has_no_parent():
-#     """
-#     El término tatarabuelo no tiene ningún padre
-#     """
-#     answer = child("tatarabuelo", P).data
-#     assert set(answer) == set([])
-#
-# def test_child_someone_not_exists():
-#     """
-#     Verifica que se retorne una lista vacía si alguno de los
-#     involucrados en la pregunta es no existe en la KB.
-#     """
-#     answer = child("", P).data
-#     answer = answer + child(P, "").data
-#     assert set(answer) == set([])
-#
-# # -----------------------------------------------------------------------------
-#
-# def test_is_child_positive_case():
-#     """
-#     Verifica que ego es derivado del término padre
-#     """
-#     answer = is_child("ego", "padre", R).data
-#     answer = answer + is_child("hermano", "padre", R).data
-#     assert set(answer) == set([(True,), (True,)])
-#
-# def test_is_child_negative_case():
-#     """
-#     Verifica que el término padre de ego no es padre de tambíén
-#     del término abuelo.
-#     """
-#     answer = is_child("abuelo", "padre", R).data
-#     answer = answer + is_child("hermano", "ego", R).data
-#     assert set(answer) == set([(False,), (False,)])
-#
-# def test_is_child_someone_not_exists():
-#     """
-#     Verfica que la lista sea vacía en caso que alguno de los términos no
-#     existe.
-#     """
-#     answer = is_child("", "padre", R).data
-#     answer = answer + is_child("hermano", "", R).data
-#     assert set(answer) == set([(False,)])
-#
-# # -----------------------------------------------------------------------------
-#
-# def test_uncle_get_all():
-#     """
-#     Se obtienen todos los términos tíos; siendo un tío cualquier ancestro
-#     de un primo que no sea ancestro del término buscado.
-#     """
-#     answer = uncle(T, "ego").data
-#
-#     expected = [
-#         ("tio",),
-#         ("tio_seg",),
-#         ("tio_abuelo",),
-#         ("tio_abuelo_seg",),
-#         ("tio_bisabuelo",),
-#         ("tio_ter",)
-#     ]
-#
-#     assert set(expected) == set(answer)
-#
-# def test_uncle_get_all_nephews():
-#     """
-#     Se obtienen todos los términos que son sobrinos de otro.
-#     """
-#     answer = uncle("tio", X).data
-#     expected = [
-#         ('primo_seg',),
-#         ('primo_ter',),
-#         ('hermano',),
-#         ('ego',),
-#         ('prueba',)
-#     ]
-#     assert set(expected) == set(answer)
-#
-# # -----------------------------------------------------------------------------
-#
-# def test_is_uncle_positive_case():
-#     """
-#     Verifica términos que son tíos de otros
-#     """
-#     answer = is_uncle("padre", "primo", R).data
-#     answer = answer + is_uncle("tio_abuelo", "hermano", R).data
-#     answer = answer + is_uncle("tio_bisabuelo", "ego", R).data
-#     assert set(answer) == set([(True,), (True,), (True,)])
-#
-# def test_is_uncle_negative_case():
-#     """
-#     Verifica términos que son tíos de otros
-#     """
-#     answer = is_uncle("padre", "hermano", R).data
-#     answer = answer + is_uncle("ego", "padre", R).data
-#     answer = answer + is_uncle("ego", "abuelo", R).data
-#     assert set(answer) == set([(False,), (False,), (False,)])
-#
-# # -----------------------------------------------------------------------------
-#
-# def test_cousins_distance_ego_and_sibling_case():
-#     """
-#     Verifica todos los primos de un determinado término junto con su lejanía.
-#     El término hermano obtiene los mismo resultados al tener los mismos primos
-#     """
-#     answer = cousins_distance("ego", Y, L).data
-#     answer = answer + cousins_distance("hermano", Y, L).data
-#     expected = [("primo", 1), ("primo_seg", 2), ("primo_ter", 3),]
-#     assert set(answer) == set(expected)
-#
-# def test_cousins_distance_parent_and_uncle_case():
-#     """
-#     Verifica todos los primos de un determinado término junto con su lejanía.
-#     El término tío obtiene los mismo resultados al tener los mismos primos
-#     """
-#     answer = cousins_distance(X, "padre", L).data
-#     answer = answer + cousins_distance(X, "tio", L).data
-#     expected = [('tio_seg', 1), ('tio_ter', 2)]
-#     assert set(answer) == set(expected)
-#
-# def test_cousins_distance_using_specific_distance():
-#     """
-#     Verifica todos los primos de un determinado término junto con su lejanía.
-#     """
-#     answer = cousins_distance(X, "ego", 2).data
-#     assert set(answer) == set([("primo_seg",)])
-#
-# def test_cousins_distance_not_cousins():
-#     """
-#     Verifica que si dos términos no son primns, se obtiene una distancia de 0
-#     """
-#     answer = cousins_distance("no primo", "ego", R).data
-#     assert set(answer) == set([(0,)])
-#
+def test_child_get_all_of():
+    """
+    Verifica que el abuelo de ego tiene solo los dos hijos
+    """
+    answer = child(X, LX, "bisabuelo", LY).data
+
+    # Existe una versión de abuelo en 'spa' y otra en 'por'
+    expected = [('abuelo', 'ape', 'por'), ('tio_abuelo', 'por', 'spa')]
+    assert set(answer) == set(expected)
+
+def test_child_get_all_of_empty():
+    """
+    Verifica que ego no tienen hijos
+    """
+    answer = child(X, LX, "ego", "ita").data
+    assert set(answer) == set([])
+
+def test_child_has_no_parent():
+    """
+    El término tatarabuelo no tiene ningún padre
+    """
+    answer = child("tatarabuelo", "ind", P, LP).data
+    assert set(answer) == set([])
+
+def test_child_someone_not_exists():
+    """
+    Verifica que se retorne una lista vacía si alguno de los
+    involucrados en la pregunta es no existe en la KB.
+    """
+    answer = child("ego", "", P, LP).data
+    assert set(answer) == set([])
+
+# -----------------------------------------------------------------------------
+
+def test_is_child_positive_case():
+    """
+    Verifica que ego es derivado del término padre
+    """
+    answer = is_child("ego", "padre", R).data
+    answer = answer + is_child("hermano", "padre", R).data
+    assert set(answer) == set([(True,), (True,)])
+
+def test_is_child_negative_case():
+    """
+    Verifica que el término padre de ego no es padre de tambíén
+    del término abuelo.
+    """
+    answer = is_child("abuelo", "padre", R).data
+    answer = answer + is_child("hermano", "ego", R).data
+    assert set(answer) == set([(False,), (False,)])
+
+def test_is_child_someone_not_exists():
+    """
+    Verfica que la lista sea vacía en caso que alguno de los términos no
+    existe.
+    """
+    answer = is_child("", "padre", R).data
+    answer = answer + is_child("hermano", "", R).data
+    assert set(answer) == set([(False,)])
+
+# -----------------------------------------------------------------------------
+
+def test_uncle_get():
+    """
+    Se obtienen todos los términos tíos; siendo un tío cualquier ancestro
+    de un primo que no sea ancestro del término buscado.
+    """
+    answer = uncle(T, LT, "primo", "ita").data
+    assert set(answer) == set([('padre', 'por')])
+
+def test_uncle_get_nephew():
+    """
+    Se obtienen todos los términos que son sobrinos de otro.
+    """
+    answer = uncle("tio", "nor", X, LX).data
+    assert set(answer) == set([('prueba', 'spa')])
+
+# -----------------------------------------------------------------------------
+
+def test_is_uncle_positive_case():
+    """
+    Verifica términos que son tíos de otros
+    """
+    answer = is_uncle("padre", "primo", R).data
+    assert set(answer) == set([(True,)])
+
+def test_is_uncle_negative_case():
+    """
+    Verifica términos que son tíos de otros
+    """
+    answer = is_uncle("padre", "hermano", R).data
+    answer = answer + is_uncle("ego", "padre", R).data
+    answer = answer + is_uncle("ego", "abuelo", R).data
+    assert set(answer) == set([(False,), (False,), (False,)])
+
+# -----------------------------------------------------------------------------
+
+def test_cousins_distance_using_specific_distance():
+    """
+    Verifica que dos primos 'directos' obtengan una distancía de 1
+    """
+    answer = cousins_distance("abuelo", "ape", Y, LY, 1).data
+    assert set(answer) == set([('tio_abuelo_seg', 'ape')])
+
+def test_cousins_distance_not_cousins():
+    """
+    Verifica que si dos términos no son primns, se obtiene una lista vacía
+    """
+    answer = cousins_distance("padre", LX, "ego", LY, R).data
+    assert set(answer) == set([])
+
 # # -----------------------------------------------------------------------------
