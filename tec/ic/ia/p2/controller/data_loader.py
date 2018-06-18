@@ -14,7 +14,8 @@ valid_relations = ['etymological_origin_of', 'has_derived_form',
 
 # -----------------------------------------------------------------------------
 
-lang_blacklist = ["xcl", "rus", "kat", "urd", "tha", "tel"]
+lang_blacklist = ["xcl", "rus", "kat", "urd", "tha", "tel" ,
+                  "zsm", "msa", "tam", "san", "cmn", "ara", "fas"]
 
 # -----------------------------------------------------------------------------
 
