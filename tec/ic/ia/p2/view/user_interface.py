@@ -420,7 +420,8 @@ class UserInterface(Tk):
         self.entry_lang_y.grid(row=1, column=1, sticky=N+S+E+W,
                                padx=5, pady=5, ipadx=5, ipady=5)
 
-        self.entry_result_lang_x_lang.grid(row=1, column=2, sticky=N+S+E+W,
+        self.entry_result_lang_x_lang.grid(row=1, column=2,
+                                           sticky=N+S+E+W, columnspan=3,
                                            padx=5, pady=5, ipadx=5, ipady=5)
 
         self.btn_amount_of_common_words.grid(row=2, column=3, sticky=N+S+E+W,
