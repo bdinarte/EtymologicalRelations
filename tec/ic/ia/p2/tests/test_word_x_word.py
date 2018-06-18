@@ -149,10 +149,8 @@ def test_are_cousins_positive_case():
     con la misma lejanía, pero no es el término hermano.
     """
 
-    answer = are_cousins("tio", LX, "prueba", LY, R).data
-
-    assert answer
-
+    answer = are_cousins("prueba", "primo", R).data
+    assert set(answer) == set([(True,)])
 
 def test_are_cousins_negative_case():
     """
@@ -160,19 +158,9 @@ def test_are_cousins_negative_case():
     de que los términos no sea primos
     """
 
-    answer = are_cousins("tatarabuelo", LX, "ego", LY, R).data
+    answer = are_cousins("tatarabuelo", "ego", R).data
+    assert set(answer) == set([(False,)])
 
-    assert not answer
-
-# def test_are_cousins_same_term():
-#     """
-#     Verifica que un término no sea primo de si mismo
-#     """
-#     answer = are_cousins("ego", "ego", R).data
-#     expected = [(False,)]
-#     assert set(answer) == set(expected)
-#
-#
 # -----------------------------------------------------------------------------
 
 def test_child_has_one_parent():
