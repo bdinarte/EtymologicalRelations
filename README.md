@@ -86,8 +86,6 @@ Lo que pretende esta funcionalidad es que a partir de dos palabras **(X, Y)** pr
 por el usuario, el sistema brinde una respuesta indicando si la palabra **X** está relacionada con
 la palabra **Y** o no.
 
-Esta funcionalidad tiene la cualidad de que toma en cuenta tanto el tío directo, como los tíos abuelos, tíos segundos y demás/ 
-
 Entonces, suponiendo que el usuario proporciona la palabra  **'X = tio'** y **'Y = sobrino,'**
 el sistema verifica en la base de conocimiento para ver si existe un hecho que cumpla la relación
 donde existe un primo P tal que todos los ancestros T de P que no sean los ancestros directos de Y son tíos de Y. 

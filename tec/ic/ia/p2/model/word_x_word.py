@@ -162,19 +162,12 @@ are_cousins(X, Y, False) <= ~cousins(X, LX, Y, LY)
 cousins_distance(X, LX, Y, LY, D) <= (cousins_distance[X, LX, Y, LY] == D)
 cousins_distance(X, LX, Y, LY, D) <= cousins_distance(Y, LY, X, LX, D)
 
-cousins_distance(X, Y, D) <= cousins_distance(X, LX, Y, LY, D) 
+cousins_distance(X, Y, D) <= cousins_distance(X, LX, Y, LY, D)
 
 # -----------------------------------------------------------------------------
 
 # T es el tío de X
-# Todos los ancestros del primo de X, a excepción de los ancestros de X,
-# son tíos de X. Esto incluye tío, tío abuelo, tío segundo, tíos abuelo...
 uncle(T, LT, X, LX) <= parent(P, LP, X, LX) & siblings(P, LP, T, LT)
-
-uncle(T, LT, X, LX) <= (
-        cousins(X, LX, Y, LY) &
-        ancestor(T, LT, Y, LY) & ~ancestor(T, LT, X, LX)
-)
 
 # -----------------------------------------------------------------------------
 
