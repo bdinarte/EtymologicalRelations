@@ -65,80 +65,105 @@ def test_siblings():
 
 # -----------------------------------------------------------------------------
 
-# def test_are_siblings_positive_case():
-#     """
-#     Verifica que tenga correspondencia con la función test_siblings
-#     """
-#     answer = are_siblings("hermano", "ego", R).data
-#     answer = answer + are_siblings("tio", "padre", R).data
-#     assert set(answer) == set([(True,)])
+def test_are_siblings_positive_case():
+    """
+    Verifica que dos palabras son hermanas <=> tiene un padre en común
 
-# def test_are_siblings_negative_case():
-#     """
-#     Verifica que se retorne una False en vez de una lista vacía
-#     en caso de que los términos no sean hermanos
-#     """
-#     answer = are_siblings("primo", "ego", R).data
-#     answer = answer + are_siblings("", "padre", R).data
-#     assert set(answer) == set([(False,)])
-#
-# def test_are_siblings_same_terms():
-#     """
-#     Verifica que se retorne una False en vez de una lista vacía
-#     en caso de que los términos no sean hermanos
-#     """
-#     answer = are_siblings("ego", "ego", R).data
-#     answer = answer + are_siblings("padre", "padre", R).data
-#     assert set(answer) == set([(False,)])
-#
-# # -----------------------------------------------------------------------------
-#
-# def test_cousins_of_ego():
-#     """
-#     Verifica todos los primos de ego, incluyendo primo segundo y tercero
-#     """
-#     answer = cousins("ego", Y).data
-#     expected = [("primo_ter",), ("primo",), ("primo_seg",)]
-#     assert set(answer) == set(expected)
-#
-# def test_cousins_of_parent():
-#     """
-#     Verifica todos los primos del padre de ego para probar que no solo sirve
-#     en los términos "hojas"
-#     """
-#     answer = cousins("padre", Y).data
-#     expected = [("tio_seg",), ("tio_ter",)]
-#     assert set(answer) == set(expected)
-#
-# def test_cousins_of_sibling():
-#     """
-#     Verifica todos los primos del término hermano de ego sean los mismo
-#     """
-#     ego = cousins("ego", Y).data
-#     sibling = cousins("hermano", Y).data
-#
-#     assert set(ego) == set(sibling)
-#
-# # -----------------------------------------------------------------------------
-#
-# def test_are_cousins_positive_case():
-#     """
-#     Verifica el que dos términos son primos si tiene un ancestro en común
-#     con la misma lejanía, pero no es el término hermano.
-#     """
-#     answer = are_cousins("ego", "primo", R).data
-#     answer = answer + are_cousins("ego", "hermano", R).data
-#     assert set(answer) == set([(True,), (False,)])
-#
-#
-# def test_are_cousins_negative_case():
-#     """
-#     Verifica que siempre se obtenga false y no una lista vacía en caso
-#     de que los términos no sea primos
-#     """
-#     answer = are_cousins("ego", "hermano", R).data
-#     assert set(answer) == set([(False,)])
-#
+    A continuación, se pueden ver los hechos que cumplen la relación de
+    hermano entre 'tio' y 'padre' (Note que el padre en este caso en la
+    palabra 'abuelo' en idioma 'chi')
+
+        + has_derived_form("chi", "abuelo", "nor", "tio")
+        + etymology("por", "padre", "chi", "abuelo")
+
+    En este otro párrafo se mostrarán las que cumplen la misma relación
+    entre las palabras: 'bisabuelo' y 'tio_bisabuelo':
+
+        + has_derived_form("ind", "tatarabuelo", "por", "bisabuelo")
+        + has_derived_form("ind", "tatarabuelo", "ind", "tio_bisabuelo")
+
+         (Note que el padre en este caso en la palabra 'abuelo'
+         en idioma 'chi')
+
+    La respuesta esperada es un set con el valor de 'True'
+    """
+
+    answer = are_siblings("bisabuelo", "tio_bisabuelo", R).data
+
+    answer = answer + are_siblings("tio", "padre", R).data
+
+    assert set(answer) == set([(True,)])
+
+def test_are_siblings_negative_case():
+    """
+    Verifica que se retorne una False en vez de una lista vacía
+    en caso de que los términos no sean hermanos
+
+        Note que la respuesta a la relación de hermanos para las palabras:
+            'primo'     -   'ego'
+            'bisabuelo' -   'padre'
+
+        es negativa debido a que en la base de conocimiento, no existen
+        hechos con un mismo padre para niguna de las dos relaciones
+        presentadas en estas palabras.
+    """
+
+    answer = are_siblings("primo", "ego", R).data
+    answer = answer + are_siblings("bisabuelo", "padre", R).data
+
+    assert set(answer) == set([(False,)])
+
+def test_are_siblings_same_terms():
+    """
+    Verifica que se retorne un False en vez de una lista vacía
+    en caso de que los términos no sean hermanos.
+
+        Tal como sucede en la prueba anterior, no se cumple que estas palabras
+        sean herman@s porque no existen hechos en el KB donde las palabras
+        estén en idiomas distintos, y que procedan de un mismo padre
+    """
+
+    answer = are_siblings("ego", "ego", R).data
+    answer = answer + are_siblings("padre", "padre", R).data
+    assert set(answer) == set([(False,)])
+
+# -----------------------------------------------------------------------------
+
+def test_cousins_of_prueba():
+    """
+    Verifica todos los primos de la palabra 'prueba', incluyendo los de
+    primer segundo y tercero grado
+    """
+
+    answer = cousins("prueba", LX, Y, LY).data
+    expected = [('spa', 'primo', 'ita')]
+
+    assert set(answer) == set(expected)
+
+
+# -----------------------------------------------------------------------------
+
+def test_are_cousins_positive_case():
+    """
+    Verifica el que dos términos son primos si tiene un ancestro en común
+    con la misma lejanía, pero no es el término hermano.
+    """
+
+    answer = are_cousins("tio", LX, "prueba", LY, R).data
+
+    assert answer
+
+
+def test_are_cousins_negative_case():
+    """
+    Verifica que siempre se obtenga false y no una lista vacía en caso
+    de que los términos no sea primos
+    """
+
+    answer = are_cousins("tatarabuelo", LX, "ego", LY, R).data
+
+    assert not answer
+
 # def test_are_cousins_same_term():
 #     """
 #     Verifica que un término no sea primo de si mismo
@@ -146,8 +171,8 @@ def test_siblings():
 #     answer = are_cousins("ego", "ego", R).data
 #     expected = [(False,)]
 #     assert set(answer) == set(expected)
-#
-#
+
+
 # # -----------------------------------------------------------------------------
 #
 # def test_child_has_one_parent():

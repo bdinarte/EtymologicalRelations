@@ -364,9 +364,28 @@ ni siquiera parece tener un significado destacado en los ambos lenguajes, pues s
 ### Operación 11
 **Descripción:** Idioma que más aportó a otro.
 
+El resultado más llamativo encontrado no es específico a un lenguaje o porcentaje. Parte de las instrucciones para el proyecto, era el medir 
+el aporte realizado por lenguaje mediante el porcentaje de palabras que este aportó a otro. El problema de esta medición radica en las 
+grandes diferencias entre lenguajes en la base de datos. Existen lenguajes que aparecen en más de medio millón de relaciones, mientras que 
+otros aparecen únicamente en dos relaciones. Lo anterior significa que lenguajes que aportan muy pocas palabras pueden tener un 100% de 
+aporte a otros lenguajes, mientras que otros que aportan cincuenta mil palabras pueden llegar únicamente a un 30% o 50% de aporte.
+
+En resumen, la métrica de usar un porcentaje provee información distorsionada si no se está consciente de la realidad de los datos. En caso 
+de que esta comparación fuera realmente importante, sería de más utilidad el conformar una métrica que también incluya la cantidad de
+palabras aportadas.
+
 ### Operación 12
 **Descripción:** Listar todos los idiomas que aportaron a otro.
 
+Durante la definición de los hechos para las pruebas se identificó una situación interesante, en el caso de existir un lenguaje **A**, que 
+aporta la palabra **ab** para el lenguaje **X**, y al mismo tiempo existir un lenguaje **B** que aporta la palabra **ab**, al mismo
+lenguaje **X**; si en los datos, para el lenguaje **X** únicamente existe la palabra **ab**, entonces surge la siguiente duda:
+¿Aportaron ambos lenguajes **A** y **B** un 100% al lenguaje **X**, ambos aportaron **0%**, o aportó 100% el lenguaje **A** y el
+lenguaje **B** no aportó nada o viceversa?
+
+Dada la situación se tomó la decisión de que ambos lenguajes aportan (un 100% en el caso del ejemplo hipotético) al  lenguaje **X**.
+Esto pues no se encontró un criterio claro para definir a que lenguaje debe atribuirse el aporte, puesto que no hay mucha información a 
+la mano. Además de que la decisión no tiene mayor importancia a simple vista.
 
 ## Detalles de Implementación y Diseño
 ________________
@@ -421,6 +440,23 @@ con los valores de lenguaje y palabra correspondientes.
 * Inclusive si lo vemos a nivel general, podemos determinar que existe la misma cantidad
 de relaciones is_derived_from que de has_derived_form, lo que también da un indicio
 fuerte de que los registros son recíprocos.
+
+#### Operaciones 11 y 12
+
+Para las operaciones 11 y 12, las instrucciones se interpretaron de dos formas diferentes, 
+pues no habían indicios claros de cuál interpretación es la correcta. La primera interpretación 
+señala que el cálculo de los porcentajes de tenía que hacerse para todos los lenguajes que 
+aportaban a un lenguaje específico definido como parámetro. Es decir, dado un lenguaje 
+específico, calcular los porcentajes de aporte de todos los demás lenguajes a este 
+específico. 
+
+La segunda interpretación sañala que el cálculo de los porcentajes tenía que hacerse en un 
+cruce entre todos los lenguajes disponibles. Es decir, se identificaron 397 lenguajes y en caso 
+de cada lenguaje haber aportado al menos una palabra a cada uno de los demás, se deberían 
+calcular "factorial de 397" porcentajes de aporte.
+
+Dado que no había claridad sobre cual debía implementarse, se implementaron ambas 
+versiones.
 
 #### Manejo de los tipos de relaciones
 Parte de las instrucciones del proyecto incluye que en la interfaz gráfica sea posible 
