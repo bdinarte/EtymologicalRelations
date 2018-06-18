@@ -138,7 +138,7 @@ la siguiente imagen:
 
 Note que la salida es simplemente un **Si/No** indicando si la palabra se encuentra relacionada al
 lenguaje proporcionado.
-  
+
 
 ### Operación 7
 **Descripción:** Obtener el conjunto de todas las palabras en un idioma originadas por una palabra específica
@@ -161,7 +161,7 @@ la siguiente imagen:
 Note que la salida difiere de la operación anterior, ya que en esta no es simplemente un valor booleano,
 sino que se espera una lista de idiomas, y de no encontrar ningún hecho simplemente despliega una 
 lista vacía de elementos.
- 
+
 ### Operación 8
 **Descripción:** Listar los idiomas relacionados con una palabra
 
@@ -282,6 +282,26 @@ Un ejemplo claro de esta relación se muestra en la siguiente imagen:
 ### Operación 2
 **Descripción:** Determinar si dos palabras son prim@s
 
+En principio, la implementación se realizó utilizando el tío directo de la palabra X, sin embargo se nota que la relación de primos se puede visualizar de una forma más general; como palabras que simplemente comparten un ancestro en común en una determinada cantidad de generaciones. 
+
+```
+
+#                   <tatarabuelo>
+#                   ____\_______________
+#                  |                    |
+#           <tio_bisabuelo>         <bisabuelo>
+#                 |                   ___|____________
+#                 |                  |                |
+#         <tio_abuelo_seg>    <tio_abuelo>          <abuelo>
+#             |                   |              _______|_______
+#             |                   |             |               |
+#        <tio_ter>          <tio_seg>       <tio>            <padre>
+#           |                  |              |             ____|______
+#           |                  |              |            |           |
+#       <primo_ter>        <primo_seg>     <primo>     <hermano>     <ego>
+
+```
+
 ### Operación 3
 **Descripción:** Determinar si una palabra es hij@ de otra
 
@@ -309,6 +329,10 @@ mencionadas.
 ### Operación 5
 **Descripción:** Determinar si son prim@s y en qué grado.
 
+Para determinar el grado que tienen una pareja de primos es bastante sencillo si se entienden las relaciones tradicionales de la familia. Todos los primos se encuentran en un mismo nivel (visualizando el árbol de la operación 2). Una vez que se sabe que dos palabras **(X, Y)** son prim@, se puede determinar el grado (prim@os primeros, segund@s, tercer@s), contando cuantos ancestros tienen X y Y hasta llegar a un ancestro que tengan en común. 
+
+
+
 ### Operación 6
 **Descripción:** Determinar si una palabra está relacionada con un idioma (Si / No)
 
@@ -316,9 +340,9 @@ mencionadas.
  relacionada con múltiples lenguajes y que tuviera un significado similar en todos ellos. Y finalmente, se optó por
  **mama** que hace referencia a _mamá_ en el lenguaje Español. Entonces, al ejecutar esta funcionalidad se encontraban bastantes
  casos donde dicha palabra está relacionada con un idioma determinado.
- 
+
  Ejemplos de estos idiomas se encuentra en la siguiente imagen:
- 
+
 ![img_dc_6](/imgs/dc_6.png)
 
 ### Operación 7
@@ -337,7 +361,7 @@ y que se relaciona con la temática del fútbol. ¿Pero porqué es interesante? 
 e inclusive tiene el mismo significado, por lo que brinda un valor agregado al utilizarla en esta funcionalidad.    
 
 A continuación, se muestra una imagen con algunos ejemplos de la palabra **'gol'** relacionada con múltiples lenguajes:
- 
+
 ![img_dc_8](/imgs/dc_8.png)
 
 ### Operación 9
