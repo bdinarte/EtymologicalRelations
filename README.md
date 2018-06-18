@@ -8,13 +8,41 @@ Escuela de Ingeniería en Computación.
 Curso de Inteligencia Artificial, I Semestre del 2018.
 
 
-## Descripción de Instalación
-________________
 
-### Archivo de datos
-El archivo de datos, se espera tenga formato de tres columnas por filas, con cada valor de la fila 
-estando separado por una tabulación. El nombre del archivo debe ser "etymwn.tsv". Y debe colocarse
-en la carpeta **p2/files/**, siendo **p2** la carpeta principal del proyecto. 
+## Instalación
+
+#### Dependencias 
+
+Es necesario contar con `Python 3`  para poder realizar la instalación. Además, se requieren algunas dependecias que se pueden instalar utilizando `pip`: 
+
+1. Se abre un terminal con permisos de administrador
+2. Se ejecuta el siguiente comando:
+
+> sudo pip3 install pyDatalog
+
+
+
+#### Instalación desde el código fuente 
+
+1. Se debe abrir una terminal con permisos de administrador  
+
+2. Se debe navegar hasta la ruta del código fuente, al nivel que se encuentre el archivo `setup.py`
+
+3. Se ejecuta el siguiente comando:
+
+> sudo python3 setup.py install 
+
+
+
+#### Instalación utilizando pip 
+
+1. Se debe abrir una terminal con permisos de administrador 
+
+2. Se ejecuta el siguiente comando: 
+
+> sudo pip3 install tec.ic.ia.p2.g03
+
+
 
 ## Manual de Usuario
 ________________
