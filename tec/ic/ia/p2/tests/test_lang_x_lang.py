@@ -1,6 +1,6 @@
 
 
-from ..controller.lang_x_lang import *
+from ..model.lang_x_lang import *
 
 
 # ----------------------------------------------------------------------------
@@ -48,10 +48,11 @@ def test_words_in_common_exist():
     @return Sin retorno
     """
 
-    obtained_results = words_in_common('spa', 'lat')
+    obtained_results = lang_common_words('spa', 'lat', Word1)
+    obtained_results = [word_tuple[0] for word_tuple in obtained_results.data]
     expected_results = {'padre', 'tio_seg'}
 
-    assert obtained_results == expected_results
+    assert set(obtained_results) == expected_results
 
 
 def test_words_in_common_dont_exist():
@@ -63,8 +64,8 @@ def test_words_in_common_dont_exist():
     @return Sin retorno
     """
 
-    obtained_results = words_in_common('spa', 'ind')
-    expected_results = {'No hay palabras en común.'}
+    obtained_results = lang_common_words('spa', 'ind', Word1).v()
+    expected_results = None
 
     assert obtained_results == expected_results
 
@@ -80,7 +81,7 @@ def test_count_common_words_count_2():
     @return Sin retorno
     """
 
-    obtained_count = count_common_words('lat', 'spa')
+    obtained_count = (count_lang_common_words['lat', 'spa'] == Total).v()[0]
     expected_count = 2
 
     assert obtained_count == expected_count
@@ -95,8 +96,8 @@ def test_count_common_words_count_0():
     @return Sin retorno
     """
 
-    obtained_count = count_common_words('spa', 'nor')
-    expected_count = 0
+    obtained_count = (count_lang_common_words['spa', 'nor'] == Total).v()
+    expected_count = None
 
     assert obtained_count == expected_count
 
@@ -112,11 +113,11 @@ def test_aux_input_words_existing():
     Entradas: No aplica
     @return Sin retorno
     """
-
-    obtained_results = aux_input_words('chi', 'por')
+    obtained_results = input_words('chi', Word1, 'por', Word2)
+    obtained_results = [word_tuple[1] for word_tuple in obtained_results.data]
     expected_results = {'ego', 'tio_ter', 'padre'}
 
-    assert obtained_results == expected_results
+    assert set(obtained_results) == expected_results
 
 
 def test_aux_input_words_not_existing():
@@ -127,8 +128,8 @@ def test_aux_input_words_not_existing():
         @return Sin retorno
         """
 
-    obtained_results = aux_input_words('nor', 'spa')
-    expected_results = {'El lenguaje no aportó nada.'}
+    obtained_results = input_words('nor', Word1, 'spa', Word2).v()
+    expected_results = None
 
     assert obtained_results == expected_results
 
@@ -145,7 +146,7 @@ def test_aux_count_input_words_count_3():
     @return Sin retorno
     """
 
-    obtained_count = aux_count_input_words('chi', 'por')
+    obtained_count = (count_input_words['chi', 'por'] == Total).v()[0]
     expected_count = 3
 
     assert obtained_count == expected_count
@@ -160,8 +161,8 @@ def test_aux_count_input_words_count_0():
     @return Sin retorno
     """
 
-    obtained_count = count_common_words('nor', 'spa')
-    expected_count = 0
+    obtained_count = (count_input_words['nor', 'spa'] == Total).v()
+    expected_count = None
 
     assert obtained_count == expected_count
 
@@ -178,7 +179,7 @@ def test_aux_count_words_received_count_5():
     @return Sin retorno
     """
 
-    obtained_count = aux_count_words_received('por')
+    obtained_count = (count_words_received['por'] == Total).v()[0]
     expected_count = 5
 
     assert obtained_count == expected_count
@@ -193,8 +194,8 @@ def test_aux_count_words_received():
     @return Sin retorno
     """
 
-    obtained_count = aux_count_words_received('chi')
-    expected_count = 0
+    obtained_count = (count_words_received['chi'] == Total).v()
+    expected_count = None
 
     assert obtained_count == expected_count
 
@@ -210,7 +211,7 @@ def test_aux_input_percent_60():
     @return Sin retorno
     """
 
-    obtained_percent = aux_input_percent('chi', 'por')
+    obtained_percent = (input_percent['chi', 'por'] == Percent).v()[0]
     expected_percent = 0.6
 
     assert obtained_percent == expected_percent
@@ -224,8 +225,9 @@ def test_aux_input_percent_0():
     @return Sin retorno
     """
 
-    obtained_percent = aux_input_percent('ita', 'chi')
-    expected_percent = 0
+    obtained_percent = (input_percent['ita', 'chi'] == Percent).v()
+    expected_percent = None
+
     assert obtained_percent == expected_percent
 
 
@@ -240,23 +242,23 @@ def test_get_all_lang_inputs_for_all():
     @return Sin retorno
     """
 
-    obtained_results = get_all_lang_inputs()
-    expected_results = {'chi aporta a nor un 100.0%.',
-                        'chi aporta a por un 60.0%.',
-                        'chi aporta a spa un 33.0%.',
-                        'ind aporta a ape un 33.0%.',
-                        'ind aporta a ind un 100.0%.',
-                        'ind aporta a por un 20.0%.',
-                        'lat aporta a ape un 33.0%.',
-                        'lat aporta a ita un 50.0%.',
-                        'nor aporta a ita un 50.0%.',
-                        'por aporta a ape un 33.0%.',
-                        'por aporta a lat un 100.0%.',
-                        'por aporta a spa un 33.0%.',
-                        'spa aporta a por un 20.0%.',
-                        'spa aporta a spa un 33.0%.'}
+    obtained_results = all_lang_inputs(Lang1, Lang2, Total).data
+    expected_results = {('lat', 'ita', 0.5),
+                         ('lat', 'ape', 0.3333333333333333),
+                         ('chi', 'nor', 1.0),
+                         ('por', 'ape', 0.3333333333333333),
+                         ('por', 'lat', 1.0),
+                         ('ind', 'ind', 1.0),
+                         ('ind', 'por', 0.2),
+                         ('nor', 'ita', 0.5),
+                         ('spa', 'por', 0.2),
+                         ('spa', 'spa', 0.3333333333333333),
+                         ('ind', 'ape', 0.3333333333333333),
+                         ('por', 'spa', 0.3333333333333333),
+                         ('chi', 'spa', 0.3333333333333333),
+                         ('chi', 'por', 0.6)}
 
-    assert obtained_results == expected_results
+    assert set(obtained_results) == expected_results
 
 
 def test_get_all_lang_inputs_for_one():
@@ -267,12 +269,10 @@ def test_get_all_lang_inputs_for_one():
     @return Sin retorno
     """
 
-    obtained_results = get_all_lang_inputs('por')
-    expected_results = {'chi aporta a por un 60.0%.',
-                        'ind aporta a por un 20.0%.',
-                        'spa aporta a por un 20.0%.'}
+    obtained_results = all_lang_inputs(Lang1, 'por', Total).data
+    expected_results = {('ind', 0.2), ('spa', 0.2), ('chi', 0.6)}
 
-    assert obtained_results == expected_results
+    assert set(obtained_results) == expected_results
 
 
 def test_get_all_lang_inputs_no_input():
@@ -283,8 +283,8 @@ def test_get_all_lang_inputs_no_input():
     @return Sin retorno
     """
 
-    obtained_results = get_all_lang_inputs('chi')
-    expected_results = ['No hay aportes.']
+    obtained_results = all_lang_inputs(Lang1, 'chi', Total).data
+    expected_results = []
 
     assert obtained_results == expected_results
 
@@ -300,8 +300,8 @@ def test_get_max_input_for_all():
     @return Sin retorno
     """
 
-    obtained_max = get_max_input()
-    expected_max = 'Idioma: por a: lat con 100.0%.'
+    obtained_max = max_input(Total, Lang2).data[0][0]
+    expected_max = (1.0, 'por', 'lat')
 
     assert obtained_max == expected_max
 
@@ -313,8 +313,8 @@ def test_get_max_input_for_one():
     Entradas: No aplica
     @return Sin retorno
     """
-    obtained_max = get_max_input('por')
-    expected_max = 'Idioma: chi a: por con 60.0%.'
+    obtained_max = max_input(Total, 'por').data[0][0]
+    expected_max = (0.6, 'chi', 'por')
 
     assert obtained_max == expected_max
 
@@ -327,7 +327,7 @@ def test_get_max_input_for_one_empty():
     @return Sin retorno
     """
 
-    obtained_max = get_max_input('chi')
-    expected_max = 'No hay aporte.'
+    obtained_max = max_input(Total, 'chi').data
+    expected_max = []
 
     assert obtained_max == expected_max
